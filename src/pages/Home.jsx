@@ -1,119 +1,64 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { fetchHomeData } from '../services/api'
+import { 
+  FileText, BookOpen, Landmark, MapPin, Phone, 
+  Settings, BarChart, Monitor, GraduationCap, Coffee, Wrench,
+  Award, Hammer, Coins, Map, Handshake, Globe
+} from 'lucide-react'
 
-const slides = [
-  {
-    url: 'https://media.portmoni.com/resized/71682/TVET_2026_Applications_Now_Open_at_Maluti_TVET_College__Apply_Online_Today-thumbnail-600x600.png',
-    caption: 'Hands-on learning for real careers'
-  },
-  {
-    url: 'https://theguard.co.za/wp-content/uploads/2023/09/IMG-20230911-WA0011-1024x683.jpg',
-    caption: 'Building skills that employers value'
-  },
-  {
-    url: 'https://fundiconnect.co.za/wp-content/uploads/2023/06/Blog-images-2.0-54.jpg',
-    caption: 'Your future starts in the Free State'
-  },
-]
-
-const programmes = [
-  {
-    title: 'Engineering Studies',
-    icon: '⚙️',
-    image: 'https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=600&q=80',
-    desc: 'N1-N6 programmes in Electrical, Civil, Mechanical, and Fitting & Turning.',
-    type: 'NATED (Report 191)',
-  },
-  {
-    title: 'Business Studies',
-    icon: '📊',
-    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80',
-    desc: 'Management Assistant, Financial Management, Human Resource Management.',
-    type: 'NATED (Report 191)',
-  },
-  {
-    title: 'IT & Computer Science',
-    icon: '💻',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80',
-    desc: 'Information Technology NC(V) covering networking, software, and support.',
-    type: 'NC(V) Level 2-4',
-  },
-  {
-    title: 'Education & Development',
-    icon: '📚',
-    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80',
-    desc: 'Early Childhood Development and EDUCARE programmes.',
-    type: 'NC(V) Level 2-4',
-  },
-  {
-    title: 'Hospitality & Tourism',
-    icon: '🍽️',
-    image: 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600&q=80',
-    desc: 'Hospitality, Food & Beverage, and Tourism management.',
-    type: 'NC(V) Level 2-4',
-  },
-  {
-    title: 'Utility Studies',
-    icon: '🔧',
-    image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80',
-    desc: 'Plumbing, Electrical Infrastructure Construction, and related trades.',
-    type: 'NATED (Report 191)',
-  },
-]
-
-const stats = [
-  { number: '8', label: 'Campuses Across the Free State' },
-  { number: '2002', label: 'Year Established' },
-  { number: 'Umalusi', label: 'Accredited By' },
-  { number: 'NSFAS', label: 'Funding Available' },
-]
-
-const campuses = [
-  { name: 'Main Campus', town: 'Phuthaditjhaba', note: 'Central Office & Flagship Campus' },
-  { name: 'Bethlehem Campus', town: 'Bethlehem', note: 'Corporate Office Location' },
-  { name: 'Harrismith Campus', town: 'Harrismith', note: 'Engineering Focus' },
-  { name: 'Bonamelo Campus', town: 'Phuthaditjhaba', note: 'Education & Development' },
-  { name: 'Itemoheleng Campus', town: 'Phuthaditjhaba', note: 'Business & IT Programmes' },
-  { name: 'Kwetlisong Campus', town: 'Riverside', note: 'Technical Trades' },
-  { name: 'Lere la Tshepe Campus', town: 'Tseki Village', note: 'Community-Centred Learning' },
-  { name: 'Sefikeng Campus', town: 'Phuthaditjhaba', note: 'Vocational Skills' },
-]
-
-const announcements = [
-  { tag: 'Admissions', text: '2026 applications are open - apply online at malutitvet.co.za or visit your nearest campus', urgent: true },
-  { tag: 'NSFAS', text: 'NSFAS applications for 2026 are open at nsfas.org.za - do not delay, funding is limited', urgent: true },
-  { tag: 'Examinations', text: 'November 2025 NC(V) and NATED examination timetables are available - contact your Campus Examination Officer', urgent: false },
-  { tag: 'Graduation', text: '2025 Graduation ceremony registration is open - deadline Friday 4 July 2025', urgent: false },
-]
-
-const events = [
-  { date: 'Aug 19-20', year: '2025', title: 'Annual Graduation Ceremony', desc: 'Graduation ceremonies across all campuses. Students must register by 4 July 2025.', location: 'All Campuses' },
-  { date: 'Sep 1', year: '2025', title: '2026 Applications Open', desc: 'Online and walk-in applications open for all NC(V) and NATED programmes for the 2026 academic year.', location: 'malutitvet.co.za' },
-  { date: 'Nov 2025', year: '2025', title: 'End of Year Examinations', desc: 'NC(V) and NATED final examinations. Timetables available from your Campus Examination Officer.', location: 'All Campuses' },
-]
-
-const testimonials = [
-  { name: 'Thabo M.', programme: 'N6 Electrical Engineering', text: 'Maluti TVET gave me the practical skills I needed. I completed my N6 and found employment within three months of finishing my trade test.' },
-  { name: 'Lerato K.', programme: 'NC(V) Business Studies', text: 'The lecturers here genuinely care about your progress. I came in with just a Grade 9 and I am now running my own small business.' },
-  { name: 'Sifiso D.', programme: 'N4 Management Assistant', text: 'NSFAS covered my fees and the college helped me through the application process. I would not have been able to study without that support.' },
-]
+const getProgrammeIcon = (id) => {
+  const icons = {
+    engineering: <Settings size={24} color="#0E7BB5" />,
+    business: <BarChart size={24} color="#0E7BB5" />,
+    it: <Monitor size={24} color="#0E7BB5" />,
+    education: <GraduationCap size={24} color="#0E7BB5" />,
+    hospitality: <Coffee size={24} color="#0E7BB5" />,
+    utility: <Wrench size={24} color="#0E7BB5" />
+  };
+  return icons[id] || <BookOpen size={24} color="#0E7BB5" />;
+}
 
 export default function Home() {
   const [current, setCurrent] = useState(0)
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const loadData = async () => {
+      try {
+        const response = await fetchHomeData()
+        setData(response)
+      } catch (error) {
+        console.error("Error fetching data", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadData()
+  }, [])
+
+  useEffect(() => {
+    if (!data) return;
     const timer = setInterval(() => {
-      setCurrent(prev => (prev + 1) % slides.length)
+      setCurrent(prev => (prev + 1) % data.slides.length)
     }, 6000)
     return () => clearInterval(timer)
-  }, [])
+  }, [data])
+
+  if (loading) {
+    return (
+      <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#0E7BB5' }}>
+        <h2>Loading Maluti TVET Portal...</h2>
+      </div>
+    )
+  }
 
   return (
     <main>
-
       {/* Hero */}
       <section style={styles.hero}>
-        {slides.map((slide, i) => (
+        {data.slides.map((slide, i) => (
           <div key={i} style={{
             ...styles.slide,
             backgroundImage: `url(${slide.url})`,
@@ -139,7 +84,7 @@ export default function Home() {
             >View Programmes</Link>
           </div>
           <div style={styles.dots}>
-            {slides.map((_, i) => (
+            {data.slides.map((_, i) => (
               <button key={i} onClick={() => setCurrent(i)} style={{
                 ...styles.dot,
                 background: i === current ? '#FFB800' : 'rgba(255,255,255,0.4)',
@@ -153,11 +98,11 @@ export default function Home() {
       {/* Quick Access Bar */}
       <section style={styles.quickBar}>
         {[
-          { icon: '📋', label: 'Apply Online', path: '/admissions' },
-          { icon: '📚', label: 'Our Programmes', path: '/programmes' },
-          { icon: '💰', label: 'NSFAS Funding', path: '/admissions' },
-          { icon: '🏫', label: 'Our Campuses', path: '/about' },
-          { icon: '📞', label: 'Contact Us', path: '/contact' },
+          { icon: <FileText size={28} />, label: 'Apply Online', path: '/admissions' },
+          { icon: <BookOpen size={28} />, label: 'Our Programmes', path: '/programmes' },
+          { icon: <Landmark size={28} />, label: 'NSFAS Funding', path: '/admissions' },
+          { icon: <MapPin size={28} />, label: 'Our Campuses', path: '/about' },
+          { icon: <Phone size={28} />, label: 'Contact Us', path: '/contact' },
         ].map((ql, i) => (
           <Link key={i} to={ql.path} style={styles.quickLink}
             onMouseEnter={e => {
@@ -169,7 +114,7 @@ export default function Home() {
               e.currentTarget.style.color = '#1a1a1a'
             }}
           >
-            <span style={{ fontSize: '22px' }}>{ql.icon}</span>
+            <span>{ql.icon}</span>
             <span style={{ fontSize: '12px', fontWeight: '600' }}>{ql.label}</span>
           </Link>
         ))}
@@ -177,7 +122,7 @@ export default function Home() {
 
       {/* Stats */}
       <section style={styles.statsBar}>
-        {stats.map((s, i) => (
+        {data.stats.map((s, i) => (
           <div key={i} style={styles.statItem}>
             <span style={styles.statNumber}>{s.number}</span>
             <span style={styles.statLabel}>{s.label}</span>
@@ -191,7 +136,7 @@ export default function Home() {
           <p style={styles.sectionTag}>Notice Board</p>
           <h2 style={styles.sectionTitle}>Announcements</h2>
           <div style={styles.announcementList}>
-            {announcements.map((a, i) => (
+            {data.announcements.map((a, i) => (
             <div key={i} style={{
                 ...styles.announcementItem,
                 borderLeft: `4px solid ${a.urgent ? '#FFB800' : '#0E7BB5'}`,
@@ -210,56 +155,55 @@ export default function Home() {
       </section>
 
       {/* Upcoming Events */}
-        <section style={{ ...styles.section, background: '#f8f9fa' }}>
-            <div style={styles.container}>
-                <p style={styles.sectionTag}>Dates to Know</p>
-                <h2 style={styles.sectionTitle}>Upcoming Events</h2>
-                <div style={styles.eventsGrid}>
-                {events.map((ev, i) => (
-                    <div key={i} style={styles.eventCard}>
-                    <div style={styles.eventDate}>
-                        <span style={styles.eventDay}>{ev.date}</span>
-                        <span style={styles.eventYear}>{ev.year}</span>
-                    </div>
-                    <div style={styles.eventBody}>
-                        <h3 style={styles.eventTitle}>{ev.title}</h3>
-                        <p style={styles.eventDesc}>{ev.desc}</p>
-                        <span style={styles.eventLocation}>{ev.location}</span>
-                    </div>
-                    </div>
-                ))}
-                </div>
-            </div>
-        </section>
+      <section style={{ ...styles.section, background: '#f8f9fa' }}>
+          <div style={styles.container}>
+              <p style={styles.sectionTag}>Dates to Know</p>
+              <h2 style={styles.sectionTitle}>Upcoming Events</h2>
+              <div style={styles.eventsGrid}>
+              {data.events.map((ev, i) => (
+                  <div key={i} style={styles.eventCard}>
+                  <div style={styles.eventDate}>
+                      <span style={styles.eventDay}>{ev.date}</span>
+                      <span style={styles.eventYear}>{ev.year}</span>
+                  </div>
+                  <div style={styles.eventBody}>
+                      <h3 style={styles.eventTitle}>{ev.title}</h3>
+                      <p style={styles.eventDesc}>{ev.desc}</p>
+                      <span style={styles.eventLocation}>{ev.location}</span>
+                  </div>
+                  </div>
+              ))}
+              </div>
+          </div>
+      </section>
 
+      {/* Testimonials with Images */}
+      <section style={styles.section}>
+          <div style={styles.container}>
+              <p style={styles.sectionTag}>Student Voices</p>
+              <h2 style={styles.sectionTitle}>What Our Students Say</h2>
+              <div style={styles.testimonialsGrid}>
+              {data.testimonials.map((t, i) => (
+                  <div key={i} style={styles.testimonialCard}>
+                  <p style={styles.testimonialText}>"{t.text}"</p>
+                  <div style={styles.testimonialAuthor}>
+                      <div style={styles.testimonialAvatar}>
+                        <img src={t.image} alt={t.name} style={styles.avatarImg} />
+                      </div>
+                      <div>
+                      <p style={styles.testimonialName}>{t.name}</p>
+                      <p style={styles.testimonialProg}>{t.programme}</p>
+                      </div>
+                  </div>
+                  </div>
+              ))}
+              </div>
+          </div>
+      </section>
 
-        {/* Testimonials */}
-        <section style={styles.section}>
-            <div style={styles.container}>
-                <p style={styles.sectionTag}>Student Voices</p>
-                <h2 style={styles.sectionTitle}>What Our Students Say</h2>
-                <div style={styles.testimonialsGrid}>
-                {testimonials.map((t, i) => (
-                    <div key={i} style={styles.testimonialCard}>
-                    <p style={styles.testimonialText}>"{t.text}"</p>
-                    <div style={styles.testimonialAuthor}>
-                        <div style={styles.testimonialAvatar}>
-                        {t.name.charAt(0)}
-                        </div>
-                        <div>
-                        <p style={styles.testimonialName}>{t.name}</p>
-                        <p style={styles.testimonialProg}>{t.programme}</p>
-                        </div>
-                    </div>
-                    </div>
-                ))}
-                </div>
-            </div>
-        </section>
-
-      {/* About Strip with Image */}
+      {/* About Strip with Dynamic API Image */}
       <section style={styles.aboutStrip}>
-        <div style={styles.aboutImg} />
+        <div style={{ ...styles.aboutImg, backgroundImage: `url(${data.aboutImage})` }} />
         <div style={styles.aboutText}>
           <p style={styles.sectionTagWhite}>Who We Are</p>
           <h2 style={{ ...styles.sectionTitleWhite, textAlign: 'left', marginBottom: '16px' }}>
@@ -279,7 +223,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Programmes with Images */}
+      {/* Programmes */}
       <section style={{ ...styles.section, background: '#f8f9fa' }}>
         <div style={styles.container}>
           <p style={styles.sectionTag}>Qualifications</p>
@@ -289,7 +233,7 @@ export default function Home() {
             across a range of fields - practical, accredited, and industry-aligned.
           </p>
           <div style={styles.progGrid}>
-            {programmes.map((prog, i) => (
+            {data.programmes.map((prog, i) => (
               <div key={i} style={styles.progCard}
                 onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-6px)'}
                 onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
@@ -300,7 +244,10 @@ export default function Home() {
                 }} />
                 <div style={styles.progBody}>
                   <span style={styles.progType}>{prog.type}</span>
-                  <h3 style={styles.progTitle}>{prog.icon} {prog.title}</h3>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' }}>
+                     {getProgrammeIcon(prog.iconId)}
+                     <h3 style={styles.progTitle}>{prog.title}</h3>
+                  </div>
                   <p style={styles.progDesc}>{prog.desc}</p>
                   <Link to="/programmes" style={styles.progLink}>View courses →</Link>
                 </div>
@@ -313,7 +260,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Campuses */}
+      {/* Campuses with Images */}
       <section style={styles.section}>
         <div style={styles.container}>
           <p style={styles.sectionTag}>Where We Are</p>
@@ -323,21 +270,28 @@ export default function Home() {
             to communities across the North Eastern Free State.
           </p>
           <div style={styles.campusGrid}>
-            {campuses.map((c, i) => (
+            {data.campuses.map((c, i) => (
               <div key={i} style={styles.campusCard}
                 onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = '#0E7BB5'
-                  e.currentTarget.style.background = '#f0f8ff'
+                  e.currentTarget.style.transform = 'translateY(-4px)'
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.08)'
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = '#e8e8e8'
-                  e.currentTarget.style.background = '#fff'
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)'
                 }}
               >
-                <span style={styles.campusIcon}>🏫</span>
-                <h3 style={styles.campusName}>{c.name}</h3>
-                <p style={styles.campusTown}>📍 {c.town}, Free State</p>
-                <p style={styles.campusNote}>{c.note}</p>
+                <div style={{
+                    height: '140px',
+                    backgroundImage: `url(${c.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }} />
+                <div style={styles.campusBody}>
+                    <h3 style={styles.campusName}><MapPin size={16} style={{marginRight: '4px'}}/> {c.name}</h3>
+                    <p style={styles.campusTown}>{c.town}, Free State</p>
+                    <p style={styles.campusNote}>{c.note}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -367,12 +321,12 @@ export default function Home() {
           <h2 style={styles.sectionTitle}>What Sets Us Apart</h2>
           <div style={styles.whyGrid}>
             {[
-              { icon: '🎓', title: 'Umalusi Accredited', desc: 'All qualifications are nationally recognised and accredited by Umalusi.' },
-              { icon: '🔧', title: 'Practical First', desc: 'Our programmes are built around hands-on training that prepares you for real work.' },
-              { icon: '💰', title: 'NSFAS Approved', desc: 'Qualifying students can access NSFAS funding for both tuition and living costs.' },
-              { icon: '📍', title: '8 Campuses', desc: 'Strategically spread across the Free State so education is always within reach.' },
-              { icon: '🤝', title: 'Industry Partnerships', desc: 'We work with employers and SETAs to keep our programmes current and relevant.' },
-              { icon: '🌍', title: 'Community Roots', desc: 'Founded to serve Free State communities - our success is measured by yours.' },
+              { icon: <Award size={36} color="#0E7BB5" />, title: 'Umalusi Accredited', desc: 'All qualifications are nationally recognised and accredited by Umalusi.' },
+              { icon: <Hammer size={36} color="#0E7BB5" />, title: 'Practical First', desc: 'Our programmes are built around hands-on training that prepares you for real work.' },
+              { icon: <Coins size={36} color="#0E7BB5" />, title: 'NSFAS Approved', desc: 'Qualifying students can access NSFAS funding for both tuition and living costs.' },
+              { icon: <Map size={36} color="#0E7BB5" />, title: '8 Campuses', desc: 'Strategically spread across the Free State so education is always within reach.' },
+              { icon: <Handshake size={36} color="#0E7BB5" />, title: 'Industry Partnerships', desc: 'We work with employers and SETAs to keep our programmes current and relevant.' },
+              { icon: <Globe size={36} color="#0E7BB5" />, title: 'Community Roots', desc: 'Founded to serve Free State communities - our success is measured by yours.' },
             ].map((item, i) => (
               <div key={i} style={styles.whyCard}>
                 <span style={styles.whyIcon}>{item.icon}</span>
@@ -409,552 +363,84 @@ export default function Home() {
 }
 
 const styles = {
-  hero: {
-    position: 'relative',
-    minHeight: '92vh',
-    display: 'flex',
-    alignItems: 'center',
-    overflow: 'hidden',
-  },
-  slide: {
-    position: 'absolute',
-    inset: 0,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    transition: 'opacity 1.4s ease-in-out',
-  },
-  overlay: {
-    position: 'absolute',
-    inset: 0,
-    background: 'linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(14,123,181,0.55) 100%)',
-    zIndex: 1,
-  },
-  heroContent: {
-    position: 'relative',
-    zIndex: 2,
-    maxWidth: '720px',
-    margin: '0 auto',
-    textAlign: 'center',
-    width: '100%',
-    padding: '80px 24px',
-  },
-  heroTagline: {
-    color: '#FFB800',
-    fontSize: '12px',
-    fontWeight: '700',
-    letterSpacing: '3px',
-    textTransform: 'uppercase',
-    marginBottom: '20px',
-  },
-  heroTitle: {
-    color: '#fff',
-    fontSize: 'clamp(36px, 6vw, 64px)',
-    fontWeight: '800',
-    lineHeight: '1.1',
-    marginBottom: '20px',
-    letterSpacing: '-1px',
-  },
-  heroSub: {
-    color: 'rgba(255,255,255,0.88)',
-    fontSize: '17px',
-    lineHeight: '1.8',
-    marginBottom: '36px',
-    maxWidth: '580px',
-    margin: '0 auto 36px',
-  },
-  heroBtns: {
-    display: 'flex',
-    gap: '16px',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-  },
-  btnPrimary: {
-    background: '#FFB800',
-    color: '#000',
-    textDecoration: 'none',
-    padding: '14px 36px',
-    borderRadius: '4px',
-    fontSize: '15px',
-    fontWeight: '700',
-    transition: 'background 0.2s',
-    letterSpacing: '0.3px',
-  },
-  btnSecondary: {
-    background: 'transparent',
-    color: '#fff',
-    textDecoration: 'none',
-    padding: '14px 36px',
-    borderRadius: '4px',
-    fontSize: '15px',
-    fontWeight: '600',
-    border: '2px solid rgba(255,255,255,0.55)',
-    transition: 'background 0.2s',
-  },
-  btnBlue: {
-    background: '#0E7BB5',
-    color: '#fff',
-    textDecoration: 'none',
-    padding: '13px 32px',
-    borderRadius: '4px',
-    fontSize: '15px',
-    fontWeight: '600',
-    display: 'inline-block',
-  },
-  btnYellow: {
-    background: '#FFB800',
-    color: '#000',
-    textDecoration: 'none',
-    padding: '13px 32px',
-    borderRadius: '4px',
-    fontSize: '15px',
-    fontWeight: '700',
-    display: 'inline-block',
-    marginTop: '20px',
-  },
-  dots: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '10px',
-    marginTop: '36px',
-  },
-  dot: {
-    width: '10px',
-    height: '10px',
-    borderRadius: '50%',
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    padding: 0,
-  },
-  quickBar: {
-    background: '#fff',
-    borderBottom: '1px solid #e8e8e8',
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-  },
-  quickLink: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '6px',
-    padding: '18px 32px',
-    textDecoration: 'none',
-    color: '#1a1a1a',
-    borderRight: '1px solid #e8e8e8',
-    transition: 'all 0.2s',
-  },
-  statsBar: {
-    background: '#0E7BB5',
-    padding: '32px 24px',
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    gap: '56px',
-  },
-  statItem: {
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-  },
-  statNumber: {
-    fontSize: '30px',
-    fontWeight: '800',
-    color: '#FFB800',
-  },
-  statLabel: {
-    fontSize: '12px',
-    fontWeight: '500',
-    color: 'rgba(255,255,255,0.85)',
-    textTransform: 'uppercase',
-    letterSpacing: '1px',
-  },
-  section: {
-    padding: '80px 24px',
-    background: '#fff',
-  },
-  container: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-  },
-  sectionTag: {
-    color: '#0E7BB5',
-    fontSize: '11px',
-    fontWeight: '700',
-    letterSpacing: '3px',
-    textTransform: 'uppercase',
-    marginBottom: '8px',
-    textAlign: 'center',
-  },
-  sectionTitle: {
-    fontSize: 'clamp(26px, 3vw, 38px)',
-    fontWeight: '700',
-    color: '#1a1a1a',
-    textAlign: 'center',
-    marginBottom: '12px',
-    letterSpacing: '-0.5px',
-  },
-  sectionSub: {
-    color: '#666',
-    fontSize: '16px',
-    textAlign: 'center',
-    maxWidth: '580px',
-    margin: '0 auto 48px',
-    lineHeight: '1.8',
-  },
-  announcementList: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-    maxWidth: '820px',
-    margin: '32px auto 0',
-  },
-  announcementItem: {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '16px',
-  background: '#fff',
-  border: '1px solid #e8e8e8',
-  borderRadius: '8px',
-  padding: '16px 20px',
-  boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
-},
-  announcementTag: {
-    fontSize: '11px',
-    fontWeight: '700',
-    padding: '4px 12px',
-    borderRadius: '20px',
-    whiteSpace: 'nowrap',
-    letterSpacing: '0.5px',
-  },
-  announcementText: {
-    fontSize: '14px',
-    color: '#333',
-    lineHeight: '1.5',
-    flex: 1,
-  },
-  hotBadge: {
-    fontSize: '11px',
-    fontWeight: '700',
-    color: '#fff',
-    background: '#e74c3c',
-    padding: '3px 10px',
-    borderRadius: '20px',
-    whiteSpace: 'nowrap',
-  },
-  aboutStrip: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    minHeight: '500px',
-    '@media(maxWidth: 768px)': {
-      gridTemplateColumns: '1fr',
-    }
-},
-aboutImg: {
-    backgroundImage: 'url(https://www.unisa.ac.za/sites/corporate/default/News-&-Media/Articles/Unisa-and-Maluti-TVET-College-host-inaugural-seminar)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    minHeight: '500px',
-    width: '100%',
-},
-  aboutText: {
-    background: '#0E7BB5',
-    padding: '64px 56px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  sectionTagWhite: {
-    color: '#FFB800',
-    fontSize: '11px',
-    fontWeight: '700',
-    letterSpacing: '3px',
-    textTransform: 'uppercase',
-    marginBottom: '12px',
-  },
-  sectionTitleWhite: {
-    fontSize: 'clamp(22px, 2.5vw, 32px)',
-    fontWeight: '700',
-    color: '#fff',
-    textAlign: 'center',
-    marginBottom: '48px',
-    letterSpacing: '-0.5px',
-  },
-  aboutPara: {
-    color: 'rgba(255,255,255,0.88)',
-    fontSize: '15px',
-    lineHeight: '1.8',
-    marginBottom: '16px',
-  },
-  progGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '24px',
-  },
-  progCard: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderRadius: '10px',
-    overflow: 'hidden',
-    transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-  },
-  progImg: {
-    height: '180px',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-  progBody: {
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-  },
-  progType: {
-    fontSize: '11px',
-    fontWeight: '700',
-    color: '#0E7BB5',
-    textTransform: 'uppercase',
-    letterSpacing: '1px',
-  },
-  progTitle: {
-    fontSize: '16px',
-    fontWeight: '700',
-    color: '#1a1a1a',
-  },
-  progDesc: {
-    fontSize: '14px',
-    color: '#666',
-    lineHeight: '1.6',
-    flex: 1,
-  },
-  progLink: {
-    color: '#0E7BB5',
-    textDecoration: 'none',
-    fontSize: '13px',
-    fontWeight: '600',
-    marginTop: '4px',
-  },
-  campusGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-    gap: '16px',
-    marginTop: '40px',
-  },
-  campusCard: {
-    background: '#fff',
-    border: '1.5px solid #e8e8e8',
-    borderRadius: '8px',
-    padding: '24px',
-    transition: 'all 0.2s',
-    cursor: 'default',
-  },
-  campusIcon: {
-    fontSize: '28px',
-    display: 'block',
-    marginBottom: '10px',
-  },
-  campusName: {
-    fontSize: '15px',
-    fontWeight: '700',
-    color: '#0E7BB5',
-    marginBottom: '4px',
-  },
-  campusTown: {
-    fontSize: '13px',
-    color: '#555',
-    marginBottom: '6px',
-  },
-  campusNote: {
-    fontSize: '12px',
-    color: '#888',
-    fontStyle: 'italic',
-  },
-  imageBanner: {
-    backgroundImage: 'url(https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1600&q=80)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundAttachment: 'fixed',
-  },
-  bannerOverlay: {
-    background: 'rgba(14,123,181,0.88)',
-    padding: '80px 24px',
-    textAlign: 'center',
-  },
-  bannerTitle: {
-    fontSize: 'clamp(26px, 3vw, 40px)',
-    fontWeight: '800',
-    color: '#fff',
-    marginBottom: '16px',
-    letterSpacing: '-0.5px',
-  },
-  bannerSub: {
-    color: 'rgba(255,255,255,0.9)',
-    fontSize: '16px',
-    lineHeight: '1.8',
-    maxWidth: '560px',
-    margin: '0 auto',
-  },
-  whyGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '24px',
-    marginTop: '40px',
-  },
-  whyCard: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderRadius: '8px',
-    padding: '28px 24px',
-    borderTop: '3px solid #0E7BB5',
-  },
-  whyIcon: {
-    fontSize: '32px',
-    display: 'block',
-    marginBottom: '14px',
-  },
-  whyTitle: {
-    fontSize: '16px',
-    fontWeight: '700',
-    color: '#1a1a1a',
-    marginBottom: '8px',
-  },
-  whyDesc: {
-    fontSize: '14px',
-    color: '#666',
-    lineHeight: '1.7',
-  },
-  cta: {
-    backgroundImage: 'url(https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=1600&q=80)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-  ctaInner: {
-    background: 'rgba(0,0,0,0.72)',
-    padding: '96px 24px',
-    textAlign: 'center',
-  },
-  ctaTitle: {
-    fontSize: 'clamp(28px, 4vw, 44px)',
-    fontWeight: '800',
-    color: '#fff',
-    marginBottom: '16px',
-    letterSpacing: '-0.5px',
-  },
-  ctaSub: {
-    color: 'rgba(255,255,255,0.8)',
-    fontSize: '16px',
-    marginBottom: '36px',
-    lineHeight: '1.7',
-    maxWidth: '520px',
-    margin: '0 auto 36px',
-  },
-eventsGrid: {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-  gap: '20px',
-  marginTop: '40px',
-},
-eventCard: {
-  background: '#fff',
-  border: '1px solid #e8e8e8',
-  borderRadius: '8px',
-  padding: '24px',
-  display: 'flex',
-  gap: '20px',
-  alignItems: 'flex-start',
-},
-eventDate: {
-  background: '#0E7BB5',
-  borderRadius: '8px',
-  padding: '12px 16px',
-  textAlign: 'center',
-  minWidth: '64px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '2px',
-},
-eventDay: {
-  color: '#FFB800',
-  fontSize: '13px',
-  fontWeight: '700',
-  display: 'block',
-},
-eventYear: {
-  color: 'rgba(255,255,255,0.7)',
-  fontSize: '11px',
-  display: 'block',
-},
-eventBody: {
-  flex: 1,
-},
-eventTitle: {
-  fontSize: '15px',
-  fontWeight: '700',
-  color: '#1a1a1a',
-  marginBottom: '6px',
-},
-eventDesc: {
-  fontSize: '13px',
-  color: '#666',
-  lineHeight: '1.6',
-  marginBottom: '8px',
-},
-eventLocation: {
-  fontSize: '12px',
-  color: '#0E7BB5',
-  fontWeight: '600',
-},
-testimonialsGrid: {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-  gap: '24px',
-  marginTop: '40px',
-},
-testimonialCard: {
-  background: '#f8f9fa',
-  borderRadius: '10px',
-  padding: '28px 24px',
-  borderTop: '3px solid #FFB800',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '20px',
-},
-testimonialText: {
-  fontSize: '15px',
-  color: '#333',
-  lineHeight: '1.8',
-  fontStyle: 'italic',
-  flex: 1,
-},
-testimonialAuthor: {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '12px',
-},
-testimonialAvatar: {
-  width: '40px',
-  height: '40px',
-  borderRadius: '50%',
-  background: '#0E7BB5',
-  color: '#fff',
-  fontWeight: '700',
-  fontSize: '16px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexShrink: 0,
-},
-testimonialName: {
-  fontSize: '14px',
-  fontWeight: '700',
-  color: '#1a1a1a',
-  margin: 0,
-},
-testimonialProg: {
-  fontSize: '12px',
-  color: '#666',
-  margin: 0,
-},
+  hero: { position: 'relative', minHeight: '92vh', display: 'flex', alignItems: 'center', overflow: 'hidden' },
+  slide: { position: 'absolute', inset: 0, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'opacity 1.4s ease-in-out' },
+  overlay: { position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(14,123,181,0.55) 100%)', zIndex: 1 },
+  heroContent: { position: 'relative', zIndex: 2, maxWidth: '720px', margin: '0 auto', textAlign: 'center', width: '100%', padding: '80px 24px' },
+  heroTagline: { color: '#FFB800', fontSize: '12px', fontWeight: '700', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '20px' },
+  heroTitle: { color: '#fff', fontSize: 'clamp(36px, 6vw, 64px)', fontWeight: '800', lineHeight: '1.1', marginBottom: '20px', letterSpacing: '-1px' },
+  heroSub: { color: 'rgba(255,255,255,0.88)', fontSize: '17px', lineHeight: '1.8', marginBottom: '36px', maxWidth: '580px', margin: '0 auto 36px' },
+  heroBtns: { display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' },
+  btnPrimary: { background: '#FFB800', color: '#000', textDecoration: 'none', padding: '14px 36px', borderRadius: '4px', fontSize: '15px', fontWeight: '700', transition: 'background 0.2s', letterSpacing: '0.3px' },
+  btnSecondary: { background: 'transparent', color: '#fff', textDecoration: 'none', padding: '14px 36px', borderRadius: '4px', fontSize: '15px', fontWeight: '600', border: '2px solid rgba(255,255,255,0.55)', transition: 'background 0.2s' },
+  btnBlue: { background: '#0E7BB5', color: '#fff', textDecoration: 'none', padding: '13px 32px', borderRadius: '4px', fontSize: '15px', fontWeight: '600', display: 'inline-block' },
+  btnYellow: { background: '#FFB800', color: '#000', textDecoration: 'none', padding: '13px 32px', borderRadius: '4px', fontSize: '15px', fontWeight: '700', display: 'inline-block', marginTop: '20px' },
+  dots: { display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '36px' },
+  dot: { width: '10px', height: '10px', borderRadius: '50%', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease', padding: 0 },
+  quickBar: { background: '#fff', borderBottom: '1px solid #e8e8e8', display: 'flex', justifyContent: 'center', flexWrap: 'wrap' },
+  quickLink: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', padding: '18px 32px', textDecoration: 'none', color: '#1a1a1a', borderRight: '1px solid #e8e8e8', transition: 'all 0.2s' },
+  statsBar: { background: '#0E7BB5', padding: '32px 24px', display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '56px' },
+  statItem: { textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '4px' },
+  statNumber: { fontSize: '30px', fontWeight: '800', color: '#FFB800' },
+  statLabel: { fontSize: '12px', fontWeight: '500', color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase', letterSpacing: '1px' },
+  section: { padding: '80px 24px', background: '#fff' },
+  container: { maxWidth: '1200px', margin: '0 auto' },
+  sectionTag: { color: '#0E7BB5', fontSize: '11px', fontWeight: '700', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '8px', textAlign: 'center' },
+  sectionTitle: { fontSize: 'clamp(26px, 3vw, 38px)', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', marginBottom: '12px', letterSpacing: '-0.5px' },
+  sectionSub: { color: '#666', fontSize: '16px', textAlign: 'center', maxWidth: '580px', margin: '0 auto 48px', lineHeight: '1.8' },
+  announcementList: { display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '820px', margin: '32px auto 0' },
+  announcementItem: { display: 'flex', alignItems: 'center', gap: '16px', background: '#fff', border: '1px solid #e8e8e8', borderRadius: '8px', padding: '16px 20px', boxShadow: '0 1px 4px rgba(0,0,0,0.04)' },
+  announcementTag: { fontSize: '11px', fontWeight: '700', padding: '4px 12px', borderRadius: '20px', whiteSpace: 'nowrap', letterSpacing: '0.5px' },
+  announcementText: { fontSize: '14px', color: '#333', lineHeight: '1.5', flex: 1 },
+  hotBadge: { fontSize: '11px', fontWeight: '700', color: '#fff', background: '#e74c3c', padding: '3px 10px', borderRadius: '20px', whiteSpace: 'nowrap' },
+  aboutStrip: { display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '500px', '@media(maxWidth: 768px)': { gridTemplateColumns: '1fr' } },
+  aboutImg: { backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '500px', width: '100%' },
+  aboutText: { background: '#0E7BB5', padding: '64px 56px', display: 'flex', flexDirection: 'column', justifyContent: 'center' },
+  sectionTagWhite: { color: '#FFB800', fontSize: '11px', fontWeight: '700', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px' },
+  sectionTitleWhite: { fontSize: 'clamp(22px, 2.5vw, 32px)', fontWeight: '700', color: '#fff', textAlign: 'center', marginBottom: '48px', letterSpacing: '-0.5px' },
+  aboutPara: { color: 'rgba(255,255,255,0.88)', fontSize: '15px', lineHeight: '1.8', marginBottom: '16px' },
+  progGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' },
+  progCard: { background: '#fff', border: '1px solid #e8e8e8', borderRadius: '10px', overflow: 'hidden', transition: 'transform 0.25s ease, box-shadow 0.25s ease', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' },
+  progImg: { height: '180px', backgroundSize: 'cover', backgroundPosition: 'center' },
+  progBody: { padding: '20px', display: 'flex', flexDirection: 'column', gap: '8px' },
+  progType: { fontSize: '11px', fontWeight: '700', color: '#0E7BB5', textTransform: 'uppercase', letterSpacing: '1px' },
+  progTitle: { fontSize: '16px', fontWeight: '700', color: '#1a1a1a', margin: 0 },
+  progDesc: { fontSize: '14px', color: '#666', lineHeight: '1.6', flex: 1 },
+  progLink: { color: '#0E7BB5', textDecoration: 'none', fontSize: '13px', fontWeight: '600', marginTop: '4px' },
+  campusGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px', marginTop: '40px' },
+  campusCard: { background: '#fff', border: '1px solid #e8e8e8', borderRadius: '10px', overflow: 'hidden', transition: 'all 0.25s ease', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' },
+  campusBody: { padding: '20px', display: 'flex', flexDirection: 'column', gap: '6px' },
+  campusName: { fontSize: '15px', fontWeight: '700', color: '#0E7BB5', display: 'flex', alignItems: 'center' },
+  campusTown: { fontSize: '13px', color: '#555' },
+  campusNote: { fontSize: '12px', color: '#888', fontStyle: 'italic', marginTop: '4px' },
+  imageBanner: { backgroundImage: 'url(https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1600&q=80)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' },
+  bannerOverlay: { background: 'rgba(14,123,181,0.88)', padding: '80px 24px', textAlign: 'center' },
+  bannerTitle: { fontSize: 'clamp(26px, 3vw, 40px)', fontWeight: '800', color: '#fff', marginBottom: '16px', letterSpacing: '-0.5px' },
+  bannerSub: { color: 'rgba(255,255,255,0.9)', fontSize: '16px', lineHeight: '1.8', maxWidth: '560px', margin: '0 auto' },
+  whyGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginTop: '40px' },
+  whyCard: { background: '#fff', border: '1px solid #e8e8e8', borderRadius: '8px', padding: '28px 24px', borderTop: '3px solid #0E7BB5' },
+  whyIcon: { display: 'block', marginBottom: '14px' },
+  whyTitle: { fontSize: '16px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' },
+  whyDesc: { fontSize: '14px', color: '#666', lineHeight: '1.7' },
+  cta: { backgroundImage: 'url(https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=1600&q=80)', backgroundSize: 'cover', backgroundPosition: 'center' },
+  ctaInner: { background: 'rgba(0,0,0,0.72)', padding: '96px 24px', textAlign: 'center' },
+  ctaTitle: { fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: '800', color: '#fff', marginBottom: '16px', letterSpacing: '-0.5px' },
+  ctaSub: { color: 'rgba(255,255,255,0.8)', fontSize: '16px', marginBottom: '36px', lineHeight: '1.7', maxWidth: '520px', margin: '0 auto 36px' },
+  eventsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginTop: '40px' },
+  eventCard: { background: '#fff', border: '1px solid #e8e8e8', borderRadius: '8px', padding: '24px', display: 'flex', gap: '20px', alignItems: 'flex-start' },
+  eventDate: { background: '#0E7BB5', borderRadius: '8px', padding: '12px 16px', textAlign: 'center', minWidth: '64px', display: 'flex', flexDirection: 'column', gap: '2px' },
+  eventDay: { color: '#FFB800', fontSize: '13px', fontWeight: '700', display: 'block' },
+  eventYear: { color: 'rgba(255,255,255,0.7)', fontSize: '11px', display: 'block' },
+  eventBody: { flex: 1 },
+  eventTitle: { fontSize: '15px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' },
+  eventDesc: { fontSize: '13px', color: '#666', lineHeight: '1.6', marginBottom: '8px' },
+  eventLocation: { fontSize: '12px', color: '#0E7BB5', fontWeight: '600' },
+  testimonialsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginTop: '40px' },
+  testimonialCard: { background: '#f8f9fa', borderRadius: '10px', padding: '28px 24px', borderTop: '3px solid #FFB800', display: 'flex', flexDirection: 'column', gap: '20px' },
+  testimonialText: { fontSize: '15px', color: '#333', lineHeight: '1.8', fontStyle: 'italic', flex: 1 },
+  testimonialAuthor: { display: 'flex', alignItems: 'center', gap: '12px' },
+  testimonialAvatar: { width: '48px', height: '48px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '2px solid #0E7BB5' },
+  avatarImg: { width: '100%', height: '100%', objectFit: 'cover' },
+  testimonialName: { fontSize: '14px', fontWeight: '700', color: '#1a1a1a', margin: 0 },
+  testimonialProg: { fontSize: '12px', color: '#666', margin: 0 }
 }
