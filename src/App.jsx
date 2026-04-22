@@ -1,11 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';  
-import About  from './pages/About.jsx'
-import Admissions from './pages/Admissions.jsx'
-import Contact from './pages/Contact.jsx'
-import Home  from './pages/Home.jsx'
-import Programmes from './pages/Programmes.jsx'
-import Footer from './components/Footer.jsx'
-import Navbar from './components/Navbar.jsx'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import Chatbot from './components/Chatbot'
+import Home from './pages/Home'
+import Programmes from './pages/Programmes'
+import Admissions from './pages/Admissions'
+import About from './pages/About'
+import Contact from './pages/Contact'
 
 function App() {
   return (
@@ -13,14 +14,15 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/admissions" element={<Admissions />} />
-        <Route path="/contact" element={<Contact />} />
         <Route path="/programmes" element={<Programmes />} />
+        <Route path="/admissions" element={<Admissions />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
       <Footer />
+      <Chatbot />
     </Router>
   )
 }
 
-export default App;
+export default App
