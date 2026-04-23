@@ -467,7 +467,7 @@ export default function About() {
         <div style={styles.container}>
           <div style={styles.fraudInner}>
             <div>
-              <h3 style={styles.fraudTitle}>🔒 Report Fraud or Corruption</h3>
+              <h3 style={styles.fraudTitle}>Report Fraud or Corruption</h3>
               <p style={styles.fraudDesc}>
                 Maluti TVET College has a zero-tolerance policy on fraud and corruption.
                 All reports are confidential. Do <strong>not</strong> pay cash to any
@@ -475,7 +475,7 @@ export default function About() {
               </p>
             </div>
             <div style={styles.fraudContact}>
-              <span style={styles.fraudNumber}>0800 212 755</span>
+              <span style={styles.fraudNumber}>0800 333 178</span>
               <span style={styles.fraudNote}>Free · 24 hrs · Confidential</span>
             </div>
           </div>
