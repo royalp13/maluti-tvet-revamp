@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { Eye, EyeOff, User, Lock, AlertTriangle, Shield, LogIn } from 'lucide-react'
 import { assets, mockLogin } from '../services/api'
 
+// Import local background image
+import phuthaditjhaba from '../assets/campuses/phuthaditjhaba.png'
 
 export default function Portal() {
   const [activeTab, setActiveTab] = useState('student')
@@ -175,8 +177,7 @@ export default function Portal() {
               {loading ? 'Signing in...' : 'Sign In to Portal'}
             </button>
 
-            
-            <a  href="https://www.malutitvet.co.za"
+            <a href="https://www.malutitvet.co.za"
               target="_blank"
               rel="noreferrer"
               style={styles.officialBtn}
@@ -222,7 +223,7 @@ const styles = {
   },
   leftPanel: {
     position: 'relative',
-    backgroundImage: 'url(https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=1200&q=80)',
+    backgroundImage: `url(${phuthaditjhaba})`, // Updated to use local asset
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     display: 'flex',
