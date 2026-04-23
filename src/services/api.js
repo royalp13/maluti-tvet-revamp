@@ -1,4 +1,3 @@
-// ============================================================
 // Maluti TVET College-API Service Layer
 // ============================================================
 // Simulates a RESTful backend. Each function represents an

@@ -8,7 +8,7 @@ import {
   ArrowRight, Sparkles, Building2, Users, BookOpen,
   Briefcase, BadgeCheck, MapPin, ChevronRight, Target,
   GraduationCap, Calendar, Info, AlertCircle, ClipboardCheck,
-  Phone, Globe, ShieldCheck, Banknote
+  Phone, Globe, ShieldCheck, Banknote, Settings
 } from 'lucide-react'
 
 export default function Admissions() {
@@ -43,7 +43,7 @@ export default function Admissions() {
   return (
     <main>
 
-      {/* ═══════════ HERO ═══════════ */}
+      {/*  HERO  */}
       <section style={styles.hero}>
         <div style={styles.heroOverlay} />
         <div style={styles.heroContent}>
@@ -75,7 +75,7 @@ export default function Admissions() {
         </div>
       </section>
 
-      {/* ═══════════ APPLICATION STATUS BANNER ═══════════ */}
+      {/*  APPLICATION STATUS BANNER  */}
       <section style={styles.statusBanner}>
         <div style={styles.container}>
           <div style={styles.statusInner}>
@@ -100,7 +100,7 @@ export default function Admissions() {
         </div>
       </section>
 
-      {/* ═══════════ TAB NAVIGATION ═══════════ */}
+      {/*  TAB NAVIGATION  */}
       <section style={styles.tabNav}>
         <div style={styles.container}>
           <div style={styles.tabList}>
@@ -126,7 +126,7 @@ export default function Admissions() {
         </div>
       </section>
 
-      {/* ═══════════ TAB CONTENT ═══════════ */}
+      {/*  TAB CONTENT  */}
 
       {/* 1. APPLICATION PROCESS */}
       {activeTab === 'process' && (
@@ -455,7 +455,7 @@ export default function Admissions() {
         </section>
       )}
 
-      {/* ═══════════ CASHLESS WARNING ═══════════ */}
+      {/*  CASHLESS WARNING  */}
       <section style={styles.cashlessSection}>
         <div style={styles.container}>
           <div style={styles.cashlessInner}>
@@ -472,7 +472,7 @@ export default function Admissions() {
         </div>
       </section>
 
-      {/* ═══════════ CAMPUS WALK-IN STRIP ═══════════ */}
+      {/*  CAMPUS WALK-IN STRIP  */}
       <section style={styles.campusSection}>
         <div style={styles.container}>
           <div style={styles.sectionHeadCenter}>
@@ -513,7 +513,7 @@ export default function Admissions() {
         </div>
       </section>
 
-      {/* ═══════════ FINAL CTA ═══════════ */}
+      {/*  FINAL CTA  */}
       <section style={styles.cta}>
         <div style={styles.ctaOverlay} />
         <div style={styles.ctaInner}>
@@ -547,419 +547,936 @@ export default function Admissions() {
   )
 }
 
-// Helper - need Settings import for WIL engineering card
-import { Settings } from 'lucide-react'
+
 
 const styles = {
   loading: {
-    minHeight: '100vh', display: 'flex', flexDirection: 'column',
-    alignItems: 'center', justifyContent: 'center', gap: '20px', background: '#fff',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '20px',
+    background: '#fff',
   },
   loadingSpinner: {
-    width: '48px', height: '48px', borderRadius: '50%',
-    border: '3px solid #e8f4fc', borderTopColor: '#0E7BB5',
+    width: '48px',
+    height: '48px',
+    borderRadius: '50%',
+    border: '3px solid #e8f4fc',
+    borderTopColor: '#0E7BB5',
     animation: 'spin 0.8s linear infinite',
   },
-  loadingText: { color: '#0E7BB5', fontSize: '14px', fontWeight: 500 },
+  loadingText: {
+    color: '#0E7BB5',
+    fontSize: '14px',
+    fontWeight: 500,
+  },
 
-  // Hero
+  /* Hero */
   hero: {
     position: 'relative',
     backgroundImage: `url(${assets.campuses.phuthaditjhaba})`,
-    backgroundSize: 'cover', backgroundPosition: 'center',
-    minHeight: '520px', display: 'flex', alignItems: 'center',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    minHeight: '520px',
+    display: 'flex',
+    alignItems: 'center',
   },
   heroOverlay: {
-    position: 'absolute', inset: 0,
+    position: 'absolute',
+    inset: 0,
     background: 'linear-gradient(135deg, rgba(14,123,181,0.94) 0%, rgba(0,0,0,0.72) 100%)',
   },
   heroContent: {
-    position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto',
-    padding: '96px 24px', width: '100%',
+    position: 'relative',
+    zIndex: 1,
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '96px 24px',
+    width: '100%',
   },
   heroBadge: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: 'rgba(255,184,0,0.15)', border: '1px solid rgba(255,184,0,0.4)',
-    color: '#FFB800', fontSize: '12px', fontWeight: 600,
-    padding: '6px 14px', borderRadius: '20px', marginBottom: '16px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: 'rgba(255,184,0,0.15)',
+    border: '1px solid rgba(255,184,0,0.4)',
+    color: '#FFB800',
+    fontSize: '12px',
+    fontWeight: 600,
+    padding: '6px 14px',
+    borderRadius: '20px',
+    marginBottom: '16px',
   },
   heroTag: {
-    color: '#FFB800', fontSize: '12px', fontWeight: 700,
-    letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px',
+    color: '#FFB800',
+    fontSize: '12px',
+    fontWeight: 700,
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    marginBottom: '12px',
   },
   heroTitle: {
-    color: '#fff', fontSize: 'clamp(34px, 5vw, 56px)',
-    fontWeight: 800, marginBottom: '16px', letterSpacing: '-1px',
+    color: '#fff',
+    fontSize: 'clamp(34px, 5vw, 56px)',
+    fontWeight: 800,
+    marginBottom: '16px',
+    letterSpacing: '-1px',
   },
   heroSub: {
-    color: 'rgba(255,255,255,0.88)', fontSize: '17px',
-    lineHeight: 1.8, maxWidth: '620px', marginBottom: '32px',
+    color: 'rgba(255,255,255,0.88)',
+    fontSize: '17px',
+    lineHeight: 1.8,
+    maxWidth: '620px',
+    marginBottom: '32px',
   },
-  heroBtns: { display: 'flex', gap: '14px', flexWrap: 'wrap' },
+  heroBtns: {
+    display: 'flex',
+    gap: '14px',
+    flexWrap: 'wrap',
+  },
   btnPrimary: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: '#FFB800', color: '#000', textDecoration: 'none',
-    padding: '14px 30px', borderRadius: '8px', fontSize: '15px',
-    fontWeight: 700, transition: 'background 0.2s',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: '#FFB800',
+    color: '#000',
+    textDecoration: 'none',
+    padding: '14px 30px',
+    borderRadius: '8px',
+    fontSize: '15px',
+    fontWeight: 700,
+    transition: 'background 0.2s',
   },
   btnSecondary: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: 'transparent', color: '#fff', textDecoration: 'none',
-    padding: '14px 30px', borderRadius: '8px', fontSize: '15px', fontWeight: 600,
-    border: '2px solid rgba(255,255,255,0.55)', transition: 'background 0.2s',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: 'transparent',
+    color: '#fff',
+    textDecoration: 'none',
+    padding: '14px 30px',
+    borderRadius: '8px',
+    fontSize: '15px',
+    fontWeight: 600,
+    border: '2px solid rgba(255,255,255,0.55)',
+    transition: 'background 0.2s',
   },
 
-  // Status Banner
+  /* Status Banner */
   statusBanner: {
-    background: '#2ecc71', padding: '16px 24px',
+    background: '#2ecc71',
+    padding: '16px 24px',
   },
-  container: { maxWidth: '1200px', margin: '0 auto' },
+  container: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+  },
   statusInner: {
-    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    flexWrap: 'wrap', gap: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: '16px',
   },
-  statusLeft: { display: 'flex', alignItems: 'center', gap: '14px' },
+  statusLeft: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '14px',
+  },
   statusDot: {
-    width: '10px', height: '10px', borderRadius: '50%', background: '#fff',
+    width: '10px',
+    height: '10px',
+    borderRadius: '50%',
+    background: '#fff',
     boxShadow: '0 0 0 4px rgba(255,255,255,0.3)',
     animation: 'pulse 2s ease-in-out infinite',
   },
   statusLabel: {
-    color: 'rgba(255,255,255,0.85)', fontSize: '11px',
-    textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600, margin: 0,
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: '11px',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+    fontWeight: 600,
+    margin: 0,
   },
-  statusText: { color: '#fff', fontSize: '14px', margin: 0 },
-  statusActions: { display: 'flex', gap: '16px', flexWrap: 'wrap' },
-  statusLink: {
-    display: 'inline-flex', alignItems: 'center', gap: '6px',
-    color: '#fff', fontSize: '13px', fontWeight: 600, textDecoration: 'none',
+  statusText: {
+    color: '#fff',
+    fontSize: '14px',
+    margin: 0,
   },
-
-  // Tab Navigation
-  tabNav: {
-    background: '#fff', borderBottom: '1px solid #e8e8e8',
-    position: 'sticky', top: '88px', zIndex: 99,
-  },
-  tabList: {
-    display: 'flex', gap: '0', overflowX: 'auto', padding: '0 24px',
-  },
-  tab: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    padding: '18px 22px', background: 'transparent', border: 'none',
-    borderBottom: '3px solid transparent', fontSize: '13px', cursor: 'pointer',
-    transition: 'all 0.2s', whiteSpace: 'nowrap',
-  },
-
-  // Section base
-  section: { padding: '64px 24px 80px', background: '#fff' },
-  sectionHeadCenter: { textAlign: 'center', marginBottom: '48px' },
-  sectionTag: {
-    color: '#0E7BB5', fontSize: '11px', fontWeight: 700,
-    letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '8px',
-  },
-  sectionTitle: {
-    fontSize: 'clamp(26px, 3vw, 38px)', fontWeight: 700,
-    color: '#1a1a1a', marginBottom: '12px', letterSpacing: '-0.5px',
-  },
-  sectionSub: {
-    color: '#666', fontSize: '16px', lineHeight: 1.8,
-    maxWidth: '620px', margin: '0 auto',
-  },
-  subSectionTitle: {
-    fontSize: '22px', fontWeight: 700, color: '#1a1a1a',
-    marginBottom: '24px', marginTop: '56px', textAlign: 'center',
-  },
-
-  // Steps
-  stepsContainer: {
-    display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '64px',
-  },
-  stepRow: { display: 'flex', gap: '20px', alignItems: 'flex-start' },
-  stepNumber: {
-    width: '64px', height: '64px', borderRadius: '16px',
-    background: 'linear-gradient(135deg, #0E7BB5 0%, #0a5a8a 100%)',
-    color: '#FFB800', fontSize: '24px', fontWeight: 800,
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    flexShrink: 0, boxShadow: '0 4px 12px rgba(14,123,181,0.25)',
-  },
-  stepCard: {
-    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
-    padding: '24px 28px', flex: 1,
-    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-  },
-  stepTitle: { fontSize: '18px', fontWeight: 700, color: '#1a1a1a', marginBottom: '10px' },
-  stepDesc: { fontSize: '14px', color: '#555', lineHeight: 1.8, marginBottom: '14px' },
-  stepNote: {
-    background: '#fff5f5', borderRadius: '6px', padding: '12px 14px',
-    display: 'flex', alignItems: 'flex-start', gap: '10px',
-    borderLeft: '3px solid #e74c3c',
-  },
-  stepNoteText: { fontSize: '13px', color: '#c0392b', lineHeight: 1.6, margin: 0, fontWeight: 500 },
-
-  // Apply Methods
-  methodsGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '20px', marginTop: '32px',
-  },
-  methodCard: {
-    background: '#f8f9fa', border: '1px solid #e8e8e8', borderRadius: '12px',
-    padding: '28px', display: 'flex', flexDirection: 'column', gap: '12px',
-  },
-  methodIconWrap: {
-    width: '48px', height: '48px', borderRadius: '10px',
-    background: '#e8f4fc', display: 'flex', alignItems: 'center', justifyContent: 'center',
-  },
-  methodTitle: { fontSize: '17px', fontWeight: 700, color: '#1a1a1a' },
-  methodDesc: { fontSize: '14px', color: '#555', lineHeight: 1.7, flex: 1 },
-  methodBtn: {
-    display: 'inline-flex', alignItems: 'center', gap: '6px',
-    color: '#0E7BB5', fontSize: '14px', fontWeight: 600,
-    textDecoration: 'none', marginTop: '4px',
-  },
-
-  // Requirements
-  requirementsList: { display: 'flex', flexDirection: 'column', gap: '14px' },
-  reqCard: {
-    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '10px',
-    padding: '20px 24px', display: 'flex', gap: '16px', alignItems: 'flex-start',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-  },
-  reqIconWrap: {
-    width: '40px', height: '40px', borderRadius: '10px', background: '#e8f4fc',
-    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-  },
-  reqBody: { flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' },
-  reqProg: { fontSize: '15px', fontWeight: 700, color: '#0E7BB5' },
-  reqText: { fontSize: '14px', color: '#333', lineHeight: 1.6 },
-  reqNote: { fontSize: '12px', color: '#888', fontStyle: 'italic', lineHeight: 1.6 },
-
-  // Important Box
-  importantBox: {
-    background: '#fff5f5', border: '1px solid #fcc', borderRadius: '12px',
-    padding: '24px 28px', marginTop: '32px',
-  },
-  importantHeader: {
-    display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px',
-  },
-  importantTitle: { fontSize: '17px', fontWeight: 700, color: '#c0392b' },
-  importantText: { fontSize: '14px', color: '#4a0f0f', lineHeight: 1.8, marginBottom: '10px' },
-
-  // Documents
-  docsGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px',
-  },
-  docCard: {
-    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '10px',
-    padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-  },
-  docHead: {
-    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-  },
-  docIconWrap: {
-    width: '32px', height: '32px', borderRadius: '8px', background: '#f8f9fa',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-  },
-  docBadge: {
-    fontSize: '10px', fontWeight: 700, padding: '3px 10px',
-    borderRadius: '20px', letterSpacing: '0.5px', textTransform: 'uppercase',
-  },
-  docTitle: { fontSize: '14px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1.4 },
-  docNote: { fontSize: '12px', color: '#666', lineHeight: 1.6 },
-
-  // Certification Box
-  certBox: {
-    background: '#e8f4fc', border: '1px solid #b8dff0', borderRadius: '12px',
-    padding: '28px', marginTop: '32px',
-  },
-  certLeft: { display: 'flex', gap: '16px', alignItems: 'flex-start' },
-  certIconWrap: {
-    width: '48px', height: '48px', borderRadius: '12px', background: '#fff',
-    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-  },
-  certTitle: { fontSize: '16px', fontWeight: 700, color: '#0E7BB5', marginBottom: '8px' },
-  certText: { fontSize: '14px', color: '#333', lineHeight: 1.8 },
-
-  // NSFAS
-  nsfasEligibility: {
-    background: 'linear-gradient(135deg, #e8f4fc 0%, #f0f8fe 100%)',
-    border: '1px solid #b8dff0', borderRadius: '16px',
-    padding: '32px', marginBottom: '48px',
-  },
-  nsfasHead: {
-    display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px',
+  statusActions: {
+    display: 'flex',
+    gap: '16px',
     flexWrap: 'wrap',
   },
-  nsfasHeadLogo: {
-    width: '72px', height: '72px', objectFit: 'contain',
-    background: '#fff', borderRadius: '12px', padding: '10px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+  statusLink: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '6px',
+    color: '#fff',
+    fontSize: '13px',
+    fontWeight: 600,
+    textDecoration: 'none',
   },
-  nsfasHeadTitle: { fontSize: '20px', fontWeight: 700, color: '#0E7BB5', marginBottom: '4px' },
-  nsfasHeadSub: { fontSize: '14px', color: '#555' },
-  eligibilityGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '12px',
+
+  /* Tab Navigation */
+  tabNav: {
+    background: '#fff',
+    borderBottom: '1px solid #e8e8e8',
+    position: 'sticky',
+    top: '88px',
+    zIndex: 99,
   },
-  eligibilityItem: {
-    display: 'flex', alignItems: 'flex-start', gap: '10px',
-    background: '#fff', padding: '12px 16px', borderRadius: '8px',
-    fontSize: '13px', color: '#333', lineHeight: 1.5,
+  tabList: {
+    display: 'flex',
+    gap: '0',
+    overflowX: 'auto',
+    padding: '0 24px',
   },
-  allowanceGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px',
-  },
-  allowanceCard: {
-    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
-    padding: '24px 20px', textAlign: 'center',
-    borderTop: '4px solid #FFB800',
-    display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center',
-  },
-  allowanceIconWrap: {
-    width: '44px', height: '44px', borderRadius: '10px', background: '#fff8e6',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-  },
-  allowanceType: { fontSize: '13px', fontWeight: 600, color: '#666', marginTop: '4px' },
-  allowanceAmount: { fontSize: '22px', fontWeight: 800, color: '#0E7BB5', letterSpacing: '-0.5px' },
-  allowancePeriod: { fontSize: '11px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px' },
-  nsfasCtaBox: {
-    background: 'linear-gradient(135deg, #0E7BB5 0%, #0a5a8a 100%)',
-    borderRadius: '16px', padding: '32px 36px', marginTop: '48px',
-    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    flexWrap: 'wrap', gap: '24px',
-  },
-  nsfasCtaLeft: { flex: 1, minWidth: '260px' },
-  nsfasCtaTitle: { fontSize: '22px', fontWeight: 700, color: '#fff', marginBottom: '8px' },
-  nsfasCtaDesc: { fontSize: '14px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.7 },
-  nsfasCtaBtn: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: '#FFB800', color: '#000', textDecoration: 'none',
-    padding: '14px 28px', borderRadius: '8px', fontSize: '15px', fontWeight: 700,
+  tab: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '18px 22px',
+    background: 'transparent',
+    border: 'none',
+    borderBottom: '3px solid transparent',
+    fontSize: '13px',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
     whiteSpace: 'nowrap',
   },
 
-  // WIL
+  /* Section Base */
+  section: {
+    padding: '64px 24px 80px',
+    background: '#fff',
+  },
+  sectionHeadCenter: {
+    textAlign: 'center',
+    marginBottom: '48px',
+  },
+  sectionTag: {
+    color: '#0E7BB5',
+    fontSize: '11px',
+    fontWeight: 700,
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    marginBottom: '8px',
+  },
+  sectionTitle: {
+    fontSize: 'clamp(26px, 3vw, 38px)',
+    fontWeight: 700,
+    color: '#1a1a1a',
+    marginBottom: '12px',
+    letterSpacing: '-0.5px',
+  },
+  sectionSub: {
+    color: '#666',
+    fontSize: '16px',
+    lineHeight: 1.8,
+    maxWidth: '620px',
+    margin: '0 auto',
+  },
+  subSectionTitle: {
+    fontSize: '22px',
+    fontWeight: 700,
+    color: '#1a1a1a',
+    marginBottom: '24px',
+    marginTop: '56px',
+    textAlign: 'center',
+  },
+
+  /* Steps */
+  stepsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+    marginBottom: '64px',
+  },
+  stepRow: {
+    display: 'flex',
+    gap: '20px',
+    alignItems: 'flex-start',
+  },
+  stepNumber: {
+    width: '64px',
+    height: '64px',
+    borderRadius: '16px',
+    background: 'linear-gradient(135deg, #0E7BB5 0%, #0a5a8a 100%)',
+    color: '#FFB800',
+    fontSize: '24px',
+    fontWeight: 800,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+    boxShadow: '0 4px 12px rgba(14,123,181,0.25)',
+  },
+  stepCard: {
+    background: '#fff',
+    border: '1px solid #e8e8e8',
+    borderRadius: '12px',
+    padding: '24px 28px',
+    flex: 1,
+    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+  },
+  stepTitle: {
+    fontSize: '18px',
+    fontWeight: 700,
+    color: '#1a1a1a',
+    marginBottom: '10px',
+  },
+  stepDesc: {
+    fontSize: '14px',
+    color: '#555',
+    lineHeight: 1.8,
+    marginBottom: '14px',
+  },
+  stepNote: {
+    background: '#fff5f5',
+    borderRadius: '6px',
+    padding: '12px 14px',
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '10px',
+    borderLeft: '3px solid #e74c3c',
+  },
+  stepNoteText: {
+    fontSize: '13px',
+    color: '#c0392b',
+    lineHeight: 1.6,
+    margin: 0,
+    fontWeight: 500,
+  },
+
+  /* Apply Methods */
+  methodsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '20px',
+    marginTop: '32px',
+  },
+  methodCard: {
+    background: '#f8f9fa',
+    border: '1px solid #e8e8e8',
+    borderRadius: '12px',
+    padding: '28px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+  },
+  methodIconWrap: {
+    width: '48px',
+    height: '48px',
+    borderRadius: '10px',
+    background: '#e8f4fc',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  methodTitle: {
+    fontSize: '17px',
+    fontWeight: 700,
+    color: '#1a1a1a',
+  },
+  methodDesc: {
+    fontSize: '14px',
+    color: '#555',
+    lineHeight: 1.7,
+    flex: 1,
+  },
+  methodBtn: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '6px',
+    color: '#0E7BB5',
+    fontSize: '14px',
+    fontWeight: 600,
+    textDecoration: 'none',
+    marginTop: '4px',
+  },
+
+  /* Requirements */
+  requirementsList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '14px',
+  },
+  reqCard: {
+    background: '#fff',
+    border: '1px solid #e8e8e8',
+    borderRadius: '10px',
+    padding: '20px 24px',
+    display: 'flex',
+    gap: '16px',
+    alignItems: 'flex-start',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+  },
+  reqIconWrap: {
+    width: '40px',
+    height: '40px',
+    borderRadius: '10px',
+    background: '#e8f4fc',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  reqBody: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+  },
+  reqProg: {
+    fontSize: '15px',
+    fontWeight: 700,
+    color: '#0E7BB5',
+  },
+  reqText: {
+    fontSize: '14px',
+    color: '#333',
+    lineHeight: 1.6,
+  },
+  reqNote: {
+    fontSize: '12px',
+    color: '#888',
+    fontStyle: 'italic',
+    lineHeight: 1.6,
+  },
+
+  /* Important Box */
+  importantBox: {
+    background: '#fff5f5',
+    border: '1px solid #fcc',
+    borderRadius: '12px',
+    padding: '24px 28px',
+    marginTop: '32px',
+  },
+  importantHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    marginBottom: '14px',
+  },
+  importantTitle: {
+    fontSize: '17px',
+    fontWeight: 700,
+    color: '#c0392b',
+  },
+  importantText: {
+    fontSize: '14px',
+    color: '#4a0f0f',
+    lineHeight: 1.8,
+    marginBottom: '10px',
+  },
+
+  /* Documents */
+  docsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: '16px',
+  },
+  docCard: {
+    background: '#fff',
+    border: '1px solid #e8e8e8',
+    borderRadius: '10px',
+    padding: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+  },
+  docHead: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  docIconWrap: {
+    width: '32px',
+    height: '32px',
+    borderRadius: '8px',
+    background: '#f8f9fa',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  docBadge: {
+    fontSize: '10px',
+    fontWeight: 700,
+    padding: '3px 10px',
+    borderRadius: '20px',
+    letterSpacing: '0.5px',
+    textTransform: 'uppercase',
+  },
+  docTitle: {
+    fontSize: '14px',
+    fontWeight: 700,
+    color: '#1a1a1a',
+    lineHeight: 1.4,
+  },
+  docNote: {
+    fontSize: '12px',
+    color: '#666',
+    lineHeight: 1.6,
+  },
+
+  /* Certification Box */
+  certBox: {
+    background: '#e8f4fc',
+    border: '1px solid #b8dff0',
+    borderRadius: '12px',
+    padding: '28px',
+    marginTop: '32px',
+  },
+  certLeft: {
+    display: 'flex',
+    gap: '16px',
+    alignItems: 'flex-start',
+  },
+  certIconWrap: {
+    width: '48px',
+    height: '48px',
+    borderRadius: '12px',
+    background: '#fff',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  certTitle: {
+    fontSize: '16px',
+    fontWeight: 700,
+    color: '#0E7BB5',
+    marginBottom: '8px',
+  },
+  certText: {
+    fontSize: '14px',
+    color: '#333',
+    lineHeight: 1.8,
+  },
+
+  /* NSFAS */
+  nsfasEligibility: {
+    background: 'linear-gradient(135deg, #e8f4fc 0%, #f0f8fe 100%)',
+    border: '1px solid #b8dff0',
+    borderRadius: '16px',
+    padding: '32px',
+    marginBottom: '48px',
+  },
+  nsfasHead: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '20px',
+    marginBottom: '24px',
+    flexWrap: 'wrap',
+  },
+  nsfasHeadLogo: {
+    width: '72px',
+    height: '72px',
+    objectFit: 'contain',
+    background: '#fff',
+    borderRadius: '12px',
+    padding: '10px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+  },
+  nsfasHeadTitle: {
+    fontSize: '20px',
+    fontWeight: 700,
+    color: '#0E7BB5',
+    marginBottom: '4px',
+  },
+  nsfasHeadSub: {
+    fontSize: '14px',
+    color: '#555',
+  },
+  eligibilityGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+    gap: '12px',
+  },
+  eligibilityItem: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '10px',
+    background: '#fff',
+    padding: '12px 16px',
+    borderRadius: '8px',
+    fontSize: '13px',
+    color: '#333',
+    lineHeight: 1.5,
+  },
+  allowanceGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: '16px',
+  },
+  allowanceCard: {
+    background: '#fff',
+    border: '1px solid #e8e8e8',
+    borderRadius: '12px',
+    padding: '24px 20px',
+    textAlign: 'center',
+    borderTop: '4px solid #FFB800',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    alignItems: 'center',
+  },
+  allowanceIconWrap: {
+    width: '44px',
+    height: '44px',
+    borderRadius: '10px',
+    background: '#fff8e6',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  allowanceType: {
+    fontSize: '13px',
+    fontWeight: 600,
+    color: '#666',
+    marginTop: '4px',
+  },
+  allowanceAmount: {
+    fontSize: '22px',
+    fontWeight: 800,
+    color: '#0E7BB5',
+    letterSpacing: '-0.5px',
+  },
+  allowancePeriod: {
+    fontSize: '11px',
+    color: '#888',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
+  },
+  nsfasCtaBox: {
+    background: 'linear-gradient(135deg, #0E7BB5 0%, #0a5a8a 100%)',
+    borderRadius: '16px',
+    padding: '32px 36px',
+    marginTop: '48px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: '24px',
+  },
+  nsfasCtaLeft: {
+    flex: 1,
+    minWidth: '260px',
+  },
+  nsfasCtaTitle: {
+    fontSize: '22px',
+    fontWeight: 700,
+    color: '#fff',
+    marginBottom: '8px',
+  },
+  nsfasCtaDesc: {
+    fontSize: '14px',
+    color: 'rgba(255,255,255,0.85)',
+    lineHeight: 1.7,
+  },
+  nsfasCtaBtn: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: '#FFB800',
+    color: '#000',
+    textDecoration: 'none',
+    padding: '14px 28px',
+    borderRadius: '8px',
+    fontSize: '15px',
+    fontWeight: 700,
+    whiteSpace: 'nowrap',
+  },
+
+  /* WIL */
   wilGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: '24px',
   },
   wilCard: {
-    background: '#fff', border: '1px solid #e8e8e8', borderTop: '4px solid #0E7BB5',
-    borderRadius: '12px', padding: '28px',
-    display: 'flex', flexDirection: 'column', gap: '14px',
+    background: '#fff',
+    border: '1px solid #e8e8e8',
+    borderTop: '4px solid #0E7BB5',
+    borderRadius: '12px',
+    padding: '28px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '14px',
   },
   wilIconWrap: {
-    width: '52px', height: '52px', borderRadius: '12px', background: '#e8f4fc',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    width: '52px',
+    height: '52px',
+    borderRadius: '12px',
+    background: '#e8f4fc',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  wilCardTitle: { fontSize: '17px', fontWeight: 700, color: '#1a1a1a' },
+  wilCardTitle: {
+    fontSize: '17px',
+    fontWeight: 700,
+    color: '#1a1a1a',
+  },
   wilHours: {
-    display: 'flex', alignItems: 'baseline', gap: '8px',
-    padding: '10px 0', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0',
+    display: 'flex',
+    alignItems: 'baseline',
+    gap: '8px',
+    padding: '10px 0',
+    borderTop: '1px solid #f0f0f0',
+    borderBottom: '1px solid #f0f0f0',
   },
-  wilHoursNum: { fontSize: '32px', fontWeight: 800, color: '#0E7BB5', letterSpacing: '-0.5px' },
-  wilHoursLabel: { fontSize: '13px', color: '#666' },
-  wilCardText: { fontSize: '13px', color: '#555', lineHeight: 1.7 },
+  wilHoursNum: {
+    fontSize: '32px',
+    fontWeight: 800,
+    color: '#0E7BB5',
+    letterSpacing: '-0.5px',
+  },
+  wilHoursLabel: {
+    fontSize: '13px',
+    color: '#666',
+  },
+  wilCardText: {
+    fontSize: '13px',
+    color: '#555',
+    lineHeight: 1.7,
+  },
   wilProcess: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: '16px',
   },
   wilStep: {
-    background: '#f8f9fa', borderRadius: '10px', padding: '20px',
-    display: 'flex', flexDirection: 'column', gap: '8px',
+    background: '#f8f9fa',
+    borderRadius: '10px',
+    padding: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
   },
   wilStepNum: {
-    fontSize: '24px', fontWeight: 800, color: '#FFB800',
-    letterSpacing: '-1px', lineHeight: 1,
+    fontSize: '24px',
+    fontWeight: 800,
+    color: '#FFB800',
+    letterSpacing: '-1px',
+    lineHeight: 1,
   },
-  wilStepTitle: { fontSize: '14px', fontWeight: 700, color: '#1a1a1a' },
-  wilStepDesc: { fontSize: '12px', color: '#666', lineHeight: 1.6 },
+  wilStepTitle: {
+    fontSize: '14px',
+    fontWeight: 700,
+    color: '#1a1a1a',
+  },
+  wilStepDesc: {
+    fontSize: '12px',
+    color: '#666',
+    lineHeight: 1.6,
+  },
   employerBox: {
-    background: '#1a1a1a', borderRadius: '12px', padding: '28px 32px',
-    marginTop: '32px', display: 'flex', gap: '20px', alignItems: 'flex-start',
+    background: '#1a1a1a',
+    borderRadius: '12px',
+    padding: '28px 32px',
+    marginTop: '32px',
+    display: 'flex',
+    gap: '20px',
+    alignItems: 'flex-start',
     flexWrap: 'wrap',
   },
   employerIconWrap: {
-    width: '52px', height: '52px', borderRadius: '12px',
-    background: 'rgba(255,184,0,0.15)', border: '1px solid rgba(255,184,0,0.3)',
-    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+    width: '52px',
+    height: '52px',
+    borderRadius: '12px',
+    background: 'rgba(255,184,0,0.15)',
+    border: '1px solid rgba(255,184,0,0.3)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
   },
-  employerContent: { flex: 1, minWidth: '260px' },
-  employerTitle: { fontSize: '18px', fontWeight: 700, color: '#fff', marginBottom: '8px' },
-  employerDesc: { fontSize: '14px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '14px' },
+  employerContent: {
+    flex: 1,
+    minWidth: '260px',
+  },
+  employerTitle: {
+    fontSize: '18px',
+    fontWeight: 700,
+    color: '#fff',
+    marginBottom: '8px',
+  },
+  employerDesc: {
+    fontSize: '14px',
+    color: 'rgba(255,255,255,0.75)',
+    lineHeight: 1.7,
+    marginBottom: '14px',
+  },
   employerBtn: {
-    display: 'inline-flex', alignItems: 'center', gap: '6px',
-    background: '#FFB800', color: '#000', textDecoration: 'none',
-    padding: '10px 20px', borderRadius: '6px', fontSize: '13px', fontWeight: 700,
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '6px',
+    background: '#FFB800',
+    color: '#000',
+    textDecoration: 'none',
+    padding: '10px 20px',
+    borderRadius: '6px',
+    fontSize: '13px',
+    fontWeight: 700,
   },
 
-  // Cashless
-  cashlessSection: { background: '#c0392b', padding: '28px 24px' },
+  /* Cashless */
+  cashlessSection: {
+    background: '#c0392b',
+    padding: '28px 24px',
+  },
   cashlessInner: {
-    display: 'flex', alignItems: 'flex-start', gap: '16px',
-    maxWidth: '1200px', margin: '0 auto',
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '16px',
+    maxWidth: '1200px',
+    margin: '0 auto',
   },
-  cashlessContent: { flex: 1 },
-  cashlessTitle: { fontSize: '16px', fontWeight: 700, color: '#fff', marginBottom: '6px' },
-  cashlessText: { fontSize: '13px', color: 'rgba(255,255,255,0.92)', lineHeight: 1.7 },
+  cashlessContent: {
+    flex: 1,
+  },
+  cashlessTitle: {
+    fontSize: '16px',
+    fontWeight: 700,
+    color: '#fff',
+    marginBottom: '6px',
+  },
+  cashlessText: {
+    fontSize: '13px',
+    color: 'rgba(255,255,255,0.92)',
+    lineHeight: 1.7,
+  },
 
-  // Campus Strip
-  campusSection: { padding: '80px 24px', background: '#f8f9fa' },
+  /* Campus Strip */
+  campusSection: {
+    padding: '80px 24px',
+    background: '#f8f9fa',
+  },
   campusStrip: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gap: '20px',
   },
   campusCard: {
-    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
-    overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+    background: '#fff',
+    border: '1px solid #e8e8e8',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
   },
   campusImg: {
-    height: '140px', backgroundSize: 'cover', backgroundPosition: 'center',
+    height: '140px',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
     position: 'relative',
   },
   campusOverlay: {
-    position: 'absolute', inset: 0,
+    position: 'absolute',
+    inset: 0,
     background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 60%)',
   },
   campusBadge: {
-    position: 'absolute', bottom: '12px', left: '12px',
-    display: 'inline-flex', alignItems: 'center', gap: '4px',
-    background: '#FFB800', color: '#000', fontSize: '11px', fontWeight: 700,
-    padding: '4px 10px', borderRadius: '4px',
+    position: 'absolute',
+    bottom: '12px',
+    left: '12px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
+    background: '#FFB800',
+    color: '#000',
+    fontSize: '11px',
+    fontWeight: 700,
+    padding: '4px 10px',
+    borderRadius: '4px',
   },
-  campusBody: { padding: '16px 18px' },
-  campusName: { fontSize: '14px', fontWeight: 700, color: '#0E7BB5', marginBottom: '4px' },
-  campusWalkin: { fontSize: '12px', color: '#666' },
-  campusFooter: { textAlign: 'center', marginTop: '32px' },
+  campusBody: {
+    padding: '16px 18px',
+  },
+  campusName: {
+    fontSize: '14px',
+    fontWeight: 700,
+    color: '#0E7BB5',
+    marginBottom: '4px',
+  },
+  campusWalkin: {
+    fontSize: '12px',
+    color: '#666',
+  },
+  campusFooter: {
+    textAlign: 'center',
+    marginTop: '32px',
+  },
   btnBlue: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: '#0E7BB5', color: '#fff', textDecoration: 'none',
-    padding: '13px 28px', borderRadius: '8px', fontSize: '14px', fontWeight: 600,
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: '#0E7BB5',
+    color: '#fff',
+    textDecoration: 'none',
+    padding: '13px 28px',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontWeight: 600,
   },
 
-  // CTA
+  /* CTA */
   cta: {
     position: 'relative',
     backgroundImage: `url(${assets.campuses.kwetlisong})`,
-    backgroundSize: 'cover', backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
   ctaOverlay: {
-    position: 'absolute', inset: 0,
+    position: 'absolute',
+    inset: 0,
     background: 'linear-gradient(135deg, rgba(14,123,181,0.94) 0%, rgba(0,0,0,0.85) 100%)',
   },
   ctaInner: {
-    position: 'relative', zIndex: 1, padding: '96px 24px', textAlign: 'center',
-    maxWidth: '720px', margin: '0 auto',
+    position: 'relative',
+    zIndex: 1,
+    padding: '96px 24px',
+    textAlign: 'center',
+    maxWidth: '720px',
+    margin: '0 auto',
   },
   ctaBadge: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: 'rgba(255,184,0,0.2)', border: '1px solid rgba(255,184,0,0.5)',
-    color: '#FFB800', fontSize: '12px', fontWeight: 600,
-    padding: '6px 14px', borderRadius: '20px', marginBottom: '20px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: 'rgba(255,184,0,0.2)',
+    border: '1px solid rgba(255,184,0,0.5)',
+    color: '#FFB800',
+    fontSize: '12px',
+    fontWeight: 600,
+    padding: '6px 14px',
+    borderRadius: '20px',
+    marginBottom: '20px',
   },
   ctaTitle: {
-    color: '#fff', fontSize: 'clamp(28px, 4vw, 44px)',
-    fontWeight: 800, marginBottom: '16px', letterSpacing: '-0.5px',
+    color: '#fff',
+    fontSize: 'clamp(28px, 4vw, 44px)',
+    fontWeight: 800,
+    marginBottom: '16px',
+    letterSpacing: '-0.5px',
   },
   ctaSub: {
-    color: 'rgba(255,255,255,0.85)', fontSize: '16px', lineHeight: 1.7,
-    marginBottom: '36px', maxWidth: '560px', margin: '0 auto 36px',
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: '16px',
+    lineHeight: 1.7,
+    marginBottom: '36px',
+    maxWidth: '560px',
+    margin: '0 auto 36px',
   },
-  ctaBtns: { display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' },
-}
+  ctaBtns: {
+    display: 'flex',
+    gap: '14px',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+};

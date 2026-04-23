@@ -5,10 +5,6 @@ import {
   Globe, Mail, Phone, MapPin, AlertTriangle,
   MessageSquare, Building2, Users, Send
 } from 'lucide-react'
-
-// ═══════════════════════════════════════════════════
-// LOCAL ASSET IMPORTS
-// ═══════════════════════════════════════════════════
 import bethlehem from '../assets/campuses/bethlehem.webp'
 import bonamelo from '../assets/campuses/bonamelo.webp'
 import harrismith from '../assets/campuses/harrismith.webp'
@@ -327,9 +323,6 @@ export default function Contact() {
   )
 }
 
-// ═══════════════════════════════════════════════════
-// STYLES
-// ═══════════════════════════════════════════════════
 const styles = {
   loadingWrap: {
     height: '60vh', display: 'flex', flexDirection: 'column',

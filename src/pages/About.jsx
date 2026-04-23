@@ -7,10 +7,6 @@ import {
   Award, BookOpen, Building2, ChevronDown, ChevronUp,
   MapPin, ArrowRight, CheckCircle2, GraduationCap, BadgeCheck
 } from 'lucide-react'
-
-// ═══════════════════════════════════════════════════
-// LOCAL ASSET IMPORTS
-// ═══════════════════════════════════════════════════
 import heroImg from '../assets/hero.png'
 import historyImg from '../assets/graduates.jpg'
 import student1 from '../assets/student1.jpg'
@@ -19,8 +15,6 @@ import student3 from '../assets/student3.jpg'
 import governanceImg from '../assets/leadership1.jpg'
 import ctaImg from '../assets/applications.jpeg'
 import valuesImg from '../assets/slide-1.jpg'
-
-// Campus Imports
 import bethlehem from '../assets/campuses/bethlehem.webp'
 import bonamelo from '../assets/campuses/bonamelo.webp'
 import harrismith from '../assets/campuses/harrismith.webp'
@@ -41,7 +35,6 @@ const valueIcons = {
   'Sustainability': Leaf,
 }
 
-// Map the imported local images so the rest of the component functions identically
 const IMAGES = {
   hero: heroImg,
   history: historyImg,
@@ -86,7 +79,7 @@ export default function About() {
   return (
     <main style={{ fontFamily: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif", color: '#1a1a1a' }}>
 
-      {/* ─── HERO ─────────────────────────────────────────── */}
+      {/* HERO */}
       <section style={{ ...styles.hero, backgroundImage: `url(${IMAGES.hero})` }}>
         <div style={styles.heroOverlay} />
         <div style={styles.heroContent}>
@@ -103,11 +96,10 @@ export default function About() {
             ))}
           </div>
         </div>
-        {/* Diagonal bottom edge */}
         <div style={styles.heroEdge} />
       </section>
 
-      {/* ─── QUICK STATS BAR ──────────────────────────────── */}
+      {/* QUICK STATS BAR */}
       <section style={styles.statsBar}>
         <div style={styles.container}>
           <div style={styles.statsGrid}>
@@ -126,7 +118,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ─── HISTORY & BACKGROUND ─────────────────────────── */}
+      {/* HISTORY & BACKGROUND */}
       <section style={styles.section}>
         <div style={styles.container}>
           <div style={styles.historyGrid}>
@@ -168,7 +160,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ─── SKILLS IN ACTION (image row) ─────────────────── */}
+      {/* SKILLS IN ACTION */}
       <section style={styles.imageRowSection}>
         <div style={styles.imageRowGrid}>
           <div style={{ ...styles.imageRowItem, backgroundImage: `url(${IMAGES.workshop})` }}>
@@ -194,7 +186,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ─── MISSION & VISION ─────────────────────────────── */}
+      {/* MISSION & VISION */}
       <section style={{ ...styles.section, background: '#f4f8fc' }}>
         <div style={styles.container}>
           <span style={styles.sectionEyebrow}>Our Purpose</span>
@@ -220,7 +212,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ─── COLOUR IDENTITY ──────────────────────────────── */}
+      {/* COLOUR IDENTITY */}
       <section style={styles.section}>
         <div style={styles.container}>
           <span style={styles.sectionEyebrow}>Brand Identity</span>
@@ -245,7 +237,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ─── CORE VALUES ──────────────────────────────────── */}
+      {/* CORE VALUES */}
       <section style={{ ...styles.valuesSection, backgroundImage: `url(${IMAGES.values})` }}>
         <div style={styles.valuesOverlay} />
         <div style={{ ...styles.container, position: 'relative', zIndex: 1 }}>
@@ -272,7 +264,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ─── LEADERSHIP ───────────────────────────────────── */}
+      {/* LEADERSHIP */}
       <section style={styles.section}>
         <div style={styles.container}>
           <span style={styles.sectionEyebrow}>Executive Management</span>
@@ -298,7 +290,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ─── GOVERNANCE ───────────────────────────────────── */}
+      {/* GOVERNANCE */}
       <section style={{ ...styles.section, background: '#f4f8fc' }}>
         <div style={styles.container}>
           <span style={styles.sectionEyebrow}>Corporate Governance</span>
@@ -385,7 +377,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ─── ACCREDITATION ────────────────────────────────── */}
+      {/* ACCREDITATION */}
       <section style={styles.section}>
         <div style={styles.container}>
           <span style={styles.sectionEyebrow}>Quality Assurance</span>
@@ -414,7 +406,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ─── CAMPUSES ─────────────────────────────────────── */}
+      {/* CAMPUSES */}
       <section style={{ ...styles.section, background: '#f4f8fc' }}>
         <div style={styles.container}>
           <span style={styles.sectionEyebrow}>Across the Free State</span>
@@ -462,7 +454,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ─── FRAUD HOTLINE BANNER ─────────────────────────── */}
+      {/* FRAUD HOTLINE BANNER */}
       <section style={styles.fraudSection}>
         <div style={styles.container}>
           <div style={styles.fraudInner}>
@@ -482,7 +474,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ─── CTA ──────────────────────────────────────────── */}
+      {/* CTA */}
       <section style={{ ...styles.ctaSection, backgroundImage: `url(${IMAGES.cta})` }}>
         <div style={styles.ctaOverlay}>
           <span style={styles.sectionEyebrowWhite}>Take the Next Step</span>
@@ -502,22 +494,29 @@ export default function About() {
   )
 }
 
-/* ═══════════════════════════════════════════════
-   STYLES
-═══════════════════════════════════════════════ */
 const styles = {
   loadingWrap: {
-    height: '60vh', display: 'flex', flexDirection: 'column',
-    alignItems: 'center', justifyContent: 'center', gap: 16,
+    height: '60vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
   },
   loadingSpinner: {
-    width: 36, height: 36, borderRadius: '50%',
-    border: '3px solid #e8e8e8', borderTopColor: '#0E7BB5',
+    width: 36,
+    height: 36,
+    borderRadius: '50%',
+    border: '3px solid #e8e8e8',
+    borderTopColor: '#0E7BB5',
     animation: 'spin 0.8s linear infinite',
   },
-  loadingText: { color: '#0E7BB5', fontSize: 14 },
+  loadingText: {
+    color: '#0E7BB5',
+    fontSize: 14,
+  },
 
-  /* ── Hero ── */
+  /* Hero */
   hero: {
     position: 'relative',
     minHeight: '88vh',
@@ -528,12 +527,15 @@ const styles = {
     overflow: 'hidden',
   },
   heroOverlay: {
-    position: 'absolute', inset: 0,
+    position: 'absolute',
+    inset: 0,
     background: 'linear-gradient(135deg, rgba(10,50,90,0.85) 0%, rgba(14,123,181,0.60) 60%, rgba(0,0,0,0.45) 100%)',
   },
   heroContent: {
-    position: 'relative', zIndex: 1,
-    maxWidth: 760, margin: '0 auto',
+    position: 'relative',
+    zIndex: 1,
+    maxWidth: 760,
+    margin: '0 auto',
     padding: '120px 24px 100px',
     textAlign: 'center',
   },
@@ -542,37 +544,57 @@ const styles = {
     background: 'rgba(255,184,0,0.2)',
     border: '1px solid rgba(255,184,0,0.5)',
     color: '#FFB800',
-    fontSize: 11, fontWeight: 700,
-    letterSpacing: '3px', textTransform: 'uppercase',
-    padding: '5px 16px', borderRadius: 20, marginBottom: 20,
+    fontSize: 11,
+    fontWeight: 700,
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    padding: '5px 16px',
+    borderRadius: 20,
+    marginBottom: 20,
   },
   heroTitle: {
     fontSize: 'clamp(32px, 5vw, 56px)',
-    fontWeight: 800, color: '#fff',
-    letterSpacing: '-1px', lineHeight: 1.1,
+    fontWeight: 800,
+    color: '#fff',
+    letterSpacing: '-1px',
+    lineHeight: 1.1,
     marginBottom: 20,
   },
   heroSub: {
-    fontSize: 17, color: 'rgba(255,255,255,0.85)',
-    lineHeight: 1.8, marginBottom: 32,
-    maxWidth: 620, margin: '0 auto 32px',
+    fontSize: 17,
+    color: 'rgba(255,255,255,0.85)',
+    lineHeight: 1.8,
+    marginBottom: 32,
+    maxWidth: 620,
+    margin: '0 auto 32px',
   },
-  heroBadges: { display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' },
+  heroBadges: {
+    display: 'flex',
+    gap: 10,
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
   heroBadge: {
     background: 'rgba(255,255,255,0.12)',
     border: '1px solid rgba(255,255,255,0.3)',
-    color: '#fff', fontSize: 12, fontWeight: 600,
-    padding: '6px 14px', borderRadius: 20,
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 600,
+    padding: '6px 14px',
+    borderRadius: 20,
     backdropFilter: 'blur(4px)',
   },
   heroEdge: {
-    position: 'absolute', bottom: -1, left: 0, right: 0,
+    position: 'absolute',
+    bottom: -1,
+    left: 0,
+    right: 0,
     height: 60,
     background: '#fff',
     clipPath: 'polygon(0 100%, 100% 0, 100% 100%)',
   },
 
-  /* ── Stats Bar ── */
+  /* Stats Bar */
   statsBar: {
     background: '#0E7BB5',
     padding: '32px 24px',
@@ -583,114 +605,202 @@ const styles = {
     gap: 24,
   },
   statItem: {
-    display: 'flex', flexDirection: 'column',
-    alignItems: 'center', gap: 4,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 4,
     padding: '8px 0',
     borderRight: '1px solid rgba(255,255,255,0.2)',
   },
   statValue: {
-    fontSize: 36, fontWeight: 800, color: '#FFB800', lineHeight: 1,
+    fontSize: 36,
+    fontWeight: 800,
+    color: '#FFB800',
+    lineHeight: 1,
   },
   statLabel: {
-    fontSize: 12, color: 'rgba(255,255,255,0.85)',
-    textAlign: 'center', fontWeight: 500,
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.85)',
+    textAlign: 'center',
+    fontWeight: 500,
   },
 
-  /* ── Shared ── */
-  container: { maxWidth: 1200, margin: '0 auto', padding: '0 24px' },
-  section: { padding: '90px 24px' },
+  /* Shared */
+  container: {
+    maxWidth: 1200,
+    margin: '0 auto',
+    padding: '0 24px',
+  },
+  section: {
+    padding: '90px 24px',
+  },
   sectionEyebrow: {
     display: 'block',
-    color: '#0E7BB5', fontSize: 11, fontWeight: 700,
-    letterSpacing: '3px', textTransform: 'uppercase',
-    marginBottom: 10, textAlign: 'center',
+    color: '#0E7BB5',
+    fontSize: 11,
+    fontWeight: 700,
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    marginBottom: 10,
+    textAlign: 'center',
   },
   sectionEyebrowWhite: {
     display: 'block',
-    color: '#FFB800', fontSize: 11, fontWeight: 700,
-    letterSpacing: '3px', textTransform: 'uppercase',
-    marginBottom: 10, textAlign: 'center',
+    color: '#FFB800',
+    fontSize: 11,
+    fontWeight: 700,
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    marginBottom: 10,
+    textAlign: 'center',
   },
   sectionTitle: {
     fontSize: 'clamp(26px, 3.5vw, 38px)',
-    fontWeight: 800, color: '#0a2a4a',
-    textAlign: 'center', letterSpacing: '-0.5px',
+    fontWeight: 800,
+    color: '#0a2a4a',
+    textAlign: 'center',
+    letterSpacing: '-0.5px',
     marginBottom: 14,
   },
   sectionTitleLeft: {
     fontSize: 'clamp(22px, 3vw, 32px)',
-    fontWeight: 800, color: '#0a2a4a',
-    letterSpacing: '-0.5px', marginBottom: 16,
+    fontWeight: 800,
+    color: '#0a2a4a',
+    letterSpacing: '-0.5px',
+    marginBottom: 16,
   },
   sectionSub: {
-    color: '#64748b', fontSize: 16,
-    textAlign: 'center', lineHeight: 1.8,
-    maxWidth: 620, margin: '0 auto 52px',
+    color: '#64748b',
+    fontSize: 16,
+    textAlign: 'center',
+    lineHeight: 1.8,
+    maxWidth: 620,
+    margin: '0 auto 52px',
   },
   sectionTitleWhite: {
     fontSize: 'clamp(26px, 3.5vw, 38px)',
-    fontWeight: 800, color: '#fff',
-    textAlign: 'center', letterSpacing: '-0.5px', marginBottom: 14,
+    fontWeight: 800,
+    color: '#fff',
+    textAlign: 'center',
+    letterSpacing: '-0.5px',
+    marginBottom: 14,
   },
   sectionSubWhite: {
-    color: 'rgba(255,255,255,0.8)', fontSize: 16,
-    textAlign: 'center', lineHeight: 1.8,
-    maxWidth: 600, margin: '0 auto 52px',
+    color: 'rgba(255,255,255,0.8)',
+    fontSize: 16,
+    textAlign: 'center',
+    lineHeight: 1.8,
+    maxWidth: 600,
+    margin: '0 auto 52px',
   },
-  bodyText: { color: '#475569', lineHeight: 1.8, fontSize: 15, marginBottom: 16 },
+  bodyText: {
+    color: '#475569',
+    lineHeight: 1.8,
+    fontSize: 15,
+    marginBottom: 16,
+  },
 
-  /* ── History ── */
+  /* History */
   historyGrid: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: 64, alignItems: 'center',
+    gap: 64,
+    alignItems: 'center',
     '@media(max-width:768px)': { gridTemplateColumns: '1fr' },
   },
-  historyImgWrap: { position: 'relative', borderRadius: 12, overflow: 'hidden' },
+  historyImgWrap: {
+    position: 'relative',
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
   historyImg: {
-    width: '100%', height: 420,
-    objectFit: 'cover', display: 'block',
+    width: '100%',
+    height: 420,
+    objectFit: 'cover',
+    display: 'block',
     borderRadius: 12,
   },
   historyImgBadge: {
-    position: 'absolute', bottom: 16, left: 16,
+    position: 'absolute',
+    bottom: 16,
+    left: 16,
     background: 'rgba(14,123,181,0.92)',
-    color: '#fff', display: 'flex', alignItems: 'center', gap: 8,
-    padding: '8px 16px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+    color: '#fff',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    padding: '8px 16px',
+    borderRadius: 8,
+    fontSize: 13,
+    fontWeight: 600,
     backdropFilter: 'blur(6px)',
   },
   historyText: {},
   historyStats: {
-    display: 'grid', gridTemplateColumns: '1fr 1fr',
-    gap: 16, marginTop: 28,
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: 16,
+    marginTop: 28,
   },
   historyStat: {
     background: '#f4f8fc',
     border: '1px solid #e2ecf5',
     borderLeft: '3px solid #0E7BB5',
-    borderRadius: 8, padding: '14px 16px',
-    display: 'flex', flexDirection: 'column', gap: 4,
+    borderRadius: 8,
+    padding: '14px 16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 4,
   },
-  historyStatVal: { fontSize: 18, fontWeight: 800, color: '#0E7BB5' },
-  historyStatLabel: { fontSize: 12, color: '#64748b', fontWeight: 500 },
+  historyStatVal: {
+    fontSize: 18,
+    fontWeight: 800,
+    color: '#0E7BB5',
+  },
+  historyStatLabel: {
+    fontSize: 12,
+    color: '#64748b',
+    fontWeight: 500,
+  },
 
-  /* ── Image Row ── */
-  imageRowSection: { padding: 0 },
-  imageRowGrid: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', height: 240 },
+  /* Image Row */
+  imageRowSection: {
+    padding: 0,
+  },
+  imageRowGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    height: 240,
+  },
   imageRowItem: {
-    backgroundSize: 'cover', backgroundPosition: 'center',
-    position: 'relative', overflow: 'hidden',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    position: 'relative',
+    overflow: 'hidden',
   },
   imageRowOverlay: {
-    position: 'absolute', inset: 0,
+    position: 'absolute',
+    inset: 0,
     background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)',
-    display: 'flex', alignItems: 'flex-end', padding: 16,
+    display: 'flex',
+    alignItems: 'flex-end',
+    padding: 16,
     transition: 'background 0.3s',
   },
-  imageRowLabel: { color: '#fff', fontSize: 13, fontWeight: 700, letterSpacing: '0.5px' },
+  imageRowLabel: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: 700,
+    letterSpacing: '0.5px',
+  },
 
-  /* ── Mission & Vision ── */
-  mvGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, marginTop: 40 },
+  /* Mission & Vision */
+  mvGrid: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: 28,
+    marginTop: 40,
+  },
   mvCard: {
     background: '#fff',
     borderRadius: 12,
@@ -701,123 +811,282 @@ const styles = {
   },
   mvCardAlt: {},
   mvAccent: {
-    position: 'absolute', top: 0, left: 0, right: 0,
-    height: 4, background: '#0E7BB5',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 4,
+    background: '#0E7BB5',
   },
   mvIconWrap: {
-    width: 52, height: 52, borderRadius: 12,
+    width: 52,
+    height: 52,
+    borderRadius: 12,
     background: '#e8f4fc',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 16,
   },
-  mvTitle: { fontSize: 20, fontWeight: 700, color: '#0a2a4a', marginBottom: 12 },
-  mvText: { color: '#475569', lineHeight: 1.8, fontSize: 15 },
+  mvTitle: {
+    fontSize: 20,
+    fontWeight: 700,
+    color: '#0a2a4a',
+    marginBottom: 12,
+  },
+  mvText: {
+    color: '#475569',
+    lineHeight: 1.8,
+    fontSize: 15,
+  },
 
-  /* ── Colour Identity ── */
+  /* Colour Identity */
   colourGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-    gap: 20, marginTop: 40,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+    gap: 20,
+    marginTop: 40,
   },
   colourCard: {
-    background: '#fff', border: '1px solid #e2e8f0',
-    borderRadius: 12, padding: '24px 20px',
-    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
+    background: '#fff',
+    border: '1px solid #e2e8f0',
+    borderRadius: 12,
+    padding: '24px 20px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 10,
     boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
   },
-  colourSwatch: { width: 56, height: 56, borderRadius: '50%' },
-  colourLabel: { fontSize: 14, fontWeight: 700, color: '#0a2a4a', textAlign: 'center' },
-  colourMeaning: { fontSize: 13, color: '#64748b', lineHeight: 1.6, textAlign: 'center' },
+  colourSwatch: {
+    width: 56,
+    height: 56,
+    borderRadius: '50%',
+  },
+  colourLabel: {
+    fontSize: 14,
+    fontWeight: 700,
+    color: '#0a2a4a',
+    textAlign: 'center',
+  },
+  colourMeaning: {
+    fontSize: 13,
+    color: '#64748b',
+    lineHeight: 1.6,
+    textAlign: 'center',
+  },
 
-  /* ── Values ── */
+  /* Values */
   valuesSection: {
     padding: '100px 24px',
-    backgroundSize: 'cover', backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
     position: 'relative',
   },
   valuesOverlay: {
-    position: 'absolute', inset: 0,
+    position: 'absolute',
+    inset: 0,
     background: 'linear-gradient(135deg, rgba(10,30,70,0.93) 0%, rgba(14,123,181,0.88) 100%)',
   },
   valuesGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
     gap: 20,
   },
   valueCard: {
     background: 'rgba(255,255,255,0.07)',
     border: '1px solid rgba(255,255,255,0.15)',
-    borderRadius: 12, padding: '28px 24px',
+    borderRadius: 12,
+    padding: '28px 24px',
     backdropFilter: 'blur(8px)',
     transition: 'background 0.2s, transform 0.2s',
   },
   valueIconWrap: {
-    width: 44, height: 44, borderRadius: 10,
+    width: 44,
+    height: 44,
+    borderRadius: 10,
     background: 'rgba(255,184,0,0.15)',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 14,
   },
-  valueTitle: { fontSize: 16, fontWeight: 700, color: '#fff', marginBottom: 8 },
-  valueDesc: { fontSize: 13, color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 },
+  valueTitle: {
+    fontSize: 16,
+    fontWeight: 700,
+    color: '#fff',
+    marginBottom: 8,
+  },
+  valueDesc: {
+    fontSize: 13,
+    color: 'rgba(255,255,255,0.75)',
+    lineHeight: 1.7,
+  },
 
-  /* ── Leadership ── */
+  /* Leadership */
   leadershipGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-    gap: 24, marginTop: 40,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+    gap: 24,
+    marginTop: 40,
   },
   leaderCard: {
-    background: '#fff', border: '1px solid #e2e8f0',
-    borderRadius: 12, padding: '32px 24px',
+    background: '#fff',
+    border: '1px solid #e2e8f0',
+    borderRadius: 12,
+    padding: '32px 24px',
     textAlign: 'center',
     boxShadow: '0 2px 16px rgba(0,0,0,0.06)',
     transition: 'box-shadow 0.2s, transform 0.2s',
   },
-  leaderAvatarWrap: { position: 'relative', display: 'inline-block', marginBottom: 16 },
+  leaderAvatarWrap: {
+    position: 'relative',
+    display: 'inline-block',
+    marginBottom: 16,
+  },
   leaderAvatar: {
-    width: 72, height: 72, borderRadius: '50%',
+    width: 72,
+    height: 72,
+    borderRadius: '50%',
     background: 'linear-gradient(135deg, #0E7BB5, #0a5a8a)',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    fontSize: 22, fontWeight: 800, color: '#fff',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 22,
+    fontWeight: 800,
+    color: '#fff',
   },
   leaderAvatarRing: {
-    position: 'absolute', inset: -3, borderRadius: '50%',
+    position: 'absolute',
+    inset: -3,
+    borderRadius: '50%',
     border: '2px solid #FFB800',
     pointerEvents: 'none',
   },
-  leaderName: { fontSize: 16, fontWeight: 700, color: '#0a2a4a', marginBottom: 4 },
-  leaderTitle: { fontSize: 13, color: '#0E7BB5', fontWeight: 600, marginBottom: 12 },
-  leaderDivider: { height: 1, background: '#e2e8f0', margin: '0 auto 12px', width: 40 },
-  leaderDesc: { fontSize: 13, color: '#64748b', lineHeight: 1.7 },
+  leaderName: {
+    fontSize: 16,
+    fontWeight: 700,
+    color: '#0a2a4a',
+    marginBottom: 4,
+  },
+  leaderTitle: {
+    fontSize: 13,
+    color: '#0E7BB5',
+    fontWeight: 600,
+    marginBottom: 12,
+  },
+  leaderDivider: {
+    height: 1,
+    background: '#e2e8f0',
+    margin: '0 auto 12px',
+    width: 40,
+  },
+  leaderDesc: {
+    fontSize: 13,
+    color: '#64748b',
+    lineHeight: 1.7,
+  },
 
-  /* ── Governance ── */
-  govGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 40 },
+  /* Governance */
+  govGrid: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: 24,
+    marginTop: 40,
+  },
   govCard: {
-    background: '#fff', borderRadius: 12, overflow: 'hidden',
+    background: '#fff',
+    borderRadius: 12,
+    overflow: 'hidden',
     border: '1px solid #e2e8f0',
     boxShadow: '0 2px 16px rgba(0,0,0,0.06)',
   },
-  govImg: { width: '100%', height: 180, objectFit: 'cover', display: 'block' },
-  govCardImgAlt: {
-    height: 180, background: 'linear-gradient(135deg, #0E7BB5, #0a3a60)',
-    display: 'flex', flexDirection: 'column',
-    alignItems: 'center', justifyContent: 'center', gap: 8,
+  govImg: {
+    width: '100%',
+    height: 180,
+    objectFit: 'cover',
+    display: 'block',
   },
-  govCardImgLabel: { color: 'rgba(255,255,255,0.5)', fontSize: 12, fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase' },
-  govCardBody: { padding: '24px' },
+  govCardImgAlt: {
+    height: 180,
+    background: 'linear-gradient(135deg, #0E7BB5, #0a3a60)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  govCardImgLabel: {
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: 12,
+    fontWeight: 600,
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+  },
+  govCardBody: {
+    padding: '24px',
+  },
   govIconWrap: {
-    width: 44, height: 44, borderRadius: 10,
+    width: 44,
+    height: 44,
+    borderRadius: 10,
     background: '#e8f4fc',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 12,
   },
-  govTitle: { fontSize: 18, fontWeight: 700, color: '#0a2a4a', marginBottom: 10 },
-  govText: { fontSize: 14, color: '#475569', lineHeight: 1.7, marginBottom: 16 },
-  govRespTitle: { fontSize: 13, fontWeight: 600, color: '#0a2a4a', marginBottom: 10 },
-  govList: { listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 },
-  govListItem: { display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 13, color: '#475569', lineHeight: 1.5 },
-  govExtraList: { display: 'flex', flexDirection: 'column', gap: 12 },
-  govExtraItem: { display: 'flex', alignItems: 'flex-start', gap: 10 },
-  govExtraText: { fontSize: 13, color: '#475569', lineHeight: 1.6 },
+  govTitle: {
+    fontSize: 18,
+    fontWeight: 700,
+    color: '#0a2a4a',
+    marginBottom: 10,
+  },
+  govText: {
+    fontSize: 14,
+    color: '#475569',
+    lineHeight: 1.7,
+    marginBottom: 16,
+  },
+  govRespTitle: {
+    fontSize: 13,
+    fontWeight: 600,
+    color: '#0a2a4a',
+    marginBottom: 10,
+  },
+  govList: {
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 8,
+  },
+  govListItem: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: 8,
+    fontSize: 13,
+    color: '#475569',
+    lineHeight: 1.5,
+  },
+  govExtraList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 12,
+  },
+  govExtraItem: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: 10,
+  },
+  govExtraText: {
+    fontSize: 13,
+    color: '#475569',
+    lineHeight: 1.6,
+  },
 
-  /* ── Documents Box ── */
+  /* Documents Box */
   docsBox: {
     marginTop: 40,
     background: '#fff',
@@ -831,132 +1100,284 @@ const styles = {
     boxShadow: '0 2px 16px rgba(0,0,0,0.05)',
   },
   docsBoxLeft: {},
-  docsTitle: { fontSize: 20, fontWeight: 700, color: '#0a2a4a', marginBottom: 10 },
-  docsDesc: { fontSize: 14, color: '#64748b', lineHeight: 1.7, marginBottom: 20 },
+  docsTitle: {
+    fontSize: 20,
+    fontWeight: 700,
+    color: '#0a2a4a',
+    marginBottom: 10,
+  },
+  docsDesc: {
+    fontSize: 14,
+    color: '#64748b',
+    lineHeight: 1.7,
+    marginBottom: 20,
+  },
   docsBtn: {
-    display: 'inline-flex', alignItems: 'center',
-    background: '#0E7BB5', color: '#fff',
-    textDecoration: 'none', padding: '10px 22px',
-    borderRadius: 8, fontSize: 14, fontWeight: 600,
+    display: 'inline-flex',
+    alignItems: 'center',
+    background: '#0E7BB5',
+    color: '#fff',
+    textDecoration: 'none',
+    padding: '10px 22px',
+    borderRadius: 8,
+    fontSize: 14,
+    fontWeight: 600,
     transition: 'background 0.2s',
   },
-  docsList: { display: 'flex', flexWrap: 'wrap', gap: 10 },
+  docsList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
   docsItem: {
-    display: 'flex', alignItems: 'center', gap: 8,
-    background: '#f4f8fc', border: '1px solid #e2ecf5',
-    borderRadius: 6, padding: '8px 14px',
-    fontSize: 13, color: '#334155',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    background: '#f4f8fc',
+    border: '1px solid #e2ecf5',
+    borderRadius: 6,
+    padding: '8px 14px',
+    fontSize: 13,
+    color: '#334155',
   },
 
-  /* ── Accreditation ── */
+  /* Accreditation */
   accredGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
-    gap: 20, marginTop: 40,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
+    gap: 20,
+    marginTop: 40,
   },
   accredCard: {
-    background: '#fff', border: '1px solid #e2e8f0',
+    background: '#fff',
+    border: '1px solid #e2e8f0',
     borderTop: '4px solid #0E7BB5',
-    borderRadius: 10, padding: '24px',
-    display: 'flex', flexDirection: 'column', gap: 8,
+    borderRadius: 10,
+    padding: '24px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 8,
     boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
   },
-  accredBadge: { fontSize: 22, fontWeight: 800, color: '#0E7BB5', letterSpacing: '-0.5px' },
-  accredName: { fontSize: 14, fontWeight: 700, color: '#0a2a4a' },
-  accredRole: { fontSize: 13, color: '#64748b', lineHeight: 1.6, flex: 1 },
+  accredBadge: {
+    fontSize: 22,
+    fontWeight: 800,
+    color: '#0E7BB5',
+    letterSpacing: '-0.5px',
+  },
+  accredName: {
+    fontSize: 14,
+    fontWeight: 700,
+    color: '#0a2a4a',
+  },
+  accredRole: {
+    fontSize: 13,
+    color: '#64748b',
+    lineHeight: 1.6,
+    flex: 1,
+  },
   accredLink: {
-    display: 'inline-flex', alignItems: 'center',
-    color: '#0E7BB5', fontSize: 13, fontWeight: 600, textDecoration: 'none',
+    display: 'inline-flex',
+    alignItems: 'center',
+    color: '#0E7BB5',
+    fontSize: 13,
+    fontWeight: 600,
+    textDecoration: 'none',
     marginTop: 4,
   },
 
-  /* ── Campus Cards ── */
+  /* Campus Cards */
   campusGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))',
-    gap: 20, marginTop: 40,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))',
+    gap: 20,
+    marginTop: 40,
   },
   campusCard: {
-    background: '#fff', borderRadius: 12, overflow: 'hidden',
+    background: '#fff',
+    borderRadius: 12,
+    overflow: 'hidden',
     border: '1px solid #e2e8f0',
     boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
     transition: 'box-shadow 0.2s, transform 0.2s',
   },
   campusImg: {
-    height: 170, backgroundSize: 'cover', backgroundPosition: 'center',
-    position: 'relative', display: 'flex', alignItems: 'flex-end', padding: 12,
+    height: 170,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'flex-end',
+    padding: 12,
   },
   campusImgOverlay: {
-    position: 'absolute', inset: 0,
+    position: 'absolute',
+    inset: 0,
     background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%)',
   },
   campusRoleBadge: {
-    position: 'relative', zIndex: 1,
+    position: 'relative',
+    zIndex: 1,
     background: 'rgba(14,123,181,0.9)',
-    color: '#fff', fontSize: 10, fontWeight: 700,
-    padding: '4px 10px', borderRadius: 4,
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: 700,
+    padding: '4px 10px',
+    borderRadius: 4,
     backdropFilter: 'blur(4px)',
-    textTransform: 'uppercase', letterSpacing: '0.5px',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
   },
-  campusBody: { padding: '16px', display: 'flex', flexDirection: 'column', gap: 6 },
-  campusName: { fontSize: 15, fontWeight: 700, color: '#0E7BB5' },
-  campusTown: { fontSize: 11, color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', display: 'flex', alignItems: 'center' },
-  campusSpec: { fontSize: 13, color: '#475569', lineHeight: 1.6 },
+  campusBody: {
+    padding: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 6,
+  },
+  campusName: {
+    fontSize: 15,
+    fontWeight: 700,
+    color: '#0E7BB5',
+  },
+  campusTown: {
+    fontSize: 11,
+    color: '#94a3b8',
+    fontWeight: 600,
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  campusSpec: {
+    fontSize: 13,
+    color: '#475569',
+    lineHeight: 1.6,
+  },
   campusExpandBtn: {
-    background: 'none', border: 'none', color: '#0E7BB5',
-    fontSize: 12, fontWeight: 600, cursor: 'pointer',
-    textAlign: 'left', padding: '4px 0',
-    display: 'flex', alignItems: 'center', gap: 4, marginTop: 4,
+    background: 'none',
+    border: 'none',
+    color: '#0E7BB5',
+    fontSize: 12,
+    fontWeight: 600,
+    cursor: 'pointer',
+    textAlign: 'left',
+    padding: '4px 0',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 4,
+    marginTop: 4,
   },
   campusAddress: {
-    fontSize: 13, color: '#475569',
-    background: '#f4f8fc', padding: '10px 12px',
-    borderRadius: 8, marginTop: 6,
-    display: 'flex', flexDirection: 'column', gap: 4, lineHeight: 1.6,
+    fontSize: 13,
+    color: '#475569',
+    background: '#f4f8fc',
+    padding: '10px 12px',
+    borderRadius: 8,
+    marginTop: 6,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 4,
+    lineHeight: 1.6,
   },
 
-  /* ── Fraud Banner ── */
+  /* Fraud Banner */
   fraudSection: {
     background: '#0a1e3a',
     padding: '40px 24px',
   },
   fraudInner: {
-    maxWidth: 1200, margin: '0 auto',
-    display: 'flex', justifyContent: 'space-between',
-    alignItems: 'center', flexWrap: 'wrap', gap: 24,
+    maxWidth: 1200,
+    margin: '0 auto',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 24,
   },
-  fraudTitle: { fontSize: 18, fontWeight: 700, color: '#fff', marginBottom: 8 },
-  fraudDesc: { fontSize: 14, color: 'rgba(255,255,255,0.72)', lineHeight: 1.7, maxWidth: 560 },
-  fraudContact: { display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 },
-  fraudNumber: { fontSize: 30, fontWeight: 800, color: '#FFB800', letterSpacing: 1 },
-  fraudNote: { fontSize: 11, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '1.5px' },
+  fraudTitle: {
+    fontSize: 18,
+    fontWeight: 700,
+    color: '#fff',
+    marginBottom: 8,
+  },
+  fraudDesc: {
+    fontSize: 14,
+    color: 'rgba(255,255,255,0.72)',
+    lineHeight: 1.7,
+    maxWidth: 560,
+  },
+  fraudContact: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    gap: 4,
+    flexShrink: 0,
+  },
+  fraudNumber: {
+    fontSize: 30,
+    fontWeight: 800,
+    color: '#FFB800',
+    letterSpacing: 1,
+  },
+  fraudNote: {
+    fontSize: 11,
+    color: 'rgba(255,255,255,0.6)',
+    textTransform: 'uppercase',
+    letterSpacing: '1.5px',
+  },
 
-  /* ── CTA ── */
-  ctaSection: { backgroundSize: 'cover', backgroundPosition: 'center' },
+  /* CTA */
+  ctaSection: {
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
   ctaOverlay: {
     background: 'rgba(10,30,70,0.85)',
-    padding: '96px 24px', textAlign: 'center',
-    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0,
+    padding: '96px 24px',
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 0,
   },
   ctaTitle: {
     fontSize: 'clamp(28px, 4vw, 44px)',
-    fontWeight: 800, color: '#fff',
-    marginBottom: 16, letterSpacing: '-0.5px',
+    fontWeight: 800,
+    color: '#fff',
+    marginBottom: 16,
+    letterSpacing: '-0.5px',
     marginTop: 12,
   },
   ctaSub: {
-    color: 'rgba(255,255,255,0.8)', fontSize: 16,
-    marginBottom: 36, lineHeight: 1.8,
+    color: 'rgba(255,255,255,0.8)',
+    fontSize: 16,
+    marginBottom: 36,
+    lineHeight: 1.8,
     maxWidth: 520,
   },
-  ctaBtns: { display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' },
+  ctaBtns: {
+    display: 'flex',
+    gap: 16,
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
   btnPrimary: {
-    background: '#FFB800', color: '#000',
-    textDecoration: 'none', padding: '14px 36px',
-    borderRadius: 8, fontSize: 15, fontWeight: 700,
+    background: '#FFB800',
+    color: '#000',
+    textDecoration: 'none',
+    padding: '14px 36px',
+    borderRadius: 8,
+    fontSize: 15,
+    fontWeight: 700,
   },
   btnOutline: {
-    background: 'transparent', color: '#fff',
-    textDecoration: 'none', padding: '14px 36px',
-    borderRadius: 8, fontSize: 15, fontWeight: 600,
+    background: 'transparent',
+    color: '#fff',
+    textDecoration: 'none',
+    padding: '14px 36px',
+    borderRadius: 8,
+    fontSize: 15,
+    fontWeight: 600,
     border: '2px solid rgba(255,255,255,0.4)',
   },
-}
+};

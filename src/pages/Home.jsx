@@ -54,10 +54,7 @@ export default function Home() {
 
   return (
     <main>
-
-      {/* ═══════════════════════════════════════════ */}
-      {/* HERO SLIDESHOW                             */}
-      {/* ═══════════════════════════════════════════ */}
+      {/* HERO SLIDESHOW */}
       <section style={styles.hero}>
         {data.slides.map((slide, i) => (
           <div key={i} style={{
@@ -127,9 +124,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════ */}
-      {/* QUICK ACCESS BAR                           */}
-      {/* ═══════════════════════════════════════════ */}
+      {/* QUICK ACCESS BAR */}
       <section style={styles.quickBar}>
         <div style={styles.container}>
           <div style={styles.quickGrid}>
@@ -167,9 +162,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════ */}
-      {/* ANNOUNCEMENTS BAND                         */}
-      {/* ═══════════════════════════════════════════ */}
+      {/* ANNOUNCEMENTS BAND */}
       <section style={styles.announceSection}>
         <div style={styles.container}>
           <div style={styles.sectionHead}>
@@ -205,9 +198,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════ */}
-      {/* ABOUT STRIP                                */}
-      {/* ═══════════════════════════════════════════ */}
+      {/* ABOUT STRIP */}
       <section style={styles.aboutStrip}>
         <div style={styles.aboutImg} />
         <div style={styles.aboutText}>
@@ -243,9 +234,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════ */}
-      {/* PROGRAMMES PREVIEW                         */}
-      {/* ═══════════════════════════════════════════ */}
+      {/* PROGRAMMES PREVIEW */}
       <section style={styles.section}>
         <div style={styles.container}>
           <div style={styles.sectionHeadCenter}>
@@ -290,9 +279,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════ */}
-      {/* CAMPUSES                                   */}
-      {/* ═══════════════════════════════════════════ */}
+      {/* CAMPUSES */}
       <section style={{ ...styles.section, background: '#f8f9fa' }}>
         <div style={styles.container}>
           <div style={styles.sectionHeadCenter}>
@@ -327,9 +314,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════ */}
-      {/* NSFAS BANNER                               */}
-      {/* ═══════════════════════════════════════════ */}
+      {/* NSFAS BANNER */}
       <section style={styles.nsfasBanner}>
         <div style={styles.container}>
           <div style={styles.nsfasInner}>
@@ -355,9 +340,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════ */}
-      {/* WHY CHOOSE US                              */}
-      {/* ═══════════════════════════════════════════ */}
+      {/* WHY CHOOSE US */}
       <section style={styles.section}>
         <div style={styles.container}>
           <div style={styles.sectionHeadCenter}>
@@ -397,9 +380,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════ */}
-      {/* EVENTS / DATES                             */}
-      {/* ═══════════════════════════════════════════ */}
+      {/* EVENTS / DATES */}
       <section style={{ ...styles.section, background: '#f8f9fa' }}>
         <div style={styles.container}>
           <div style={styles.sectionHeadCenter}>
@@ -456,9 +437,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════ */}
-      {/* TESTIMONIALS                               */}
-      {/* ═══════════════════════════════════════════ */}
+      {/* TESTIMONIALS */}
       <section style={styles.section}>
         <div style={styles.container}>
           <div style={styles.sectionHeadCenter}>
@@ -486,9 +465,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════ */}
-      {/* FINAL CTA                                  */}
-      {/* ═══════════════════════════════════════════ */}
+      {/* FINAL CTA */}
       <section style={styles.cta}>
         <div style={styles.ctaOverlay} />
         <div style={styles.ctaInner}>
@@ -522,296 +499,627 @@ export default function Home() {
   )
 }
 
-// ═══════════════════════════════════════════════════
-// STYLES
-// ═══════════════════════════════════════════════════
 const styles = {
   loading: {
-    minHeight: '100vh', display: 'flex', flexDirection: 'column',
-    alignItems: 'center', justifyContent: 'center', gap: '20px', background: '#fff',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '20px',
+    background: '#fff',
   },
   loadingSpinner: {
-    width: '48px', height: '48px', borderRadius: '50%',
-    border: '3px solid #e8f4fc', borderTopColor: '#0E7BB5',
+    width: '48px',
+    height: '48px',
+    borderRadius: '50%',
+    border: '3px solid #e8f4fc',
+    borderTopColor: '#0E7BB5',
     animation: 'spin 0.8s linear infinite',
   },
-  loadingText: { color: '#0E7BB5', fontSize: '14px', fontWeight: 500 },
+  loadingText: {
+    color: '#0E7BB5',
+    fontSize: '14px',
+    fontWeight: 500,
+  },
 
-  // Hero
+  /* Hero */
   hero: {
-    position: 'relative', minHeight: '92vh',
-    display: 'flex', alignItems: 'center', overflow: 'hidden',
+    position: 'relative',
+    minHeight: '92vh',
+    display: 'flex',
+    alignItems: 'center',
+    overflow: 'hidden',
   },
   slide: {
-    position: 'absolute', inset: 0,
-    backgroundSize: 'cover', backgroundPosition: 'center',
+    position: 'absolute',
+    inset: 0,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
     transition: 'opacity 1.6s ease-in-out, transform 6s ease-out',
   },
   heroOverlay: {
-    position: 'absolute', inset: 0,
+    position: 'absolute',
+    inset: 0,
     background: 'linear-gradient(135deg, rgba(14,123,181,0.85) 0%, rgba(0,0,0,0.75) 100%)',
     zIndex: 1,
   },
   heroContent: {
-    position: 'relative', zIndex: 2,
-    maxWidth: '780px', margin: '0 auto', textAlign: 'center',
-    width: '100%', padding: '80px 24px',
+    position: 'relative',
+    zIndex: 2,
+    maxWidth: '780px',
+    margin: '0 auto',
+    textAlign: 'center',
+    width: '100%',
+    padding: '80px 24px',
   },
   heroBadge: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: 'rgba(255,184,0,0.15)', border: '1px solid rgba(255,184,0,0.4)',
-    color: '#FFB800', fontSize: '12px', fontWeight: 600,
-    padding: '6px 14px', borderRadius: '20px', marginBottom: '20px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: 'rgba(255,184,0,0.15)',
+    border: '1px solid rgba(255,184,0,0.4)',
+    color: '#FFB800',
+    fontSize: '12px',
+    fontWeight: 600,
+    padding: '6px 14px',
+    borderRadius: '20px',
+    marginBottom: '20px',
   },
   heroTagline: {
-    color: '#FFB800', fontSize: '12px', fontWeight: 700,
-    letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
+    color: '#FFB800',
+    fontSize: '12px',
+    fontWeight: 700,
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    marginBottom: '16px',
   },
   heroTitle: {
-    color: '#fff', fontSize: 'clamp(36px, 6vw, 64px)',
-    fontWeight: 800, lineHeight: 1.1, marginBottom: '20px', letterSpacing: '-1.5px',
+    color: '#fff',
+    fontSize: 'clamp(36px, 6vw, 64px)',
+    fontWeight: 800,
+    lineHeight: 1.1,
+    marginBottom: '20px',
+    letterSpacing: '-1.5px',
   },
   heroSub: {
-    color: 'rgba(255,255,255,0.88)', fontSize: '17px',
-    lineHeight: 1.8, marginBottom: '36px', maxWidth: '620px', margin: '0 auto 36px',
+    color: 'rgba(255,255,255,0.88)',
+    fontSize: '17px',
+    lineHeight: 1.8,
+    marginBottom: '36px',
+    maxWidth: '620px',
+    margin: '0 auto 36px',
   },
   heroBtns: {
-    display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap',
+    display: 'flex',
+    gap: '14px',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
     marginBottom: '48px',
   },
   btnPrimary: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: '#FFB800', color: '#000', textDecoration: 'none',
-    padding: '14px 30px', borderRadius: '8px', fontSize: '15px',
-    fontWeight: 700, transition: 'background 0.2s', border: 'none', cursor: 'pointer',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: '#FFB800',
+    color: '#000',
+    textDecoration: 'none',
+    padding: '14px 30px',
+    borderRadius: '8px',
+    fontSize: '15px',
+    fontWeight: 700,
+    transition: 'background 0.2s',
+    border: 'none',
+    cursor: 'pointer',
   },
   btnSecondary: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: 'transparent', color: '#fff', textDecoration: 'none',
-    padding: '14px 30px', borderRadius: '8px', fontSize: '15px', fontWeight: 600,
-    border: '2px solid rgba(255,255,255,0.55)', transition: 'background 0.2s',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: 'transparent',
+    color: '#fff',
+    textDecoration: 'none',
+    padding: '14px 30px',
+    borderRadius: '8px',
+    fontSize: '15px',
+    fontWeight: 600,
+    border: '2px solid rgba(255,255,255,0.55)',
+    transition: 'background 0.2s',
   },
   heroStats: {
-    display: 'inline-flex', alignItems: 'center', gap: '24px',
-    background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)',
-    borderRadius: '12px', padding: '16px 24px', backdropFilter: 'blur(8px)',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '24px',
+    background: 'rgba(255,255,255,0.08)',
+    border: '1px solid rgba(255,255,255,0.15)',
+    borderRadius: '12px',
+    padding: '16px 24px',
+    backdropFilter: 'blur(8px)',
   },
-  heroStat: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' },
-  heroStatNum: { color: '#FFB800', fontSize: '24px', fontWeight: 800 },
-  heroStatLabel: { color: 'rgba(255,255,255,0.75)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' },
-  heroStatDiv: { width: '1px', height: '30px', background: 'rgba(255,255,255,0.2)' },
-  dots: { display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '40px' },
+  heroStat: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '2px',
+  },
+  heroStatNum: {
+    color: '#FFB800',
+    fontSize: '24px',
+    fontWeight: 800,
+  },
+  heroStatLabel: {
+    color: 'rgba(255,255,255,0.75)',
+    fontSize: '11px',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+  },
+  heroStatDiv: {
+    width: '1px',
+    height: '30px',
+    background: 'rgba(255,255,255,0.2)',
+  },
+  dots: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '8px',
+    marginTop: '40px',
+  },
   dot: {
-    height: '10px', borderRadius: '5px', border: 'none',
-    cursor: 'pointer', transition: 'all 0.4s ease', padding: 0,
+    height: '10px',
+    borderRadius: '5px',
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'all 0.4s ease',
+    padding: 0,
   },
 
-  // Quick Bar
+  /* Quick Bar */
   quickBar: {
-    background: '#fff', borderBottom: '1px solid #e8e8e8',
-    padding: '32px 24px', marginTop: '-40px', position: 'relative', zIndex: 10,
+    background: '#fff',
+    borderBottom: '1px solid #e8e8e8',
+    padding: '32px 24px',
+    marginTop: '-40px',
+    position: 'relative',
+    zIndex: 10,
   },
-  container: { maxWidth: '1200px', margin: '0 auto' },
+  container: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+  },
   quickGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-    gap: '12px', background: '#fff', borderRadius: '16px',
-    padding: '8px', boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+    gap: '12px',
+    background: '#fff',
+    borderRadius: '16px',
+    padding: '8px',
+    boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
   },
   quickLink: {
-    display: 'flex', alignItems: 'center', gap: '12px',
-    padding: '18px 20px', textDecoration: 'none', borderRadius: '10px',
-    background: '#fff', transition: 'all 0.2s',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    padding: '18px 20px',
+    textDecoration: 'none',
+    borderRadius: '10px',
+    background: '#fff',
+    transition: 'all 0.2s',
   },
   quickIconWrap: {
-    width: '44px', height: '44px', borderRadius: '10px', background: '#e8f4fc',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    flexShrink: 0, transition: 'background 0.2s',
+    width: '44px',
+    height: '44px',
+    borderRadius: '10px',
+    background: '#e8f4fc',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+    transition: 'background 0.2s',
   },
-  quickText: { display: 'flex', flexDirection: 'column', gap: '2px' },
-  quickLabel: { fontSize: '14px', fontWeight: 700, color: '#1a1a1a', transition: 'color 0.2s' },
-  quickDesc: { fontSize: '12px', color: '#888', transition: 'color 0.2s' },
+  quickText: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+  },
+  quickLabel: {
+    fontSize: '14px',
+    fontWeight: 700,
+    color: '#1a1a1a',
+    transition: 'color 0.2s',
+  },
+  quickDesc: {
+    fontSize: '12px',
+    color: '#888',
+    transition: 'color 0.2s',
+  },
 
-  // Announcements
-  announceSection: { padding: '64px 24px 80px', background: '#fff' },
-  sectionHead: {
-    display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
-    marginBottom: '32px', flexWrap: 'wrap', gap: '16px',
+  /* Announcements */
+  announceSection: {
+    padding: '64px 24px 80px',
+    background: '#fff',
   },
-  sectionHeadCenter: { textAlign: 'center', marginBottom: '48px' },
+  sectionHead: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    marginBottom: '32px',
+    flexWrap: 'wrap',
+    gap: '16px',
+  },
+  sectionHeadCenter: {
+    textAlign: 'center',
+    marginBottom: '48px',
+  },
   sectionTag: {
-    color: '#0E7BB5', fontSize: '11px', fontWeight: 700,
-    letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '8px',
+    color: '#0E7BB5',
+    fontSize: '11px',
+    fontWeight: 700,
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    marginBottom: '8px',
   },
   sectionTitle: {
-    fontSize: 'clamp(26px, 3vw, 38px)', fontWeight: 700,
-    color: '#1a1a1a', marginBottom: '12px', letterSpacing: '-0.5px',
+    fontSize: 'clamp(26px, 3vw, 38px)',
+    fontWeight: 700,
+    color: '#1a1a1a',
+    marginBottom: '12px',
+    letterSpacing: '-0.5px',
   },
   sectionTitleLeft: {
-    fontSize: 'clamp(24px, 2.5vw, 32px)', fontWeight: 700,
-    color: '#1a1a1a', letterSpacing: '-0.5px',
+    fontSize: 'clamp(24px, 2.5vw, 32px)',
+    fontWeight: 700,
+    color: '#1a1a1a',
+    letterSpacing: '-0.5px',
   },
   sectionSub: {
-    color: '#666', fontSize: '16px', lineHeight: 1.8,
-    maxWidth: '620px', margin: '0 auto',
+    color: '#666',
+    fontSize: '16px',
+    lineHeight: 1.8,
+    maxWidth: '620px',
+    margin: '0 auto',
   },
   sectionLink: {
-    display: 'inline-flex', alignItems: 'center', gap: '4px',
-    color: '#0E7BB5', textDecoration: 'none', fontSize: '14px', fontWeight: 600,
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
+    color: '#0E7BB5',
+    textDecoration: 'none',
+    fontSize: '14px',
+    fontWeight: 600,
   },
   announceGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+    gap: '16px',
   },
   announceCard: {
-    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '10px',
-    padding: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+    background: '#fff',
+    border: '1px solid #e8e8e8',
+    borderRadius: '10px',
+    padding: '20px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
   },
-  announceTop: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' },
+  announceTop: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '10px',
+  },
   announceTag: {
-    display: 'inline-flex', alignItems: 'center', gap: '5px',
-    fontSize: '11px', fontWeight: 700, padding: '4px 10px',
-    borderRadius: '20px', letterSpacing: '0.3px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '5px',
+    fontSize: '11px',
+    fontWeight: 700,
+    padding: '4px 10px',
+    borderRadius: '20px',
+    letterSpacing: '0.3px',
   },
   urgentDot: {
-    width: '8px', height: '8px', borderRadius: '50%',
-    background: '#e74c3c', animation: 'pulse 2s ease-in-out infinite',
+    width: '8px',
+    height: '8px',
+    borderRadius: '50%',
+    background: '#e74c3c',
+    animation: 'pulse 2s ease-in-out infinite',
   },
-  announceText: { fontSize: '14px', color: '#444', lineHeight: 1.6 },
+  announceText: {
+    fontSize: '14px',
+    color: '#444',
+    lineHeight: 1.6,
+  },
 
-  // About Strip
-  aboutStrip: { display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '520px' },
+  /* About Strip */
+  aboutStrip: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    minHeight: '520px',
+  },
   aboutImg: {
-  backgroundImage: `url(${leadership1})`, // ✅ Uses the imported variable
-  backgroundSize: 'cover', 
-  backgroundPosition: 'center', 
-  minHeight: '400px',
-},
+    backgroundImage: `url(${leadership1})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    minHeight: '400px',
+  },
   aboutText: {
-    background: '#0E7BB5', padding: '64px 56px',
-    display: 'flex', flexDirection: 'column', justifyContent: 'center',
+    background: '#0E7BB5',
+    padding: '64px 56px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   sectionTagWhite: {
-    color: '#FFB800', fontSize: '11px', fontWeight: 700,
-    letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px',
+    color: '#FFB800',
+    fontSize: '11px',
+    fontWeight: 700,
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    marginBottom: '12px',
   },
   aboutTitle: {
-    color: '#fff', fontSize: 'clamp(24px, 2.5vw, 34px)',
-    fontWeight: 700, marginBottom: '20px', letterSpacing: '-0.5px',
+    color: '#fff',
+    fontSize: 'clamp(24px, 2.5vw, 34px)',
+    fontWeight: 700,
+    marginBottom: '20px',
+    letterSpacing: '-0.5px',
   },
   aboutPara: {
-    color: 'rgba(255,255,255,0.88)', fontSize: '15px',
-    lineHeight: 1.8, marginBottom: '16px',
+    color: 'rgba(255,255,255,0.88)',
+    fontSize: '15px',
+    lineHeight: 1.8,
+    marginBottom: '16px',
   },
-  aboutBadges: { display: 'flex', flexWrap: 'wrap', gap: '10px', margin: '20px 0 24px' },
+  aboutBadges: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '10px',
+    margin: '20px 0 24px',
+  },
   aboutBadge: {
-    display: 'inline-flex', alignItems: 'center', gap: '6px',
-    background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
-    borderRadius: '20px', padding: '6px 12px',
-    fontSize: '12px', color: '#fff', fontWeight: 500,
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '6px',
+    background: 'rgba(255,255,255,0.1)',
+    border: '1px solid rgba(255,255,255,0.2)',
+    borderRadius: '20px',
+    padding: '6px 12px',
+    fontSize: '12px',
+    color: '#fff',
+    fontWeight: 500,
   },
   aboutBtn: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: '#FFB800', color: '#000', textDecoration: 'none',
-    padding: '12px 24px', borderRadius: '8px', fontSize: '14px',
-    fontWeight: 700, width: 'fit-content',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: '#FFB800',
+    color: '#000',
+    textDecoration: 'none',
+    padding: '12px 24px',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontWeight: 700,
+    width: 'fit-content',
   },
 
-  // Sections
-  section: { padding: '80px 24px', background: '#fff' },
+  /* Sections */
+  section: {
+    padding: '80px 24px',
+    background: '#fff',
+  },
 
-  // Programmes preview
+  /* Programmes preview */
   progGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '24px',
   },
   progCard: {
-    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
-    overflow: 'hidden', textDecoration: 'none', color: 'inherit',
+    background: '#fff',
+    border: '1px solid #e8e8e8',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    textDecoration: 'none',
+    color: 'inherit',
     boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
     transition: 'transform 0.25s ease, box-shadow 0.25s ease',
   },
   progImg: {
-    height: '180px', backgroundSize: 'cover', backgroundPosition: 'center',
-    position: 'relative', display: 'flex', alignItems: 'flex-end', padding: '14px',
+    height: '180px',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'flex-end',
+    padding: '14px',
   },
   progType: {
-    background: 'rgba(0,0,0,0.72)', color: '#fff', fontSize: '11px',
-    fontWeight: 600, padding: '4px 10px', borderRadius: '4px',
+    background: 'rgba(0,0,0,0.72)',
+    color: '#fff',
+    fontSize: '11px',
+    fontWeight: 600,
+    padding: '4px 10px',
+    borderRadius: '4px',
     backdropFilter: 'blur(4px)',
   },
-  progBody: { padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' },
-  progIconRow: { display: 'flex', alignItems: 'center', gap: '10px' },
-  progTitle: { fontSize: '16px', fontWeight: 700, color: '#1a1a1a' },
-  progDesc: { fontSize: '13px', color: '#666', lineHeight: 1.7 },
-  progLink: {
-    display: 'inline-flex', alignItems: 'center', gap: '4px',
-    color: '#0E7BB5', fontSize: '13px', fontWeight: 600, marginTop: '4px',
+  progBody: {
+    padding: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
   },
-  sectionFooter: { textAlign: 'center', marginTop: '48px' },
+  progIconRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+  progTitle: {
+    fontSize: '16px',
+    fontWeight: 700,
+    color: '#1a1a1a',
+  },
+  progDesc: {
+    fontSize: '13px',
+    color: '#666',
+    lineHeight: 1.7,
+  },
+  progLink: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
+    color: '#0E7BB5',
+    fontSize: '13px',
+    fontWeight: 600,
+    marginTop: '4px',
+  },
+  sectionFooter: {
+    textAlign: 'center',
+    marginTop: '48px',
+  },
   btnBlue: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: '#0E7BB5', color: '#fff', textDecoration: 'none',
-    padding: '13px 28px', borderRadius: '8px', fontSize: '14px', fontWeight: 600,
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: '#0E7BB5',
+    color: '#fff',
+    textDecoration: 'none',
+    padding: '13px 28px',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontWeight: 600,
   },
 
-  // Campuses
+  /* Campuses */
   campusGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: '20px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))',
+    gap: '20px',
   },
   campusCard: {
-    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
-    overflow: 'hidden', transition: 'transform 0.25s ease',
+    background: '#fff',
+    border: '1px solid #e8e8e8',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    transition: 'transform 0.25s ease',
     boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
   },
   campusImg: {
-    height: '170px', backgroundSize: 'cover', backgroundPosition: 'center',
-    position: 'relative', display: 'flex', alignItems: 'flex-end', padding: '12px',
+    height: '170px',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'flex-end',
+    padding: '12px',
   },
   campusImgOverlay: {
-    position: 'absolute', inset: 0,
+    position: 'absolute',
+    inset: 0,
     background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 60%)',
   },
   campusTownBadge: {
-    position: 'relative', zIndex: 1,
-    display: 'inline-flex', alignItems: 'center', gap: '4px',
-    background: '#FFB800', color: '#000', fontSize: '11px',
-    fontWeight: 700, padding: '4px 10px', borderRadius: '4px',
+    position: 'relative',
+    zIndex: 1,
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
+    background: '#FFB800',
+    color: '#000',
+    fontSize: '11px',
+    fontWeight: 700,
+    padding: '4px 10px',
+    borderRadius: '4px',
   },
   campusBody: {
     padding: '18px 20px 20px',
-    display: 'flex', flexDirection: 'column', gap: '6px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
   },
-  campusName: { fontSize: '15px', fontWeight: 700, color: '#0E7BB5' },
-  campusRole: { fontSize: '12px', color: '#888', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' },
-  campusSpec: { fontSize: '13px', color: '#555', lineHeight: 1.6 },
+  campusName: {
+    fontSize: '15px',
+    fontWeight: 700,
+    color: '#0E7BB5',
+  },
+  campusRole: {
+    fontSize: '12px',
+    color: '#888',
+    fontWeight: 600,
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
+  },
+  campusSpec: {
+    fontSize: '13px',
+    color: '#555',
+    lineHeight: 1.6,
+  },
 
-  // NSFAS Banner
+  /* NSFAS Banner */
   nsfasBanner: {
-    background: 'linear-gradient(135deg, #0E7BB5 0%, #0a5a8a 100%)', padding: '56px 24px',
+    background: 'linear-gradient(135deg, #0E7BB5 0%, #0a5a8a 100%)',
+    padding: '56px 24px',
   },
   nsfasInner: {
-    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    flexWrap: 'wrap', gap: '32px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: '32px',
   },
-  nsfasLeft: { display: 'flex', alignItems: 'center', gap: '20px', flex: 1, minWidth: '300px' },
+  nsfasLeft: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '20px',
+    flex: 1,
+    minWidth: '300px',
+  },
   nsfasIconWrap: {
-    width: '64px', height: '64px', borderRadius: '16px',
-    background: 'rgba(255,184,0,0.15)', border: '1.5px solid rgba(255,184,0,0.3)',
-    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+    width: '64px',
+    height: '64px',
+    borderRadius: '16px',
+    background: 'rgba(255,184,0,0.15)',
+    border: '1.5px solid rgba(255,184,0,0.3)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
   },
   nsfasTitle: {
-    fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 700, color: '#fff',
-    marginBottom: '6px', letterSpacing: '-0.5px',
+    fontSize: 'clamp(22px, 3vw, 30px)',
+    fontWeight: 700,
+    color: '#fff',
+    marginBottom: '6px',
+    letterSpacing: '-0.5px',
   },
-  nsfasSub: { color: 'rgba(255,255,255,0.85)', fontSize: '14px', lineHeight: 1.7, maxWidth: '540px' },
-  nsfasBtns: { display: 'flex', gap: '12px', flexWrap: 'wrap' },
+  nsfasSub: {
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: '14px',
+    lineHeight: 1.7,
+    maxWidth: '540px',
+  },
+  nsfasBtns: {
+    display: 'flex',
+    gap: '12px',
+    flexWrap: 'wrap',
+  },
   nsfasBtnPrimary: {
-    background: '#FFB800', color: '#000', textDecoration: 'none',
-    padding: '12px 24px', borderRadius: '8px', fontSize: '14px',
-    fontWeight: 700, whiteSpace: 'nowrap',
+    background: '#FFB800',
+    color: '#000',
+    textDecoration: 'none',
+    padding: '12px 24px',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontWeight: 700,
+    whiteSpace: 'nowrap',
   },
   nsfasBtnOutline: {
-    background: 'transparent', color: '#fff', textDecoration: 'none',
-    padding: '12px 24px', borderRadius: '8px', fontSize: '14px',
-    fontWeight: 600, border: '2px solid rgba(255,255,255,0.5)', whiteSpace: 'nowrap',
+    background: 'transparent',
+    color: '#fff',
+    textDecoration: 'none',
+    padding: '12px 24px',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontWeight: 600,
+    border: '2px solid rgba(255,255,255,0.5)',
+    whiteSpace: 'nowrap',
   },
   nsfasLogoImg: {
     maxWidth: '44px',
@@ -819,108 +1127,224 @@ const styles = {
     objectFit: 'contain',
   },
 
-  nsfasTitle: {
-    fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 700, color: '#fff',
-    marginBottom: '6px', letterSpacing: '-0.5px',
-  },
-
-  // Why
+  /* Why */
   whyGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: '20px',
   },
   whyCard: {
-    background: '#fff', border: '1.5px solid #e8e8e8', borderRadius: '12px',
-    padding: '28px 24px', transition: 'all 0.25s ease',
-    display: 'flex', flexDirection: 'column', gap: '12px',
+    background: '#fff',
+    border: '1.5px solid #e8e8e8',
+    borderRadius: '12px',
+    padding: '28px 24px',
+    transition: 'all 0.25s ease',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
   },
   whyIconWrap: {
-    width: '48px', height: '48px', borderRadius: '10px', background: '#e8f4fc',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    width: '48px',
+    height: '48px',
+    borderRadius: '10px',
+    background: '#e8f4fc',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  whyTitle: { fontSize: '16px', fontWeight: 700, color: '#1a1a1a' },
-  whyDesc: { fontSize: '14px', color: '#666', lineHeight: 1.7 },
+  whyTitle: {
+    fontSize: '16px',
+    fontWeight: 700,
+    color: '#1a1a1a',
+  },
+  whyDesc: {
+    fontSize: '14px',
+    color: '#666',
+    lineHeight: 1.7,
+  },
 
-  // Events
+  /* Events */
   eventsGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+    gap: '20px',
   },
   eventCard: {
-  background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
-  overflow: 'hidden', display: 'flex', flexDirection: 'column',
-  boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-},
-eventImage: {
-  height: '180px', backgroundSize: 'cover', backgroundPosition: 'center',
-  position: 'relative',
-},
-eventImageOverlay: {
-  position: 'absolute', inset: 0,
-  background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0) 100%)',
-},
-eventDateBadge: {
-  position: 'absolute', bottom: '14px', left: '14px',
-  background: 'rgba(14,123,181,0.95)', backdropFilter: 'blur(8px)',
-  borderRadius: '8px', padding: '8px 12px',
-  display: 'flex', alignItems: 'center', gap: '10px',
-},
-eventDay: { color: '#FFB800', fontSize: '13px', fontWeight: 700, lineHeight: 1.2 },
-eventYear: { color: 'rgba(255,255,255,0.75)', fontSize: '11px', lineHeight: 1.2 },
-eventBody: { padding: '20px', display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 },
-eventTitle: { fontSize: '16px', fontWeight: 700, color: '#1a1a1a' },
-eventDesc: { fontSize: '13px', color: '#666', lineHeight: 1.6, flex: 1 },
-eventMeta: {
-  display: 'flex', alignItems: 'center', gap: '6px', marginTop: '8px',
-  paddingTop: '12px', borderTop: '1px solid #f0f0f0',
-},
-eventLocation: { fontSize: '12px', color: '#0E7BB5', fontWeight: 600 },
-  // Testimonials
+    background: '#fff',
+    border: '1px solid #e8e8e8',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+    transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+  },
+  eventImage: {
+    height: '180px',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    position: 'relative',
+  },
+  eventImageOverlay: {
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0) 100%)',
+  },
+  eventDateBadge: {
+    position: 'absolute',
+    bottom: '14px',
+    left: '14px',
+    background: 'rgba(14,123,181,0.95)',
+    backdropFilter: 'blur(8px)',
+    borderRadius: '8px',
+    padding: '8px 12px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+  eventDay: {
+    color: '#FFB800',
+    fontSize: '13px',
+    fontWeight: 700,
+    lineHeight: 1.2,
+  },
+  eventYear: {
+    color: 'rgba(255,255,255,0.75)',
+    fontSize: '11px',
+    lineHeight: 1.2,
+  },
+  eventBody: {
+    padding: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    flex: 1,
+  },
+  eventTitle: {
+    fontSize: '16px',
+    fontWeight: 700,
+    color: '#1a1a1a',
+  },
+  eventDesc: {
+    fontSize: '13px',
+    color: '#666',
+    lineHeight: 1.6,
+    flex: 1,
+  },
+  eventMeta: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    marginTop: '8px',
+    paddingTop: '12px',
+    borderTop: '1px solid #f0f0f0',
+  },
+  eventLocation: {
+    fontSize: '12px',
+    color: '#0E7BB5',
+    fontWeight: 600,
+  },
+
+  /* Testimonials */
   testimonialsGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '24px',
   },
   testimonialCard: {
-    background: '#f8f9fa', borderRadius: '12px', padding: '32px 28px',
+    background: '#f8f9fa',
+    borderRadius: '12px',
+    padding: '32px 28px',
     borderTop: '3px solid #FFB800',
-    display: 'flex', flexDirection: 'column', gap: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
   },
   testimonialText: {
-    fontSize: '15px', color: '#333', lineHeight: 1.8, fontStyle: 'italic', flex: 1,
+    fontSize: '15px',
+    color: '#333',
+    lineHeight: 1.8,
+    fontStyle: 'italic',
+    flex: 1,
   },
-  testimonialAuthor: { display: 'flex', alignItems: 'center', gap: '12px' },
+  testimonialAuthor: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
   testimonialImg: {
-    width: '48px', height: '48px', borderRadius: '50%',
-    objectFit: 'cover', flexShrink: 0, border: '2px solid #FFB800',
+    width: '48px',
+    height: '48px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    flexShrink: 0,
+    border: '2px solid #FFB800',
   },
-  testimonialName: { fontSize: '14px', fontWeight: 700, color: '#1a1a1a', margin: 0 },
-  testimonialProg: { fontSize: '12px', color: '#666', margin: 0 },
+  testimonialName: {
+    fontSize: '14px',
+    fontWeight: 700,
+    color: '#1a1a1a',
+    margin: 0,
+  },
+  testimonialProg: {
+    fontSize: '12px',
+    color: '#666',
+    margin: 0,
+  },
 
-  // CTA
+  /* CTA */
   cta: {
     position: 'relative',
     backgroundImage: 'url(https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1600&q=80)',
-    backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundAttachment: 'fixed',
   },
   ctaOverlay: {
-    position: 'absolute', inset: 0,
+    position: 'absolute',
+    inset: 0,
     background: 'linear-gradient(135deg, rgba(14,123,181,0.94) 0%, rgba(0,0,0,0.85) 100%)',
   },
   ctaInner: {
-    position: 'relative', zIndex: 1, padding: '96px 24px', textAlign: 'center',
-    maxWidth: '720px', margin: '0 auto',
+    position: 'relative',
+    zIndex: 1,
+    padding: '96px 24px',
+    textAlign: 'center',
+    maxWidth: '720px',
+    margin: '0 auto',
   },
   ctaBadge: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px',
-    background: 'rgba(255,184,0,0.2)', border: '1px solid rgba(255,184,0,0.5)',
-    color: '#FFB800', fontSize: '12px', fontWeight: 600,
-    padding: '6px 14px', borderRadius: '20px', marginBottom: '20px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: 'rgba(255,184,0,0.2)',
+    border: '1px solid rgba(255,184,0,0.5)',
+    color: '#FFB800',
+    fontSize: '12px',
+    fontWeight: 600,
+    padding: '6px 14px',
+    borderRadius: '20px',
+    marginBottom: '20px',
   },
   ctaTitle: {
-    color: '#fff', fontSize: 'clamp(30px, 4vw, 48px)',
-    fontWeight: 800, marginBottom: '16px', letterSpacing: '-0.5px',
+    color: '#fff',
+    fontSize: 'clamp(30px, 4vw, 48px)',
+    fontWeight: 800,
+    marginBottom: '16px',
+    letterSpacing: '-0.5px',
   },
   ctaSub: {
-    color: 'rgba(255,255,255,0.85)', fontSize: '16px', lineHeight: 1.7,
-    marginBottom: '36px', maxWidth: '560px', margin: '0 auto 36px',
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: '16px',
+    lineHeight: 1.7,
+    marginBottom: '36px',
+    maxWidth: '560px',
+    margin: '0 auto 36px',
   },
-  ctaBtns: { display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' },
-}
+  ctaBtns: {
+    display: 'flex',
+    gap: '14px',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+};

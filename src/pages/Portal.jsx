@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Eye, EyeOff, User, Lock, AlertTriangle, Shield, LogIn } from 'lucide-react'
 import { assets, mockLogin } from '../services/api'
-
-// Import local background image
 import phuthaditjhaba from '../assets/campuses/phuthaditjhaba.webp'
 
 export default function Portal() {
@@ -39,13 +37,13 @@ export default function Portal() {
   ]
 
   return (
-    <main style={styles.page}>
+    <main style={styles.page} className="portal-page">
       {/* Left Panel */}
-      <div style={styles.leftPanel}>
+      <div style={styles.leftPanel} className="portal-left">
         <div style={styles.leftOverlay} />
-        <div style={styles.leftContent}>
-          <img src={assets.logoWhiteBg} alt="Maluti TVET College" style={styles.panelLogo} />
-          <h2 style={styles.panelTitle}>Student & Staff Portal</h2>
+        <div style={styles.leftContent} className="portal-left-content">
+          <img src={assets.logoWhiteBg} alt="Maluti TVET College" style={styles.panelLogo} className="portal-logo-desktop" />
+          <h2 style={styles.panelTitle} className="portal-panel-title">Student & Staff Portal</h2>
           <p style={styles.panelDesc}>
             Access your academic records, examination results, NSFAS funding status,
             proof of registration, and more through the Maluti TVET iEnabler system.
@@ -76,15 +74,15 @@ export default function Portal() {
       </div>
 
       {/* Right Panel */}
-      <div style={styles.rightPanel}>
-        <div style={styles.formCard}>
-          <img src={assets.logoWhiteBg} alt="Maluti TVET College" style={styles.mobileLogo} />
+      <div style={styles.rightPanel} className="portal-right">
+        <div style={styles.formCard} className="portal-form-card">
+          <img src={assets.logoWhiteBg} alt="Maluti TVET College" style={styles.mobileLogo} className="portal-logo-mobile" />
 
           <div style={styles.formHeader}>
             <div style={styles.formIconWrap}>
               <LogIn size={22} color="#0E7BB5" />
             </div>
-            <h1 style={styles.formTitle}>Sign In</h1>
+            <h1 style={styles.formTitle} className="portal-form-title">Sign In</h1>
             <p style={styles.formSubtitle}>Access your Maluti TVET portal</p>
           </div>
 
@@ -223,7 +221,7 @@ const styles = {
   },
   leftPanel: {
     position: 'relative',
-    backgroundImage: `url(${phuthaditjhaba})`, // Updated to use local asset
+    backgroundImage: `url(${phuthaditjhaba})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     display: 'flex',
@@ -241,6 +239,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
+    width: '100%',
+    maxWidth: '600px',
   },
   panelLogo: {
     height: '64px',
