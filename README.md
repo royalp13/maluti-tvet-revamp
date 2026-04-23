@@ -1,16 +1,45 @@
-# React + Vite
+# Maluti TVET College Website Revamp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, high-performance web application designed to revitalize the digital presence of Maluti TVET College. This project focuses on improving user experience, streamlining student admissions, and ensuring mobile accessibility for all 8 campuses across the Free State.
 
-Currently, two official plugins are available:
+## Project Overview
+The legacy Maluti TVET website faced challenges with navigation, load speeds, and mobile responsiveness. This revamp leverages **React** and **Vite** to provide a seamless, lightning-fast interface that meets the needs of current and prospective students.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Key Features
+- **Modern UI/UX:** Clean, professional interface with a focus on ease of navigation.
+- **Mobile First:** Fully responsive design optimized for smartphones and tablets.
+- **Interactive Chatbot:** A support component to assist with common student inquiries.
+- **Campus Directory:** Detailed information for all campuses (Bethlehem, Harrismith, Phuthaditjhaba, etc.).
+- **Student Portal:** A secure, streamlined gateway for academic resources and student interactions.
+- **Course Exploration:** Dedicated sections for NATED and NC(V) programmes with clear application paths.
 
-## React Compiler
+## Tech Stack
+- **Frontend:** React.js
+- **Build Tool:** Vite
+- **Hosting:** Azure Static Web Apps
+- **Routing:** React Router
+- **Assets:** Optimized WebP and SVG imagery.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Project Structure
+- `/src/pages`: Home, Admissions, About, Contact, Programmes, Portal, Wireframes.
+- `/src/components`: Reusable UI elements (NavBar, Footer, Chatbot).
+- `/src/assets`: Campus imagery and branding assets.
+- `/src/services`: Logic for API interactions and future backend connectivity.
 
-## Expanding the ESLint configuration
+## Installation & Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **Clone the repository:**
+   ```bash
+   git clone [(https://github.com/royalp13/maluti-tvet-revamp.git)]
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+
+3. **Run the development server:**
+   ```bash
+   npm run dev
+
+4. **Build for production:**
+   ```bash
+   npm run build
