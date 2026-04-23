@@ -27,7 +27,7 @@ export default function Contact() {
   function handleSubmit(e) {
     e.preventDefault()
     setSubmitting(true)
-    // Simulate form submission — in production, POST to /api/contact
+    // Simulate form submission-in production, POST to /api/contact
     setTimeout(() => {
       setSubmitting(false)
       setSubmitted(true)
@@ -85,7 +85,7 @@ export default function Contact() {
           <div style={styles.fraudInner}>
             <AlertTriangle size={24} color="#1a1a1a" />
             <p style={styles.fraudText}>
-              <strong>Fraud & Corruption Hotline: {data.general.fraudHotline}</strong> — {data.general.fraudHotlineProvider}.
+              <strong>Fraud & Corruption Hotline: {data.general.fraudHotline}</strong>-{data.general.fraudHotlineProvider}.
               Do not pay cash to any college staff member. All payments via EFT only.
             </p>
           </div>
@@ -140,7 +140,7 @@ export default function Contact() {
                       <select name="campus" value={form.campus} onChange={handleChange} style={styles.input}>
                         <option value="">Select a campus</option>
                         {data.campuses.map((c, i) => (
-                          <option key={i} value={c.name}>{c.name} — {c.town}</option>
+                          <option key={i} value={c.name}>{c.name}-{c.town}</option>
                         ))}
                       </select>
                     </div>
@@ -223,7 +223,7 @@ export default function Contact() {
           <h2 style={styles.sectionTitle}>Campus Locations</h2>
           <p style={styles.sectionSub}>
             All 8 campuses are staffed to assist with admissions, student support, and general enquiries.
-            Visit any campus in person for face-to-face assistance — no appointment required.
+            Visit any campus in person for face-to-face assistance-no appointment required.
           </p>
           <div style={styles.campusGrid}>
             {data.campuses.map((c, i) => (
@@ -265,7 +265,7 @@ export default function Contact() {
               <AlertTriangle size={24} color="#e74c3c" />
               <h3 style={styles.importantTitle}>Fraud & Corruption Hotline</h3>
               <p style={styles.importantNumber}>{data.general.fraudHotline}</p>
-              <p style={styles.importantNote}>Whistle Blower — Free call, 24 hours, confidential</p>
+              <p style={styles.importantNote}>Whistle Blower-Free call, 24 hours, confidential</p>
             </div>
             <div style={{ ...styles.importantCard, borderTopColor: '#0E7BB5' }}>
               <Globe size={24} color="#0E7BB5" />
@@ -287,7 +287,7 @@ export default function Contact() {
               <Mail size={24} color="#FFB800" />
               <h3 style={styles.importantTitle}>General Enquiries</h3>
               <p style={styles.importantLink}>{data.general.email}</p>
-              <p style={styles.importantNote}>For non-urgent enquiries — allow 2–3 working days for response</p>
+              <p style={styles.importantNote}>For non-urgent enquiries-allow 2–3 working days for response</p>
             </div>
           </div>
         </div>

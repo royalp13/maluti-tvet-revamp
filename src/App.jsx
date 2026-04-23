@@ -7,8 +7,10 @@ import Programmes from './pages/Programmes'
 import Admissions from './pages/Admissions'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import Portal from './pages/Portal'
+import Wireframes from './pages/Wireframes'
 
-function App() {
+export default function App() {
   return (
     <Router>
       <Navbar />
@@ -18,11 +20,11 @@ function App() {
         <Route path="/admissions" element={<Admissions />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/portal" element={<Portal />} />
+        <Route path="/wireframes" element={<Wireframes />} />
       </Routes>
       <Footer />
       <Chatbot />
     </Router>
   )
 }
-
-export default App

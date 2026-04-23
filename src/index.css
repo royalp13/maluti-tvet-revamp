@@ -20,3 +20,10 @@ body {
   nav > div > a:last-of-type { display: none !important; }
   nav button { display: flex !important; }
 }
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
+}

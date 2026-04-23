@@ -47,7 +47,7 @@ export default function About() {
           <h1 style={styles.heroTitle}>About Maluti TVET College</h1>
           <p style={styles.heroSub}>
             A public Technical Vocational Education and Training institution serving the
-            North Eastern Free State since 2002 — committed to transforming lives through
+            North Eastern Free State since 2002-committed to transforming lives through
             practical, accredited, and industry-relevant education.
           </p>
           <div style={styles.heroBadges}>
@@ -141,7 +141,7 @@ export default function About() {
           <h2 style={styles.sectionTitleWhite}>Our Core Values</h2>
           <p style={styles.sectionSubWhite}>
             These eight values govern every decision, interaction, and initiative at
-            Maluti TVET College — from the boardroom to the classroom.
+            Maluti TVET College-from the boardroom to the classroom.
           </p>
           <div style={styles.valuesGrid}>
             {data.values.map((v, i) => {
@@ -260,7 +260,7 @@ export default function About() {
           <h2 style={styles.sectionTitle}>Accreditation & Regulatory Bodies</h2>
           <p style={styles.sectionSub}>
             All qualifications offered at Maluti TVET College are nationally accredited
-            and quality-assured by the relevant statutory bodies — ensuring your
+            and quality-assured by the relevant statutory bodies-ensuring your
             qualification is recognised by employers and further education institutions.
           </p>
           <div style={styles.accredGrid}>
@@ -322,12 +322,12 @@ export default function About() {
               <p style={styles.fraudDesc}>
                 Maluti TVET College is committed to zero tolerance for fraud, corruption, and
                 maladministration. If you witness or suspect any irregularity, report it
-                confidentially through the Whistle Blower service — available 24 hours a day.
+                confidentially through the Whistle Blower service-available 24 hours a day.
               </p>
             </div>
             <div style={styles.fraudContact}>
               <span style={styles.fraudNumber}>0800 333 178</span>
-              <span style={styles.fraudNote}>Free call — 24 hours — Confidential</span>
+              <span style={styles.fraudNote}>Free call-24 hours-Confidential</span>
             </div>
           </div>
         </div>
@@ -1028,4 +1028,12 @@ const styles = {
     fontWeight: '600',
     border: '2px solid rgba(255,255,255,0.5)',
   },
+  leaderPhoto: {
+  width: '80px',
+  height: '80px',
+  borderRadius: '50%',
+  objectFit: 'cover',
+  objectPosition: 'top',
+  marginBottom: '4px',
+},
 }
