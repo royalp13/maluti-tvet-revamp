@@ -35,7 +35,7 @@ export default function Wireframes() {
           <p style={styles.heroTag}>Phase 2 Submission · The Battlefield</p>
           <h1 style={styles.heroTitle}>Project Architecture & Wireframes</h1>
           <p style={styles.heroSub}>
-            A complete architectural overview of the Maluti TVET College website revamp —
+            A complete architectural overview of the Maluti TVET College website revamp -
             covering all five deliverables, the API skeleton, page structure, and hosting pipeline.
           </p>
         </div>

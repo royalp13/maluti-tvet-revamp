@@ -166,7 +166,7 @@ export default function Footer() {
           <div style={styles.fraudLeft}>
             <AlertTriangle size={16} color="#e74c3c" />
             <span style={styles.fraudText}>
-              <strong>Fraud & Corruption Hotline:</strong> 0800 333 178-Whistle Blower, free call, 24 hours.
+              <strong>Fraud & Corruption Hotline:</strong> 0800 333 178-nWhistle Blower, free call, 24 hours.
               Do not pay cash to any college staff member.
             </span>
           </div>

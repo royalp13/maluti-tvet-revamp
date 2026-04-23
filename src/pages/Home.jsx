@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchHomeData } from '../services/api'
 import {
-  FileText, BookOpen, Landmark, MapPin, Phone,
+  FileText, BookOpen, MapPin, Phone,
   Settings, BarChart3, Monitor, GraduationCap, Coffee, Wrench,
-  Award, Building2, Users, Globe, ChevronRight, Quote,
-  Calendar, AlertCircle, CheckCircle2, Shield, Sparkles,
-  ArrowRight, DollarSign, Briefcase, Target
+  Award, Building2, ChevronRight, Quote,
+  Calendar, AlertCircle, CheckCircle2, Sparkles,
+  ArrowRight, Briefcase, Target, BadgeCheck
 } from 'lucide-react'
+import leadership1 from '../assets/leadership1.jpg'
+import nsfasLogo from '../assets/nsfas-logo.png'
 
 const getIcon = (id, size = 22, color = '#0E7BB5') => {
   const icons = {
@@ -134,7 +136,7 @@ export default function Home() {
             {[
               { icon: FileText, label: 'Apply Online', desc: '2026 applications open', path: '/admissions' },
               { icon: BookOpen, label: 'Programmes', desc: 'NC(V) & NATED courses', path: '/programmes' },
-              { icon: DollarSign, label: 'NSFAS Funding', desc: 'Apply for bursary', path: '/admissions' },
+              { icon: BadgeCheck, label: 'NSFAS Funding', desc: 'Apply for bursary', path: '/admissions' },
               { icon: Building2, label: 'Our Campuses', desc: '8 Free State locations', path: '/about' },
               { icon: Phone, label: 'Contact Us', desc: 'Get in touch', path: '/contact' },
             ].map((q, i) => (
@@ -250,7 +252,7 @@ export default function Home() {
             <p style={styles.sectionTag}>Qualifications</p>
             <h2 style={styles.sectionTitle}>NC(V) & NATED Programmes</h2>
             <p style={styles.sectionSub}>
-              Accredited National Certificate (Vocational) and NATED Report 191 programmes —
+              Accredited National Certificate (Vocational) and NATED Report 191 programmes -
               practical, industry-aligned, and nationally recognised.
             </p>
           </div>
@@ -333,7 +335,7 @@ export default function Home() {
           <div style={styles.nsfasInner}>
             <div style={styles.nsfasLeft}>
               <div style={styles.nsfasIconWrap}>
-                <DollarSign size={32} color="#FFB800" />
+                <img src={nsfasLogo} alt="NSFAS" style={styles.nsfasLogoImg} />
               </div>
               <div>
                 <h2 style={styles.nsfasTitle}>NSFAS Funding Available</h2>
@@ -369,7 +371,7 @@ export default function Home() {
             {[
               { Icon: Award, title: 'Umalusi Accredited', desc: 'Nationally recognised qualifications accredited by Umalusi, QCTO, and DHET.' },
               { Icon: Wrench, title: 'Practical First', desc: 'Hands-on training in modern workshops-ready for the workplace from day one.' },
-              { Icon: DollarSign, title: 'NSFAS Approved', desc: 'Qualifying students access NSFAS funding covering tuition and living costs.' },
+              { Icon: BadgeCheck, title: 'NSFAS Approved', desc: 'Qualifying students access NSFAS funding covering tuition and living costs.' },
               { Icon: MapPin, title: '8 Campuses', desc: 'Strategically spread across the Free State-quality education close to home.' },
               { Icon: Briefcase, title: 'Industry Partners', desc: 'Strong partnerships with employers and SETAs keep our curriculum relevant.' },
               { Icon: Target, title: 'Real Outcomes', desc: 'Graduates placed in employment, artisan trades, and further education nationwide.' },
@@ -403,25 +405,53 @@ export default function Home() {
           <div style={styles.sectionHeadCenter}>
             <p style={styles.sectionTag}>Dates to Remember</p>
             <h2 style={styles.sectionTitle}>Upcoming Events</h2>
+            <p style={styles.sectionSub}>
+              Key dates on the Maluti TVET College calendar for the 2025/2026 academic year.
+            </p>
           </div>
           <div style={styles.eventsGrid}>
-            {data.events.map((ev, i) => (
-              <div key={i} style={styles.eventCard}>
-                <div style={styles.eventDate}>
-                  <Calendar size={16} color="#FFB800" />
-                  <span style={styles.eventDay}>{ev.date}</span>
-                  <span style={styles.eventYear}>{ev.year}</span>
-                </div>
-                <div style={styles.eventBody}>
-                  <h3 style={styles.eventTitle}>{ev.title}</h3>
-                  <p style={styles.eventDesc}>{ev.desc}</p>
-                  <div style={styles.eventMeta}>
-                    <MapPin size={12} color="#0E7BB5" />
-                    <span style={styles.eventLocation}>{ev.location}</span>
+            {data.events.map((ev, i) => {
+              // Pick a campus image for each event based on index
+              const eventImages = [
+                data.campuses[0]?.image,
+                data.campuses[4]?.image,
+                data.campuses[2]?.image,
+              ]
+              return (
+                <div key={i} style={styles.eventCard}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.transform = 'translateY(-4px)'
+                    e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.12)'
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)'
+                  }}
+                >
+                  <div style={{
+                    ...styles.eventImage,
+                    backgroundImage: `url(${eventImages[i] || data.campuses[0]?.image})`,
+                  }}>
+                    <div style={styles.eventImageOverlay} />
+                    <div style={styles.eventDateBadge}>
+                      <Calendar size={14} color="#FFB800" />
+                      <div>
+                        <div style={styles.eventDay}>{ev.date}</div>
+                        <div style={styles.eventYear}>{ev.year}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={styles.eventBody}>
+                    <h3 style={styles.eventTitle}>{ev.title}</h3>
+                    <p style={styles.eventDesc}>{ev.desc}</p>
+                    <div style={styles.eventMeta}>
+                      <MapPin size={12} color="#0E7BB5" />
+                      <span style={styles.eventLocation}>{ev.location}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -650,9 +680,11 @@ const styles = {
   // About Strip
   aboutStrip: { display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '520px' },
   aboutImg: {
-    backgroundImage: 'url(https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1000&q=80)',
-    backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '400px',
-  },
+  backgroundImage: `url(${leadership1})`, // ✅ Uses the imported variable
+  backgroundSize: 'cover', 
+  backgroundPosition: 'center', 
+  minHeight: '400px',
+},
   aboutText: {
     background: '#0E7BB5', padding: '64px 56px',
     display: 'flex', flexDirection: 'column', justifyContent: 'center',
@@ -781,6 +813,16 @@ const styles = {
     padding: '12px 24px', borderRadius: '8px', fontSize: '14px',
     fontWeight: 600, border: '2px solid rgba(255,255,255,0.5)', whiteSpace: 'nowrap',
   },
+  nsfasLogoImg: {
+    maxWidth: '44px',
+    maxHeight: '44px',
+    objectFit: 'contain',
+  },
+
+  nsfasTitle: {
+    fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 700, color: '#fff',
+    marginBottom: '6px', letterSpacing: '-0.5px',
+  },
 
   // Why
   whyGrid: {
@@ -803,22 +845,35 @@ const styles = {
     display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px',
   },
   eventCard: {
-    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
-    padding: '24px', display: 'flex', gap: '20px', alignItems: 'flex-start',
-  },
-  eventDate: {
-    background: 'linear-gradient(135deg, #0E7BB5 0%, #0a5a8a 100%)',
-    borderRadius: '10px', padding: '14px 16px', textAlign: 'center', minWidth: '80px',
-    display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'center',
-  },
-  eventDay: { color: '#FFB800', fontSize: '13px', fontWeight: 700 },
-  eventYear: { color: 'rgba(255,255,255,0.7)', fontSize: '11px' },
-  eventBody: { flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' },
-  eventTitle: { fontSize: '15px', fontWeight: 700, color: '#1a1a1a' },
-  eventDesc: { fontSize: '13px', color: '#666', lineHeight: 1.6 },
-  eventMeta: { display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' },
-  eventLocation: { fontSize: '12px', color: '#0E7BB5', fontWeight: 600 },
-
+  background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
+  overflow: 'hidden', display: 'flex', flexDirection: 'column',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+},
+eventImage: {
+  height: '180px', backgroundSize: 'cover', backgroundPosition: 'center',
+  position: 'relative',
+},
+eventImageOverlay: {
+  position: 'absolute', inset: 0,
+  background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0) 100%)',
+},
+eventDateBadge: {
+  position: 'absolute', bottom: '14px', left: '14px',
+  background: 'rgba(14,123,181,0.95)', backdropFilter: 'blur(8px)',
+  borderRadius: '8px', padding: '8px 12px',
+  display: 'flex', alignItems: 'center', gap: '10px',
+},
+eventDay: { color: '#FFB800', fontSize: '13px', fontWeight: 700, lineHeight: 1.2 },
+eventYear: { color: 'rgba(255,255,255,0.75)', fontSize: '11px', lineHeight: 1.2 },
+eventBody: { padding: '20px', display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 },
+eventTitle: { fontSize: '16px', fontWeight: 700, color: '#1a1a1a' },
+eventDesc: { fontSize: '13px', color: '#666', lineHeight: 1.6, flex: 1 },
+eventMeta: {
+  display: 'flex', alignItems: 'center', gap: '6px', marginTop: '8px',
+  paddingTop: '12px', borderTop: '1px solid #f0f0f0',
+},
+eventLocation: { fontSize: '12px', color: '#0E7BB5', fontWeight: 600 },
   // Testimonials
   testimonialsGrid: {
     display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px',

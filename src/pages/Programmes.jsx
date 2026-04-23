@@ -1,607 +1,369 @@
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { fetchProgrammesData } from '../services/api'
+import {
+  Search, Filter, BookOpen, Settings, BarChart3, Monitor,
+  GraduationCap, Coffee, Wrench, Award, MapPin, Clock,
+  CheckCircle2, ArrowRight, ChevronDown, ChevronUp,
+  Target, Sparkles, Briefcase, Users, Building2, BadgeCheck
+} from 'lucide-react'
+import programmes from '../assets/programmes.png'
 
-const allProgrammes = [
-  // NC(V) - Engineering
-  {
-    id: 1,
-    type: 'NC(V)',
-    field: 'Engineering',
-    title: 'Information Technology',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80',
-    description: 'Covers computer hardware, software, networking, systems support, and programming basics. Graduates are prepared for IT support roles or further study in computing.',
-    subjects: ['Computer Hardware', 'Systems Software', 'Networking', 'Programming', 'Life Orientation', 'English', 'Mathematics'],
-    careers: ['IT Technician', 'Network Support', 'Systems Administrator', 'Further study in IT'],
-    campus: 'Itemoheleng, Main Campus',
-  },
-  {
-    id: 2,
-    type: 'NC(V)',
-    field: 'Engineering',
-    title: 'Electrical Infrastructure Construction',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80',
-    description: 'Practical training in electrical installations, wiring, and infrastructure. Aligned with SETA trade standards for electricians.',
-    subjects: ['Electrical Systems', 'Infrastructure Construction', 'Occupational Health & Safety', 'Engineering Science', 'English', 'Mathematics'],
-    careers: ['Electrician', 'Electrical Inspector', 'Infrastructure Technician', 'Trade Test (Artisan)'],
-    campus: 'Bethlehem, Harrismith, Main Campus',
-  },
-  {
-    id: 3,
-    type: 'NC(V)',
-    field: 'Engineering',
-    title: 'Engineering and Related Design',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=600&q=80',
-    description: 'Covers technical drawing, engineering design principles, and CAD fundamentals. Ideal for students interested in mechanical or structural design careers.',
-    subjects: ['Engineering Drawing', 'CAD', 'Mathematics', 'Engineering Science', 'English', 'Physical Science'],
-    careers: ['Draughtsman', 'Design Technician', 'CAD Operator', 'Engineering Technologist'],
-    campus: 'Main Campus, Bethlehem',
-  },
-  {
-    id: 4,
-    type: 'NC(V)',
-    field: 'Engineering',
-    title: 'Civil Engineering and Building Construction',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80',
-    description: 'Practical training in construction methods, building materials, and civil engineering principles. Includes site-based practical components.',
-    subjects: ['Building Construction', 'Civil Technology', 'Mathematics', 'Engineering Science', 'English', 'Physical Science'],
-    careers: ['Construction Supervisor', 'Site Foreman', 'Civil Technician', 'Building Inspector'],
-    campus: 'Harrismith, Bethlehem',
-  },
-  // NC(V) - Business
-  {
-    id: 5,
-    type: 'NC(V)',
-    field: 'Business',
-    title: 'Finance, Economics and Accounting',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&q=80',
-    description: 'Covers financial accounting, economics, bookkeeping, and business finance. Prepares students for roles in banking, finance, and accounting firms.',
-    subjects: ['Financial Accounting', 'Economics', 'Business Practice', 'English', 'Mathematical Literacy', 'Life Orientation'],
-    careers: ['Bookkeeper', 'Accounts Clerk', 'Financial Assistant', 'Bank Teller'],
-    campus: 'Main Campus, Bonamelo, Bethlehem',
-  },
-  {
-    id: 6,
-    type: 'NC(V)',
-    field: 'Business',
-    title: 'Office Administration',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80',
-    description: 'Develops administrative, communication, and office management skills. Includes practical computer and business communication components.',
-    subjects: ['Office Practice', 'Business Communication', 'Computer Practice', 'English', 'Mathematical Literacy'],
-    careers: ['Office Administrator', 'Receptionist', 'Executive Assistant', 'Records Manager'],
-    campus: 'All Campuses',
-  },
-  {
-    id: 7,
-    type: 'NC(V)',
-    field: 'Business',
-    title: 'Marketing',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&q=80',
-    description: 'Covers marketing principles, consumer behaviour, digital marketing basics, and retail management.',
-    subjects: ['Marketing', 'Sales Management', 'Entrepreneurship', 'English', 'Mathematical Literacy'],
-    careers: ['Marketing Assistant', 'Sales Representative', 'Retail Manager', 'Brand Coordinator'],
-    campus: 'Main Campus, Bethlehem',
-  },
-  {
-    id: 8,
-    type: 'NC(V)',
-    field: 'Agriculture',
-    title: 'Primary Agriculture',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=600&q=80',
-    description: 'Covers plant production, animal husbandry, and agricultural business principles. Includes practical farm-based training.',
-    subjects: ['Plant Production', 'Animal Production', 'Agricultural Management', 'English', 'Mathematical Literacy'],
-    careers: ['Farmer', 'Agricultural Technician', 'Farm Manager', 'Agri-Business Owner'],
-    campus: 'Kwetlisong, Lere la Tshepe',
-  },
-  // NC(V) - Services
-  {
-    id: 9,
-    type: 'NC(V)',
-    field: 'Services',
-    title: 'Hospitality',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600&q=80',
-    description: 'Practical training in food preparation, front office operations, and hospitality management. Industry placement included.',
-    subjects: ['Food Preparation', 'Hospitality Generics', 'Food & Beverage Service', 'English', 'Mathematical Literacy'],
-    careers: ['Chef', 'Hotel Front Desk', 'Food & Beverage Supervisor', 'Events Coordinator'],
-    campus: 'Main Campus, Harrismith',
-  },
-  {
-    id: 10,
-    type: 'NC(V)',
-    field: 'Services',
-    title: 'Education and Development',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80',
-    description: 'Prepares students to work with young children in EDUCARE and early childhood development settings. Includes practical placement at ECD centres.',
-    subjects: ['Child Development', 'EDUCARE Didactics', 'Educational Psychology', 'English', 'Mathematical Literacy'],
-    careers: ['ECD Practitioner', 'Crèche Teacher', 'EDUCARE Centre Manager', 'Community Development Worker'],
-    campus: 'Bonamelo, Sefikeng, Main Campus',
-  },
-  {
-    id: 11,
-    type: 'NC(V)',
-    field: 'Services',
-    title: 'Tourism',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80',
-    description: 'Covers tourism operations, guiding, customer service, and travel management. Practical components included.',
-    subjects: ['Tourism Operations', 'Customer Care', 'Travel & Tours', 'English', 'Mathematical Literacy'],
-    careers: ['Tour Guide', 'Travel Agent', 'Tourism Officer', 'Guest House Manager'],
-    campus: 'Main Campus',
-  },
-  {
-    id: 12,
-    type: 'NC(V)',
-    field: 'Services',
-    title: 'Primary Health',
-    levels: 'Level 2 - 4',
-    duration: '3 years (1 year per level)',
-    entry: 'Grade 9 or NQF Level 1',
-    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80',
-    description: 'Covers community health, primary care principles, anatomy, and health promotion. Prepares students for community health worker roles.',
-    subjects: ['Primary Health Care', 'Anatomy & Physiology', 'Community Health', 'English', 'Mathematical Literacy'],
-    careers: ['Community Health Worker', 'Health Promoter', 'Clinic Assistant', 'Home-Based Carer'],
-    campus: 'Main Campus, Bonamelo',
-  },
-  // NATED - Engineering
-  {
-    id: 13,
-    type: 'NATED',
-    field: 'Engineering',
-    title: 'Electrical Engineering',
-    levels: 'N1 - N6',
-    duration: 'N1-N3: 18 months | N4-N6: 18 months + 2 years practical',
-    entry: 'N1-N3: Grade 9 | N4-N6: Matric with Maths & Science or NCV L4',
-    image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80',
-    description: 'The most popular engineering programme. Covers electrical theory, industrial electronics, and power systems from N1 through N6. N3 + trade test = qualified artisan. N6 + 2 years practical = National Diploma.',
-    subjects: ['Electrical Trade Theory', 'Industrial Electronics', 'Mathematics', 'Engineering Science', 'Motor Electrical Trade Theory'],
-    careers: ['Electrician (Artisan)', 'Electrical Inspector', 'Electrical Engineer (with further study)', 'Maintenance Technician'],
-    campus: 'Bethlehem, Harrismith, Main Campus, Kwetlisong',
-  },
-  {
-    id: 14,
-    type: 'NATED',
-    field: 'Engineering',
-    title: 'Mechanical Engineering',
-    levels: 'N1 - N6',
-    duration: 'N1-N3: 18 months | N4-N6: 18 months + 2 years practical',
-    entry: 'N1-N3: Grade 9 | N4-N6: Matric with Maths & Science or NCV L4',
-    image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80',
-    description: 'Covers fitting, turning, mechanical drawing, and industrial machinery. Leads to artisan qualification at N3 level or National Diploma at N6.',
-    subjects: ['Fitting & Machining', 'Mechanical Drawing', 'Mathematics', 'Engineering Science', 'Industrial Orientation'],
-    careers: ['Fitter & Turner (Artisan)', 'Machine Operator', 'Mechanical Technician', 'Maintenance Engineer'],
-    campus: 'Bethlehem, Harrismith',
-  },
-  {
-    id: 15,
-    type: 'NATED',
-    field: 'Engineering',
-    title: 'Civil Engineering',
-    levels: 'N1 - N6',
-    duration: 'N1-N3: 18 months | N4-N6: 18 months + 2 years practical',
-    entry: 'N1-N3: Grade 9 | N4-N6: Matric with Maths & Science or NCV L4',
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80',
-    description: 'Covers construction, building materials, surveying, and civil technology. Pathway to artisan or civil engineering technician qualification.',
-    subjects: ['Civil Technology', 'Surveying', 'Mathematics', 'Engineering Drawing', 'Building Science'],
-    careers: ['Civil Technician', 'Quantity Surveyor', 'Site Supervisor', 'Construction Manager'],
-    campus: 'Bethlehem, Harrismith',
-  },
-  // NATED - Business
-  {
-    id: 16,
-    type: 'NATED',
-    field: 'Business',
-    title: 'Business Management',
-    levels: 'N4 - N6',
-    duration: '18 months full-time + 2 years practical',
-    entry: 'Matric (Grade 12) or NCV Level 4',
-    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80',
-    description: 'Develops business administration, management, and entrepreneurship skills. The N6 + 2 years practical experience leads to a National Diploma.',
-    subjects: ['Business Management', 'Entrepreneurship', 'Computer Practice', 'English for Business', 'Economics'],
-    careers: ['Business Manager', 'Entrepreneur', 'Operations Manager', 'Business Consultant'],
-    campus: 'All Campuses',
-  },
-  {
-    id: 17,
-    type: 'NATED',
-    field: 'Business',
-    title: 'Management Assistant',
-    levels: 'N4 - N6',
-    duration: '18 months full-time + 2 years practical',
-    entry: 'Matric (Grade 12) or NCV Level 4',
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80',
-    description: 'Office management, secretarial skills, and administrative support. High demand in corporate environments.',
-    subjects: ['Office Practice', 'Computer Practice', 'Communication', 'English for Business', 'Entrepreneurship'],
-    careers: ['Personal Assistant', 'Office Manager', 'Executive Secretary', 'Administrative Coordinator'],
-    campus: 'All Campuses',
-  },
-  {
-    id: 18,
-    type: 'NATED',
-    field: 'Business',
-    title: 'Financial Management',
-    levels: 'N4 - N6',
-    duration: '18 months full-time + 2 years practical',
-    entry: 'Matric (Grade 12) or NCV Level 4',
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&q=80',
-    description: 'Covers financial accounting, cost accounting, taxation, and auditing principles. Prepares students for roles in finance departments.',
-    subjects: ['Financial Accounting', 'Cost and Management Accounting', 'Taxation', 'Auditing', 'Economics'],
-    careers: ['Financial Manager', 'Accountant', 'Auditor', 'Tax Consultant'],
-    campus: 'Main Campus, Bethlehem, Bonamelo',
-  },
-  {
-    id: 19,
-    type: 'NATED',
-    field: 'Business',
-    title: 'Human Resource Management',
-    levels: 'N4 - N6',
-    duration: '18 months full-time + 2 years practical',
-    entry: 'Matric (Grade 12) or NCV Level 4',
-    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600&q=80',
-    description: 'Covers labour relations, personnel management, training and development, and HR administration.',
-    subjects: ['Personnel Management', 'Labour Relations', 'Training & Development', 'Computer Practice', 'English'],
-    careers: ['HR Officer', 'Labour Relations Officer', 'Recruitment Consultant', 'Training Coordinator'],
-    campus: 'Main Campus, Bethlehem',
-  },
-  {
-    id: 20,
-    type: 'NATED',
-    field: 'Business',
-    title: 'Marketing Management',
-    levels: 'N4 - N6',
-    duration: '18 months full-time + 2 years practical',
-    entry: 'Matric (Grade 12) or NCV Level 4',
-    image: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&q=80',
-    description: 'Advanced marketing theory, sales management, consumer behaviour, and digital marketing fundamentals.',
-    subjects: ['Marketing Management', 'Sales Management', 'Consumer Behaviour', 'Entrepreneurship', 'Communication'],
-    careers: ['Marketing Manager', 'Brand Manager', 'Sales Manager', 'Digital Marketer'],
-    campus: 'Main Campus, Bethlehem',
-  },
-  {
-    id: 21,
-    type: 'NATED',
-    field: 'Business',
-    title: 'Public Management',
-    levels: 'N4 - N6',
-    duration: '18 months full-time + 2 years practical',
-    entry: 'Matric (Grade 12) or NCV Level 4',
-    image: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=80',
-    description: 'Prepares students for public sector roles, covering governance, public administration, and community development.',
-    subjects: ['Public Administration', 'Public Finance', 'Municipal Administration', 'Communication', 'Entrepreneurship'],
-    careers: ['Government Official', 'Municipal Officer', 'Public Administrator', 'Community Development Worker'],
-    campus: 'Main Campus, Bonamelo',
-  },
-  // NATED - Utility
-  {
-    id: 22,
-    type: 'NATED',
-    field: 'Utility',
-    title: 'Educare (Early Childhood Development)',
-    levels: 'N4 - N6',
-    duration: '18 months full-time + 2 years practical',
-    entry: 'Matric (Grade 12) or NCV Level 4',
-    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80',
-    description: 'Advanced early childhood development training. Covers educational psychology, curriculum development, and ECD centre management.',
-    subjects: ['Educare Didactics', 'Day Care Personnel Development', 'Educational Psychology', 'Entrepreneurship', 'English'],
-    careers: ['ECD Centre Principal', 'Early Childhood Educator', 'EDUCARE Trainer', 'Child Development Specialist'],
-    campus: 'Main Campus, Bonamelo, Sefikeng',
-  },
-]
 
-const filters = ['All', 'NC(V)', 'NATED', 'Engineering', 'Business', 'Services', 'Agriculture', 'Utility']
+const fieldIcons = {
+  Engineering: Settings,
+  Business: BarChart3,
+  Services: Coffee,
+  Agriculture: Wrench,
+  Utility: GraduationCap,
+}
 
 export default function Programmes() {
-  const [activeFilter, setActiveFilter] = useState('All')
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState('all')
+  const [activeField, setActiveField] = useState('All Fields')
   const [search, setSearch] = useState('')
-  const [expanded, setExpanded] = useState(null)
+  const [expandedId, setExpandedId] = useState(null)
 
-  const filtered = allProgrammes.filter(p => {
-    const matchFilter =
-      activeFilter === 'All' ||
-      p.type === activeFilter ||
-      p.field === activeFilter
-    const matchSearch =
-      search === '' ||
-      p.title.toLowerCase().includes(search.toLowerCase()) ||
-      p.field.toLowerCase().includes(search.toLowerCase()) ||
-      p.description.toLowerCase().includes(search.toLowerCase())
-    return matchFilter && matchSearch
-  })
+  useEffect(() => {
+    fetchProgrammesData()
+      .then(d => setData(d))
+      .catch(err => console.error(err))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const allProgrammes = useMemo(() => {
+    if (!data) return []
+    if (activeTab === 'ncv') return data.ncv
+    if (activeTab === 'nated') return data.nated
+    return [...data.ncv, ...data.nated]
+  }, [data, activeTab])
+
+  const fields = useMemo(() => {
+    if (!data) return ['All Fields']
+    const unique = [...new Set([...data.ncv, ...data.nated].map(p => p.field))]
+    return ['All Fields', ...unique]
+  }, [data])
+
+  const filtered = useMemo(() => {
+    return allProgrammes.filter(p => {
+      const matchesField = activeField === 'All Fields' || p.field === activeField
+      const matchesSearch =
+        search === '' ||
+        p.title.toLowerCase().includes(search.toLowerCase()) ||
+        p.description.toLowerCase().includes(search.toLowerCase()) ||
+        p.careers.some(c => c.toLowerCase().includes(search.toLowerCase()))
+      return matchesField && matchesSearch
+    })
+  }, [allProgrammes, activeField, search])
+
+  if (loading) {
+    return (
+      <div style={styles.loading}>
+        <div style={styles.loadingSpinner} />
+        <p style={styles.loadingText}>Loading programmes...</p>
+      </div>
+    )
+  }
 
   return (
     <main>
-
       {/* Hero */}
       <section style={styles.hero}>
         <div style={styles.heroOverlay} />
         <div style={styles.heroContent}>
-          <p style={styles.heroTag}>Qualifications & Courses</p>
+          <div style={styles.heroBadge}>
+            <BookOpen size={13} color="#FFB800" />
+            <span>22 Accredited Programmes</span>
+          </div>
+          <p style={styles.heroTag}>Qualifications That Work</p>
           <h1 style={styles.heroTitle}>Our Programmes</h1>
           <p style={styles.heroSub}>
-            NC(V) and NATED (Report 191) programmes accredited by Umalusi and
-            aligned with SETA and industry standards across the Free State.
+            National Certificate (Vocational) and NATED Report 191 programmes spanning
+            Engineering, Business, Services, Agriculture, and Utility Studies - all
+            accredited by Umalusi, QCTO, and DHET.
           </p>
           <div style={styles.heroStats}>
-            {[
-              { n: '22+', l: 'Programmes' },
-              { n: 'NC(V)', l: 'Level 2-4' },
-              { n: 'NATED', l: 'N1-N6' },
-              { n: 'Umalusi', l: 'Accredited' },
-            ].map((s, i) => (
-              <div key={i} style={styles.heroStat}>
-                <span style={styles.heroStatNum}>{s.n}</span>
-                <span style={styles.heroStatLabel}>{s.l}</span>
-              </div>
-            ))}
+            <div style={styles.heroStat}>
+              <span style={styles.heroStatNum}>{data.ncv.length}</span>
+              <span style={styles.heroStatLabel}>NC(V) Programmes</span>
+            </div>
+            <div style={styles.heroStatDiv} />
+            <div style={styles.heroStat}>
+              <span style={styles.heroStatNum}>{data.nated.length}</span>
+              <span style={styles.heroStatLabel}>NATED Programmes</span>
+            </div>
+            <div style={styles.heroStatDiv} />
+            <div style={styles.heroStat}>
+              <span style={styles.heroStatNum}>{fields.length - 1}</span>
+              <span style={styles.heroStatLabel}>Study Fields</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Explanation Banners */}
-      <section style={styles.explainSection}>
+      {/* NC(V) vs NATED Explainer */}
+      <section style={styles.explainerSection}>
         <div style={styles.container}>
-          <div style={styles.explainGrid}>
-            <div style={styles.explainCard}>
-              <div style={styles.explainIconWrap}>
-                <span style={styles.explainIcon}>NC(V)</span>
+          <div style={styles.sectionHeadCenter}>
+            <p style={styles.sectionTag}>Choose Your Path</p>
+            <h2 style={styles.sectionTitle}>NC(V) or NATED?</h2>
+            <p style={styles.sectionSub}>
+              Two accredited qualification frameworks, two different pathways - both lead
+              to recognised certifications and employment opportunities.
+            </p>
+          </div>
+          <div style={styles.explainerGrid}>
+            <div style={{ ...styles.explainerCard, borderTopColor: '#0E7BB5' }}>
+              <div style={styles.explainerIconWrap}>
+                <Award size={22} color="#0E7BB5" />
               </div>
-              <h3 style={styles.explainTitle}>National Certificate (Vocational)</h3>
-              <p style={styles.explainText}>
-                A 3-year qualification completed at Level 2, 3, and 4. Each level consists
-                of 7 subjects - 3 fundamental and 4 vocational. An NC(V) Level 4 certificate
-                is equivalent to Matric and can qualify you for university entry, employment,
-                or entrepreneurship.
+              <h3 style={styles.explainerTitle}>NC(V) - Level 2 to 4</h3>
+              <p style={styles.explainerDesc}>
+                Full-time, 3-year National Certificate (Vocational). Equivalent to Grade 12
+                (Matric). Entry requires Grade 9 pass.
               </p>
-              <p style={styles.explainReq}>Entry: Grade 9 or NQF Level 1</p>
+              <ul style={styles.explainerList}>
+                <li>3-year full-time programme</li>
+                <li>7 subjects per level (4 vocational + 3 fundamentals)</li>
+                <li>Accredited by Umalusi</li>
+                <li>Enables entry to university, Higher Certificate, or N4</li>
+              </ul>
             </div>
-            <div style={styles.explainCard}>
-              <div style={{ ...styles.explainIconWrap, background: '#FFB800' }}>
-                <span style={{ ...styles.explainIcon, color: '#000' }}>N1-N6</span>
+            <div style={{ ...styles.explainerCard, borderTopColor: '#FFB800' }}>
+              <div style={{ ...styles.explainerIconWrap, background: '#fff8e6' }}>
+                <Briefcase size={22} color="#FFB800" />
               </div>
-              <h3 style={styles.explainTitle}>NATED (Report 191)</h3>
-              <p style={styles.explainText}>
-                NATED programmes run from N1 to N6 and cover Engineering, Business, and Utility
-                Studies. Completing N6 plus 2 years of approved practical experience earns you
-                a National Diploma. N3 in engineering plus a trade test qualifies you as a
-                certified artisan.
+              <h3 style={styles.explainerTitle}>NATED (Report 191)</h3>
+              <p style={styles.explainerDesc}>
+                N1–N6 trimester-based programmes. Strong theory + practical component.
+                N6 + practical hours = National Diploma.
               </p>
-              <p style={styles.explainReq}>Entry: N1-N3: Grade 9 | N4-N6: Matric or NCV L4</p>
+              <ul style={styles.explainerList}>
+                <li>N1–N3: 18 months total (3 trimesters each)</li>
+                <li>N4–N6: 18 months + 2 years workplace practical</li>
+                <li>Accredited by QCTO and DHET</li>
+                <li>Leads to artisan trade test or National Diploma</li>
+              </ul>
             </div>
-            <div style={styles.explainCard}>
-              <div style={{ ...styles.explainIconWrap, background: '#2ecc71' }}>
-                <span style={{ ...styles.explainIcon, color: '#fff' }}>PATH</span>
+            <div style={{ ...styles.explainerCard, borderTopColor: '#2ecc71' }}>
+              <div style={{ ...styles.explainerIconWrap, background: '#e8f8f0' }}>
+                <BadgeCheck size={22} color="#2ecc71" />
               </div>
-              <h3 style={styles.explainTitle}>Your Qualification Pathway</h3>
-              <p style={styles.explainText}>
-                Start at any entry point that matches your current qualification. NC(V) Level 4
-                opens the door to NATED N4 programmes. N6 plus practical experience leads to
-                a National Diploma. National Diplomas can bridge to university degrees.
+              <h3 style={styles.explainerTitle}>Which Is Right for You?</h3>
+              <p style={styles.explainerDesc}>
+                Your current qualification and career goals determine the best pathway.
               </p>
-              <p style={styles.explainReq}>Exams: June and November each year</p>
+              <ul style={styles.explainerList}>
+                <li><strong>Grade 9–11:</strong> Start with NC(V) Level 2 or NATED N1</li>
+                <li><strong>Matric:</strong> Enter NATED N4 or NC(V) for career switch</li>
+                <li><strong>Artisan goal:</strong> NATED engineering + trade test</li>
+                <li><strong>Management goal:</strong> NATED N4–N6 Business</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Search and Filter */}
+      {/* Search & Filter Bar */}
       <section style={styles.filterSection}>
         <div style={styles.container}>
-          <div style={styles.searchRow}>
+          <div style={styles.filterBar}>
             <div style={styles.searchWrap}>
-              <span style={styles.searchIcon}>&#128269;</span>
+              <Search size={18} color="#999" style={styles.searchIcon} />
               <input
-                style={styles.searchInput}
-                placeholder="Search programmes by name or field..."
+                type="text"
+                placeholder="Search programmes, subjects, or careers..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
+                style={styles.searchInput}
               />
-              {search && (
-                <button style={styles.clearBtn} onClick={() => setSearch('')}>
-                  ✕
+            </div>
+            <div style={styles.tabRow}>
+              {[
+                { id: 'all', label: 'All Programmes', count: data.ncv.length + data.nated.length },
+                { id: 'ncv', label: 'NC(V)', count: data.ncv.length },
+                { id: 'nated', label: 'NATED', count: data.nated.length },
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  style={{
+                    ...styles.tab,
+                    background: activeTab === tab.id ? '#0E7BB5' : 'transparent',
+                    color: activeTab === tab.id ? '#fff' : '#555',
+                  }}
+                >
+                  {tab.label} <span style={styles.tabCount}>{tab.count}</span>
                 </button>
-              )}
+              ))}
             </div>
           </div>
-          <div style={styles.filterRow}>
-            {filters.map(f => (
+          <div style={styles.fieldRow}>
+            <span style={styles.fieldLabel}>
+              <Filter size={14} color="#666" /> Filter by field:
+            </span>
+            {fields.map(field => (
               <button
-                key={f}
+                key={field}
+                onClick={() => setActiveField(field)}
                 style={{
-                  ...styles.filterBtn,
-                  background: activeFilter === f ? '#0E7BB5' : '#fff',
-                  color: activeFilter === f ? '#fff' : '#555',
-                  borderColor: activeFilter === f ? '#0E7BB5' : '#ddd',
-                  fontWeight: activeFilter === f ? '600' : '400',
+                  ...styles.fieldChip,
+                  background: activeField === field ? '#FFB800' : '#fff',
+                  color: activeField === field ? '#000' : '#555',
+                  borderColor: activeField === field ? '#FFB800' : '#e0e0e0',
                 }}
-                onClick={() => setActiveFilter(f)}
               >
-                {f}
+                {field}
               </button>
             ))}
           </div>
           <p style={styles.resultCount}>
-            Showing {filtered.length} programme{filtered.length !== 1 ? 's' : ''}
-            {activeFilter !== 'All' ? ` in ${activeFilter}` : ''}
-            {search ? ` matching "${search}"` : ''}
+            Showing <strong>{filtered.length}</strong> of {allProgrammes.length} programmes
           </p>
         </div>
       </section>
 
-      {/* Programme Cards */}
-      <section style={styles.cardsSection}>
+      {/* Programmes Grid */}
+      <section style={styles.progSection}>
         <div style={styles.container}>
           {filtered.length === 0 ? (
-            <div style={styles.noResults}>
-              <p style={{ fontSize: '18px', color: '#666' }}>No programmes match your search.</p>
-              <button style={styles.resetBtn} onClick={() => { setSearch(''); setActiveFilter('All') }}>
-                Clear filters
+            <div style={styles.emptyState}>
+              <Search size={48} color="#ccc" />
+              <h3 style={styles.emptyTitle}>No programmes found</h3>
+              <p style={styles.emptyDesc}>
+                Try adjusting your search or filter criteria.
+              </p>
+              <button
+                onClick={() => { setSearch(''); setActiveField('All Fields'); setActiveTab('all') }}
+                style={styles.emptyBtn}
+              >
+                Reset Filters
               </button>
             </div>
           ) : (
-            <div style={styles.cardsGrid}>
-              {filtered.map(prog => (
-                <div key={prog.id} style={styles.card}>
-                  <div style={{
-                    ...styles.cardImg,
-                    backgroundImage: `url(${prog.image})`,
-                  }}>
-                    <span style={{
-                      ...styles.cardBadge,
-                      background: prog.type === 'NC(V)' ? '#0E7BB5' : '#FFB800',
-                      color: prog.type === 'NC(V)' ? '#fff' : '#000',
-                    }}>{prog.type}</span>
-                    <span style={styles.cardFieldBadge}>{prog.field}</span>
-                  </div>
-
-                  <div style={styles.cardBody}>
-                    <h3 style={styles.cardTitle}>{prog.title}</h3>
-                    <p style={styles.cardDesc}>{prog.description}</p>
-
-                    <div style={styles.cardMeta}>
-                      <div style={styles.metaItem}>
-                        <span style={styles.metaLabel}>Levels</span>
-                        <span style={styles.metaValue}>{prog.levels}</span>
-                      </div>
-                      <div style={styles.metaItem}>
-                        <span style={styles.metaLabel}>Duration</span>
-                        <span style={styles.metaValue}>{prog.duration}</span>
-                      </div>
-                      <div style={styles.metaItem}>
-                        <span style={styles.metaLabel}>Entry</span>
-                        <span style={styles.metaValue}>{prog.entry}</span>
-                      </div>
-                      <div style={styles.metaItem}>
-                        <span style={styles.metaLabel}>Campus</span>
-                        <span style={styles.metaValue}>{prog.campus}</span>
-                      </div>
+            <div style={styles.progGrid}>
+              {filtered.map(p => {
+                const FieldIcon = fieldIcons[p.field] || BookOpen
+                const isNCV = p.levels.includes('Level')
+                const isExpanded = expandedId === p.id
+                return (
+                  <div key={p.id} style={styles.progCard}>
+                    <div style={{ ...styles.progImg, backgroundImage: `url(${p.image})` }}>
+                      <div style={styles.progImgOverlay} />
+                      <span style={{
+                        ...styles.progTypeBadge,
+                        background: isNCV ? '#0E7BB5' : '#FFB800',
+                        color: isNCV ? '#fff' : '#000',
+                      }}>
+                        {isNCV ? 'NC(V)' : 'NATED'}
+                      </span>
+                      <span style={styles.progFieldBadge}>
+                        <FieldIcon size={12} />
+                        {p.field}
+                      </span>
                     </div>
-
-                    <button
-                      style={styles.expandBtn}
-                      onClick={() => setExpanded(expanded === prog.id ? null : prog.id)}
-                    >
-                      {expanded === prog.id ? 'Hide details' : 'View subjects & careers'} {expanded === prog.id ? '▲' : '▼'}
-                    </button>
-
-                    {expanded === prog.id && (
-                      <div style={styles.expandedContent}>
-                        <div style={styles.expandSection}>
-                          <h4 style={styles.expandHeading}>Subjects</h4>
-                          <ul style={styles.expandList}>
-                            {prog.subjects.map((s, i) => (
-                              <li key={i} style={styles.expandItem}>{s}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div style={styles.expandSection}>
-                          <h4 style={styles.expandHeading}>Career Outcomes</h4>
-                          <ul style={styles.expandList}>
-                            {prog.careers.map((c, i) => (
-                              <li key={i} style={styles.expandItem}>{c}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        <Link to="/admissions" style={styles.applyBtn}>
-                          Apply for This Programme
-                        </Link>
+                    <div style={styles.progBody}>
+                      <h3 style={styles.progTitle}>{p.title}</h3>
+                      <div style={styles.progMeta}>
+                        <span style={styles.progMetaItem}>
+                          <Award size={13} color="#0E7BB5" />
+                          {p.levels}
+                        </span>
+                        <span style={styles.progMetaItem}>
+                          <Clock size={13} color="#0E7BB5" />
+                          {p.duration.length > 40 ? `${p.duration.substring(0, 40)}...` : p.duration}
+                        </span>
                       </div>
-                    )}
+                      <p style={styles.progDesc}>{p.description}</p>
+
+                      {isExpanded && (
+                        <div style={styles.expandedContent}>
+                          <div style={styles.expandSection}>
+                            <h4 style={styles.expandTitle}>Entry Requirements</h4>
+                            <p style={styles.expandText}>{p.entry}</p>
+                          </div>
+                          <div style={styles.expandSection}>
+                            <h4 style={styles.expandTitle}>Duration</h4>
+                            <p style={styles.expandText}>{p.duration}</p>
+                          </div>
+                          <div style={styles.expandSection}>
+                            <h4 style={styles.expandTitle}>Key Subjects</h4>
+                            <div style={styles.subjectList}>
+                              {p.subjects.map((s, i) => (
+                                <span key={i} style={styles.subjectChip}>{s}</span>
+                              ))}
+                            </div>
+                          </div>
+                          <div style={styles.expandSection}>
+                            <h4 style={styles.expandTitle}>Career Opportunities</h4>
+                            <div style={styles.careerList}>
+                              {p.careers.map((c, i) => (
+                                <div key={i} style={styles.careerItem}>
+                                  <CheckCircle2 size={13} color="#2ecc71" />
+                                  <span>{c}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div style={styles.expandSection}>
+                            <h4 style={styles.expandTitle}>Available At</h4>
+                            <p style={styles.expandText}>
+                              <MapPin size={13} color="#0E7BB5" style={{ verticalAlign: 'middle', marginRight: '4px' }} />
+                              {p.campus}
+                            </p>
+                          </div>
+                          <Link to="/admissions" style={styles.expandCta}>
+                            Apply for this programme <ArrowRight size={14} />
+                          </Link>
+                        </div>
+                      )}
+
+                      <button
+                        onClick={() => setExpandedId(isExpanded ? null : p.id)}
+                        style={styles.expandBtn}
+                      >
+                        {isExpanded ? (
+                          <>Hide details <ChevronUp size={14} /></>
+                        ) : (
+                          <>View full details <ChevronDown size={14} /></>
+                        )}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>
       </section>
 
-      {/* Pathway Section */}
+      {/* Pathway Diagram */}
       <section style={styles.pathwaySection}>
         <div style={styles.container}>
-          <p style={styles.sectionTag}>How It Works</p>
-          <h2 style={styles.sectionTitle}>Your Study Pathway</h2>
-          <p style={styles.sectionSub}>
-            Whether you are starting with Grade 9 or Matric, there is a clear progression
-            from your first qualification to a National Diploma and beyond.
-          </p>
-          <div style={styles.pathwaySteps}>
+          <div style={styles.sectionHeadCenter}>
+            <p style={styles.sectionTagWhite}>Your Journey</p>
+            <h2 style={styles.sectionTitleWhite}>From Enrolment to Employment</h2>
+            <p style={styles.sectionSubWhite}>
+              A clear pathway from your current qualification to workplace-ready skills
+              and nationally recognised certification.
+            </p>
+          </div>
+          <div style={styles.pathway}>
             {[
-              { step: '1', title: 'NC(V) Level 2', sub: 'Entry: Grade 9 or NQF Level 1', color: '#e8f4fc' },
-              { step: '2', title: 'NC(V) Level 3', sub: 'Progress after passing all 7 subjects', color: '#d1eaf8' },
-              { step: '3', title: 'NC(V) Level 4', sub: 'Equivalent to Matric on NQF', color: '#b3dbf2' },
-              { step: '4', title: 'NATED N4-N6', sub: 'Entry: NCV L4 or Matric', color: '#FFB800' },
-              { step: '5', title: 'National Diploma', sub: 'N6 + 2 years approved practical', color: '#0E7BB5' },
-            ].map((s, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0' }}>
-                <div style={{ ...styles.pathStep, background: s.color }}>
-                  <span style={{
-                    ...styles.pathNum,
-                    color: s.color === '#0E7BB5' ? '#FFB800' : '#0E7BB5',
-                  }}>{s.step}</span>
-                  <h4 style={{
-                    ...styles.pathTitle,
-                    color: s.color === '#0E7BB5' || s.color === '#FFB800' ? (s.color === '#FFB800' ? '#000' : '#fff') : '#1a1a1a',
-                  }}>{s.title}</h4>
-                  <p style={{
-                    ...styles.pathSub,
-                    color: s.color === '#0E7BB5' ? 'rgba(255,255,255,0.8)' : '#666',
-                  }}>{s.sub}</p>
-                </div>
-                {i < 4 && <div style={styles.pathArrow}>→</div>}
+              { num: '01', title: 'Choose Your Programme', desc: 'Select NC(V) or NATED based on your current qualification and career goals.' },
+              { num: '02', title: 'Apply & Register', desc: 'Complete career guidance, placement assessment, and formal application.' },
+              { num: '03', title: 'Study & Train', desc: 'Theory classes, practical workshops, and simulated workplace training.' },
+              { num: '04', title: 'Trade Test / Practical', desc: 'NATED: Workplace hours + trade test. NC(V): Internal + external assessments.' },
+              { num: '05', title: 'Qualify & Work', desc: 'Certified artisan, National Diploma, or further studies (Higher Certificate, Diploma, Degree).' },
+            ].map((step, i) => (
+              <div key={i} style={styles.pathwayStep}>
+                <div style={styles.pathwayNum}>{step.num}</div>
+                <h4 style={styles.pathwayTitle}>{step.title}</h4>
+                <p style={styles.pathwayDesc}>{step.desc}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* NSFAS Banner */}
-      <section style={styles.nsfasBanner}>
-        <div style={styles.container}>
-          <div style={styles.nsfasInner}>
-            <div>
-              <h2 style={styles.nsfasTitle}>NSFAS Funding Available</h2>
-              <p style={styles.nsfasSub}>
-                Qualifying students can receive NSFAS funding to cover tuition, accommodation,
-                and living allowances. Apply at nsfas.org.za before the deadline.
-              </p>
-            </div>
-            <div style={styles.nsfasBtns}>
-              <a href="https://www.nsfas.org.za" target="_blank" rel="noreferrer" style={styles.nsfasBtn}>
-                Apply for NSFAS
-              </a>
-              <Link to="/admissions" style={styles.nsfasBtnOutline}>
-                College Admissions
-              </Link>
-            </div>
           </div>
         </div>
       </section>
@@ -609,36 +371,26 @@ export default function Programmes() {
       {/* FAQ */}
       <section style={styles.faqSection}>
         <div style={styles.container}>
-          <p style={styles.sectionTag}>Common Questions</p>
-          <h2 style={styles.sectionTitle}>Programmes FAQ</h2>
-          <div style={styles.faqGrid}>
+          <div style={styles.sectionHeadCenter}>
+            <p style={styles.sectionTag}>Common Questions</p>
+            <h2 style={styles.sectionTitle}>Frequently Asked</h2>
+          </div>
+          <div style={styles.faqList}>
             {[
-              {
-                q: 'What is the difference between NC(V) and NATED?',
-                a: 'NC(V) is a 3-year school-based qualification from Level 2 to Level 4, equivalent to Matric. NATED (Report 191) runs from N1 to N6 and is career-focused. Both are nationally accredited.'
-              },
-              {
-                q: 'Can I apply with only a Grade 9?',
-                a: 'Yes. Most NC(V) Level 2 programmes and NATED N1-N3 engineering programmes accept Grade 9 as the minimum entry requirement.'
-              },
-              {
-                q: 'How do I qualify for a National Diploma?',
-                a: 'Complete N6 in your chosen NATED programme, then obtain a letter confirming 2 years of approved practical workplace experience. Submit both to the college for your National Diploma.'
-              },
-              {
-                q: 'Are examinations conducted by the college?',
-                a: 'No. All national examinations are conducted by the Department of Higher Education and Training (DHET) in June and November each year.'
-              },
-              {
-                q: 'Can an NC(V) Level 4 certificate get me into university?',
-                a: 'Yes, provided you meet the NC(V) Level 4 statutory requirements for higher certificate, diploma or degree entry as set by the Council for General and Further Education and Training.'
-              },
-              {
-                q: 'Is NSFAS available for all programmes?',
-                a: 'NSFAS is available for students enrolled in NC(V) and NATED programmes at Maluti TVET College, subject to meeting NSFAS eligibility criteria.'
-              },
+              { q: 'Do I need Matric to study at Maluti TVET College?', a: 'Not necessarily. NC(V) Level 2 and NATED N1 only require a Grade 9 pass. However, NATED N4–N6 programmes require Matric or a completed N3 certificate. Engineering NATED programmes specifically require Mathematics and Physical Science - Mathematical Literacy is not accepted.' },
+              { q: 'What is the difference between NC(V) and NATED?', a: 'NC(V) is a 3-year full-time qualification equivalent to Matric, accredited by Umalusi. NATED (Report 191) is trimester-based - N1–N3 for 18 months, then N4–N6 for another 18 months plus 2 years workplace practical. Both are nationally recognised.' },
+              { q: 'Can I get NSFAS funding for my programme?', a: 'Yes, qualifying students receive NSFAS funding covering tuition, accommodation, transport, and incidentals. Household income threshold is R350,000 per annum. Apply at nsfas.org.za as early as possible.' },
+              { q: 'How do I become a qualified artisan?', a: 'Complete NATED N1–N3 in your trade (e.g. Electrical, Mechanical), accumulate required workplace hours (logbook), then pass your QCTO trade test. This gives you artisan status recognised nationally.' },
+              { q: 'What is the National Diploma pathway?', a: 'Complete NATED N4–N6 (18 months), then complete 2,000 practical hours for Business qualifications or 2,670 hours for Engineering. Submit your QCTO logbook to receive your National Diploma.' },
+              { q: 'At which campuses can I study my chosen programme?', a: 'Each programme is offered at specific campuses based on infrastructure and specialisation. Click "View full details" on any programme above to see campus availability.' },
             ].map((faq, i) => (
-              <FaqItem key={i} q={faq.q} a={faq.a} />
+              <details key={i} style={styles.faqItem}>
+                <summary style={styles.faqQ}>
+                  <span>{faq.q}</span>
+                  <ChevronDown size={18} color="#0E7BB5" />
+                </summary>
+                <p style={styles.faqA}>{faq.a}</p>
+              </details>
             ))}
           </div>
         </div>
@@ -646,17 +398,24 @@ export default function Programmes() {
 
       {/* CTA */}
       <section style={styles.cta}>
+        <div style={styles.ctaOverlay} />
         <div style={styles.ctaInner}>
-          <h2 style={styles.ctaTitle}>Found a Programme That Suits You?</h2>
+          <div style={styles.ctaBadge}>
+            <Sparkles size={14} color="#FFB800" />
+            <span>Applications Open for 2026</span>
+          </div>
+          <h2 style={styles.ctaTitle}>Found Your Programme?</h2>
           <p style={styles.ctaSub}>
-            Apply online at malutitvet.co.za or visit any of our 8 campuses across the Free State.
+            Take the next step. Applications for the 2026 academic year are open at all
+            8 campuses. NSFAS funding available for qualifying students.
           </p>
           <div style={styles.ctaBtns}>
-            <Link to="/admissions" style={styles.btnPrimary}
-              onMouseEnter={e => e.currentTarget.style.background = '#e6a600'}
-              onMouseLeave={e => e.currentTarget.style.background = '#FFB800'}
-            >Apply Now</Link>
-            <Link to="/contact" style={styles.btnOutline}>Contact Us</Link>
+            <Link to="/admissions" style={styles.btnPrimary}>
+              Start Your Application <ArrowRight size={16} />
+            </Link>
+            <Link to="/contact" style={styles.btnOutline}>
+              Contact a Campus
+            </Link>
           </div>
         </div>
       </section>
@@ -665,572 +424,310 @@ export default function Programmes() {
   )
 }
 
-function FaqItem({ q, a }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div style={styles.faqItem}>
-      <button style={styles.faqQ} onClick={() => setOpen(!open)}>
-        <span>{q}</span>
-        <span style={{ fontSize: '18px', color: '#0E7BB5' }}>{open ? '−' : '+'}</span>
-      </button>
-      {open && <p style={styles.faqA}>{a}</p>}
-    </div>
-  )
-}
-
 const styles = {
+  loading: {
+    minHeight: '100vh', display: 'flex', flexDirection: 'column',
+    alignItems: 'center', justifyContent: 'center', gap: '20px', background: '#fff',
+  },
+  loadingSpinner: {
+    width: '48px', height: '48px', borderRadius: '50%',
+    border: '3px solid #e8f4fc', borderTopColor: '#0E7BB5',
+    animation: 'spin 0.8s linear infinite',
+  },
+  loadingText: { color: '#0E7BB5', fontSize: '14px', fontWeight: 500 },
+
   hero: {
     position: 'relative',
-    backgroundImage: 'url(https://cms.cut.ac.za/Files/Images/6f2107c2-0ceb-4be4-b4d9-0da308d664ee.jpg',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    minHeight: '480px',
-    display: 'flex',
-    alignItems: 'center',
+    backgroundImage: `url(${programmes})`,
+    backgroundSize: 'cover', backgroundPosition: 'center',
+    minHeight: '480px', display: 'flex', alignItems: 'center',
   },
   heroOverlay: {
-    position: 'absolute',
-    inset: 0,
-    background: 'linear-gradient(135deg, rgba(14,123,181,0.92) 0%, rgba(0,0,0,0.7) 100%)',
+    position: 'absolute', inset: 0,
+    background: 'linear-gradient(135deg, rgba(14,123,181,0.94) 0%, rgba(0,0,0,0.72) 100%)',
   },
   heroContent: {
-    position: 'relative',
-    zIndex: 1,
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '80px 24px',
-    width: '100%',
+    position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto',
+    padding: '96px 24px', width: '100%',
+  },
+  heroBadge: {
+    display: 'inline-flex', alignItems: 'center', gap: '8px',
+    background: 'rgba(255,184,0,0.15)', border: '1px solid rgba(255,184,0,0.4)',
+    color: '#FFB800', fontSize: '12px', fontWeight: 600,
+    padding: '6px 14px', borderRadius: '20px', marginBottom: '16px',
   },
   heroTag: {
-    color: '#FFB800',
-    fontSize: '12px',
-    fontWeight: '700',
-    letterSpacing: '3px',
-    textTransform: 'uppercase',
-    marginBottom: '12px',
+    color: '#FFB800', fontSize: '12px', fontWeight: 700,
+    letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px',
   },
   heroTitle: {
-    color: '#fff',
-    fontSize: 'clamp(32px, 5vw, 52px)',
-    fontWeight: '800',
-    marginBottom: '16px',
-    letterSpacing: '-1px',
+    color: '#fff', fontSize: 'clamp(34px, 5vw, 56px)',
+    fontWeight: 800, marginBottom: '16px', letterSpacing: '-1px',
   },
   heroSub: {
-    color: 'rgba(255,255,255,0.88)',
-    fontSize: '17px',
-    lineHeight: '1.8',
-    maxWidth: '600px',
-    marginBottom: '40px',
+    color: 'rgba(255,255,255,0.88)', fontSize: '17px',
+    lineHeight: 1.8, maxWidth: '640px', marginBottom: '36px',
   },
   heroStats: {
-    display: 'flex',
-    gap: '40px',
-    flexWrap: 'wrap',
+    display: 'inline-flex', alignItems: 'center', gap: '28px',
+    background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)',
+    borderRadius: '12px', padding: '18px 28px', backdropFilter: 'blur(8px)', flexWrap: 'wrap',
   },
-  heroStat: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-  },
-  heroStatNum: {
-    color: '#FFB800',
-    fontSize: '24px',
-    fontWeight: '800',
-  },
-  heroStatLabel: {
-    color: 'rgba(255,255,255,0.75)',
-    fontSize: '12px',
-    textTransform: 'uppercase',
-    letterSpacing: '1px',
-  },
-  explainSection: {
-    background: '#fff',
-    padding: '64px 24px',
-    borderBottom: '1px solid #e8e8e8',
-  },
-  container: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-  },
-  explainGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '24px',
-  },
-  explainCard: {
-    background: '#f8f9fa',
-    borderRadius: '10px',
-    padding: '28px',
-    borderTop: '4px solid #0E7BB5',
-  },
-  explainIconWrap: {
-    background: '#0E7BB5',
-    display: 'inline-flex',
-    borderRadius: '8px',
-    padding: '8px 16px',
-    marginBottom: '16px',
-  },
-  explainIcon: {
-    color: '#fff',
-    fontWeight: '800',
-    fontSize: '16px',
-    letterSpacing: '1px',
-  },
-  explainTitle: {
-    fontSize: '17px',
-    fontWeight: '700',
-    color: '#1a1a1a',
-    marginBottom: '10px',
-  },
-  explainText: {
-    fontSize: '14px',
-    color: '#555',
-    lineHeight: '1.8',
-    marginBottom: '12px',
-  },
-  explainReq: {
-    fontSize: '13px',
-    color: '#0E7BB5',
-    fontWeight: '600',
-    background: '#e8f4fc',
-    padding: '6px 12px',
-    borderRadius: '4px',
-    display: 'inline-block',
-  },
-  filterSection: {
-    background: '#fff',
-    padding: '32px 24px 0',
-    position: 'sticky',
-    top: '88px',
-    zIndex: 100,
-    borderBottom: '1px solid #e8e8e8',
-  },
-  searchRow: {
-    marginBottom: '16px',
-  },
-  searchWrap: {
-    position: 'relative',
-    maxWidth: '480px',
-  },
-  searchIcon: {
-    position: 'absolute',
-    left: '14px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    fontSize: '16px',
-    color: '#999',
-  },
-  searchInput: {
-    width: '100%',
-    padding: '12px 40px 12px 40px',
-    borderRadius: '8px',
-    border: '1.5px solid #e0e0e0',
-    fontSize: '14px',
-    outline: 'none',
-    background: '#f8f9fa',
-  },
-  clearBtn: {
-    position: 'absolute',
-    right: '12px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: '#999',
-    fontSize: '14px',
-  },
-  filterRow: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '8px',
-    paddingBottom: '16px',
-  },
-  filterBtn: {
-    padding: '7px 16px',
-    borderRadius: '20px',
-    border: '1px solid #ddd',
-    fontSize: '13px',
-    cursor: 'pointer',
-    transition: 'all 0.15s',
-  },
-  resultCount: {
-    fontSize: '13px',
-    color: '#888',
-    paddingBottom: '12px',
-  },
-  cardsSection: {
-    padding: '48px 24px 80px',
-    background: '#f8f9fa',
-  },
-  cardsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
-    gap: '24px',
-  },
-  card: {
-    background: '#fff',
-    borderRadius: '10px',
-    overflow: 'hidden',
-    border: '1px solid #e8e8e8',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardImg: {
-    height: '180px',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    padding: '12px',
-  },
-  cardBadge: {
-    fontSize: '11px',
-    fontWeight: '700',
-    padding: '4px 10px',
-    borderRadius: '4px',
-    letterSpacing: '0.5px',
-  },
-  cardFieldBadge: {
-    fontSize: '11px',
-    fontWeight: '600',
-    padding: '4px 10px',
-    borderRadius: '4px',
-    background: 'rgba(0,0,0,0.55)',
-    color: '#fff',
-    backdropFilter: 'blur(4px)',
-  },
-  cardBody: {
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-    flex: 1,
-  },
-  cardTitle: {
-    fontSize: '17px',
-    fontWeight: '700',
-    color: '#1a1a1a',
-  },
-  cardDesc: {
-    fontSize: '14px',
-    color: '#555',
-    lineHeight: '1.7',
-  },
-  cardMeta: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '8px',
-    background: '#f8f9fa',
-    borderRadius: '8px',
-    padding: '12px',
-    marginTop: '4px',
-  },
-  metaItem: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2px',
-  },
-  metaLabel: {
-    fontSize: '10px',
-    color: '#999',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
-    fontWeight: '600',
-  },
-  metaValue: {
-    fontSize: '13px',
-    color: '#333',
-    fontWeight: '500',
-  },
-  expandBtn: {
-    background: 'none',
-    border: '1px solid #0E7BB5',
-    color: '#0E7BB5',
-    borderRadius: '6px',
-    padding: '8px 14px',
-    fontSize: '13px',
-    fontWeight: '600',
-    cursor: 'pointer',
-    textAlign: 'left',
-    marginTop: '4px',
-  },
-  expandedContent: {
-    background: '#f0f8ff',
-    borderRadius: '8px',
-    padding: '16px',
-    marginTop: '4px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-  },
-  expandSection: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-  },
-  expandHeading: {
-    fontSize: '13px',
-    fontWeight: '700',
-    color: '#0E7BB5',
-    textTransform: 'uppercase',
-    letterSpacing: '1px',
-  },
-  expandList: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '6px',
-    listStyle: 'none',
-    padding: 0,
-    margin: 0,
-  },
-  expandItem: {
-    background: '#fff',
-    border: '1px solid #cce4f5',
-    borderRadius: '20px',
-    padding: '4px 12px',
-    fontSize: '12px',
-    color: '#333',
-  },
-  applyBtn: {
-    background: '#0E7BB5',
-    color: '#fff',
-    textDecoration: 'none',
-    padding: '10px 20px',
-    borderRadius: '6px',
-    fontSize: '13px',
-    fontWeight: '600',
-    textAlign: 'center',
-    display: 'block',
-    marginTop: '4px',
-  },
-  noResults: {
-    textAlign: 'center',
-    padding: '80px 24px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '16px',
-  },
-  resetBtn: {
-    background: '#0E7BB5',
-    color: '#fff',
-    border: 'none',
-    padding: '10px 24px',
-    borderRadius: '6px',
-    fontSize: '14px',
-    cursor: 'pointer',
-    fontWeight: '600',
-  },
-  pathwaySection: {
-    padding: '80px 24px',
-    background: '#fff',
-  },
+  heroStat: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' },
+  heroStatNum: { color: '#FFB800', fontSize: '26px', fontWeight: 800 },
+  heroStatLabel: { color: 'rgba(255,255,255,0.75)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' },
+  heroStatDiv: { width: '1px', height: '32px', background: 'rgba(255,255,255,0.2)' },
+
+  explainerSection: { padding: '80px 24px', background: '#fff' },
+  container: { maxWidth: '1200px', margin: '0 auto' },
+  sectionHeadCenter: { textAlign: 'center', marginBottom: '48px' },
   sectionTag: {
-    color: '#0E7BB5',
-    fontSize: '11px',
-    fontWeight: '700',
-    letterSpacing: '3px',
-    textTransform: 'uppercase',
-    marginBottom: '8px',
-    textAlign: 'center',
+    color: '#0E7BB5', fontSize: '11px', fontWeight: 700,
+    letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '8px',
   },
   sectionTitle: {
-    fontSize: 'clamp(24px, 3vw, 36px)',
-    fontWeight: '700',
-    color: '#1a1a1a',
-    textAlign: 'center',
-    marginBottom: '12px',
-    letterSpacing: '-0.5px',
+    fontSize: 'clamp(26px, 3vw, 38px)', fontWeight: 700,
+    color: '#1a1a1a', marginBottom: '12px', letterSpacing: '-0.5px',
   },
   sectionSub: {
-    color: '#666',
-    fontSize: '16px',
-    textAlign: 'center',
-    maxWidth: '600px',
-    margin: '0 auto 48px',
-    lineHeight: '1.8',
+    color: '#666', fontSize: '16px', lineHeight: 1.8,
+    maxWidth: '620px', margin: '0 auto',
   },
-  pathwaySteps: {
-    display: 'flex',
-    alignItems: 'stretch',
-    flexWrap: 'wrap',
-    gap: '0',
-    justifyContent: 'center',
+  explainerGrid: {
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px',
   },
-  pathStep: {
-    padding: '24px 20px',
-    borderRadius: '8px',
-    textAlign: 'center',
-    minWidth: '160px',
-    flex: '1',
-    maxWidth: '200px',
+  explainerCard: {
+    background: '#fff', border: '1px solid #e8e8e8', borderTop: '4px solid #0E7BB5',
+    borderRadius: '12px', padding: '32px 28px',
+    display: 'flex', flexDirection: 'column', gap: '14px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
   },
-  pathNum: {
-    fontSize: '28px',
-    fontWeight: '800',
-    display: 'block',
-    marginBottom: '8px',
+  explainerIconWrap: {
+    width: '52px', height: '52px', borderRadius: '12px', background: '#e8f4fc',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
   },
-  pathTitle: {
-    fontSize: '14px',
-    fontWeight: '700',
-    marginBottom: '6px',
+  explainerTitle: { fontSize: '18px', fontWeight: 700, color: '#1a1a1a' },
+  explainerDesc: { fontSize: '14px', color: '#555', lineHeight: 1.7 },
+  explainerList: {
+    listStyle: 'none', padding: 0, margin: '8px 0 0', display: 'flex',
+    flexDirection: 'column', gap: '8px',
   },
-  pathSub: {
-    fontSize: '12px',
-    lineHeight: '1.5',
+
+  filterSection: {
+    padding: '32px 24px', background: '#f8f9fa',
+    borderTop: '1px solid #e8e8e8', borderBottom: '1px solid #e8e8e8',
+    position: 'sticky', top: '88px', zIndex: 100,
   },
-  pathArrow: {
-    fontSize: '20px',
-    color: '#0E7BB5',
-    padding: '0 4px',
-    display: 'flex',
-    alignItems: 'center',
+  filterBar: {
+    display: 'flex', gap: '16px', alignItems: 'center',
+    flexWrap: 'wrap', marginBottom: '16px',
   },
-  nsfasBanner: {
-    background: '#0E7BB5',
-    padding: '56px 24px',
+  searchWrap: { position: 'relative', flex: 1, minWidth: '260px' },
+  searchIcon: { position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' },
+  searchInput: {
+    width: '100%', padding: '12px 16px 12px 44px', borderRadius: '8px',
+    border: '1.5px solid #e0e0e0', fontSize: '14px', outline: 'none',
+    background: '#fff', fontFamily: 'inherit', boxSizing: 'border-box',
   },
-  nsfasInner: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: '32px',
+  tabRow: {
+    display: 'flex', gap: '0', border: '1px solid #e0e0e0',
+    borderRadius: '8px', overflow: 'hidden', background: '#fff',
   },
-  nsfasTitle: {
-    fontSize: 'clamp(22px, 3vw, 32px)',
-    fontWeight: '700',
-    color: '#fff',
-    marginBottom: '8px',
-    letterSpacing: '-0.5px',
+  tab: {
+    padding: '11px 18px', border: 'none', fontSize: '13px', fontWeight: 600,
+    cursor: 'pointer', transition: 'all 0.15s',
+    display: 'inline-flex', alignItems: 'center', gap: '6px',
   },
-  nsfasSub: {
-    color: 'rgba(255,255,255,0.85)',
-    fontSize: '15px',
-    lineHeight: '1.7',
-    maxWidth: '520px',
+  tabCount: {
+    background: 'rgba(255,255,255,0.25)', padding: '1px 7px',
+    borderRadius: '10px', fontSize: '11px', fontWeight: 700,
   },
-  nsfasBtns: {
-    display: 'flex',
-    gap: '12px',
-    flexWrap: 'wrap',
-    flexShrink: 0,
+  fieldRow: {
+    display: 'flex', gap: '8px', alignItems: 'center',
+    flexWrap: 'wrap', marginBottom: '12px',
   },
-  nsfasBtn: {
-    background: '#FFB800',
-    color: '#000',
-    textDecoration: 'none',
-    padding: '12px 24px',
-    borderRadius: '6px',
-    fontSize: '14px',
-    fontWeight: '700',
-    whiteSpace: 'nowrap',
+  fieldLabel: {
+    display: 'inline-flex', alignItems: 'center', gap: '6px',
+    fontSize: '13px', color: '#666', fontWeight: 500, marginRight: '4px',
   },
-  nsfasBtnOutline: {
-    background: 'transparent',
-    color: '#fff',
-    textDecoration: 'none',
-    padding: '12px 24px',
-    borderRadius: '6px',
-    fontSize: '14px',
-    fontWeight: '600',
-    border: '2px solid rgba(255,255,255,0.5)',
-    whiteSpace: 'nowrap',
+  fieldChip: {
+    padding: '6px 14px', border: '1.5px solid #e0e0e0',
+    borderRadius: '20px', fontSize: '13px', fontWeight: 500,
+    cursor: 'pointer', transition: 'all 0.15s',
   },
-  faqSection: {
+  resultCount: { fontSize: '13px', color: '#666', marginTop: '4px' },
+
+  progSection: { padding: '48px 24px 80px', background: '#f8f9fa' },
+  emptyState: {
+    textAlign: 'center', padding: '64px 24px',
+    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px',
+  },
+  emptyTitle: { fontSize: '20px', fontWeight: 700, color: '#1a1a1a' },
+  emptyDesc: { fontSize: '14px', color: '#666' },
+  emptyBtn: {
+    background: '#0E7BB5', color: '#fff', border: 'none',
+    padding: '10px 24px', borderRadius: '6px', fontSize: '13px',
+    fontWeight: 600, cursor: 'pointer', marginTop: '8px',
+  },
+  progGrid: {
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '24px',
+  },
+  progCard: {
+    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
+    overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+  },
+  progImg: {
+    height: '180px', backgroundSize: 'cover', backgroundPosition: 'center',
+    position: 'relative', display: 'flex', alignItems: 'flex-end',
+    justifyContent: 'space-between', padding: '14px',
+  },
+  progImgOverlay: {
+    position: 'absolute', inset: 0,
+    background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%)',
+  },
+  progTypeBadge: {
+    position: 'relative', zIndex: 1,
+    fontSize: '11px', fontWeight: 700, padding: '4px 10px', borderRadius: '4px',
+    letterSpacing: '0.5px',
+  },
+  progFieldBadge: {
+    position: 'relative', zIndex: 1,
+    display: 'inline-flex', alignItems: 'center', gap: '4px',
+    background: 'rgba(255,255,255,0.95)', color: '#0E7BB5',
+    fontSize: '11px', fontWeight: 600, padding: '4px 10px', borderRadius: '4px',
+    backdropFilter: 'blur(4px)',
+  },
+  progBody: {
+    padding: '20px 22px',
+    display: 'flex', flexDirection: 'column', gap: '10px',
+  },
+  progTitle: { fontSize: '17px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1.3 },
+  progMeta: { display: 'flex', gap: '12px', flexWrap: 'wrap' },
+  progMetaItem: {
+    display: 'inline-flex', alignItems: 'center', gap: '5px',
+    fontSize: '12px', color: '#666', fontWeight: 500,
+  },
+  progDesc: { fontSize: '13px', color: '#555', lineHeight: 1.7 },
+  expandedContent: {
+    background: '#f8f9fa', borderRadius: '8px', padding: '18px',
+    display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '8px',
+  },
+  expandSection: { display: 'flex', flexDirection: 'column', gap: '6px' },
+  expandTitle: {
+    fontSize: '11px', fontWeight: 700, color: '#0E7BB5',
+    textTransform: 'uppercase', letterSpacing: '1px',
+  },
+  expandText: { fontSize: '13px', color: '#444', lineHeight: 1.6 },
+  subjectList: { display: 'flex', flexWrap: 'wrap', gap: '6px' },
+  subjectChip: {
+    background: '#fff', border: '1px solid #d8e4ef',
+    color: '#0E7BB5', fontSize: '11px', fontWeight: 500,
+    padding: '3px 10px', borderRadius: '20px',
+  },
+  careerList: { display: 'flex', flexDirection: 'column', gap: '6px' },
+  careerItem: {
+    display: 'flex', alignItems: 'center', gap: '8px',
+    fontSize: '13px', color: '#444',
+  },
+  expandCta: {
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+    gap: '6px', background: '#0E7BB5', color: '#fff', textDecoration: 'none',
+    padding: '10px 18px', borderRadius: '6px', fontSize: '13px',
+    fontWeight: 600, marginTop: '4px',
+  },
+  expandBtn: {
+    background: 'transparent', border: 'none', color: '#0E7BB5',
+    fontSize: '13px', fontWeight: 600, cursor: 'pointer',
+    padding: '4px 0', display: 'flex', alignItems: 'center', gap: '4px',
+    justifyContent: 'center', marginTop: '4px',
+  },
+
+  pathwaySection: {
+    background: 'linear-gradient(135deg, #0E7BB5 0%, #0a5a8a 100%)',
     padding: '80px 24px',
-    background: '#f8f9fa',
   },
-  faqGrid: {
-    maxWidth: '800px',
-    margin: '0 auto',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-    marginTop: '40px',
+  sectionTagWhite: {
+    color: '#FFB800', fontSize: '11px', fontWeight: 700,
+    letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '8px',
+  },
+  sectionTitleWhite: {
+    fontSize: 'clamp(26px, 3vw, 38px)', fontWeight: 700, color: '#fff',
+    marginBottom: '12px', letterSpacing: '-0.5px',
+  },
+  sectionSubWhite: {
+    color: 'rgba(255,255,255,0.85)', fontSize: '16px', lineHeight: 1.8,
+    maxWidth: '640px', margin: '0 auto',
+  },
+  pathway: {
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px',
+  },
+  pathwayStep: {
+    background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)',
+    borderRadius: '12px', padding: '24px',
+    display: 'flex', flexDirection: 'column', gap: '10px',
+  },
+  pathwayNum: {
+    fontSize: '32px', fontWeight: 800, color: '#FFB800',
+    letterSpacing: '-1px', lineHeight: 1,
+  },
+  pathwayTitle: { fontSize: '15px', fontWeight: 700, color: '#fff' },
+  pathwayDesc: { fontSize: '13px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.6 },
+
+  faqSection: { padding: '80px 24px', background: '#fff' },
+  faqList: {
+    display: 'flex', flexDirection: 'column', gap: '12px',
+    maxWidth: '820px', margin: '0 auto',
   },
   faqItem: {
-    background: '#fff',
-    borderRadius: '8px',
-    border: '1px solid #e8e8e8',
-    overflow: 'hidden',
+    background: '#f8f9fa', border: '1px solid #e8e8e8', borderRadius: '10px',
+    padding: '4px 0', overflow: 'hidden',
   },
   faqQ: {
-    width: '100%',
-    background: 'none',
-    border: 'none',
-    padding: '18px 20px',
-    textAlign: 'left',
-    fontSize: '15px',
-    fontWeight: '600',
-    color: '#1a1a1a',
-    cursor: 'pointer',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: '12px',
+    padding: '18px 22px', cursor: 'pointer',
+    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+    fontSize: '15px', fontWeight: 600, color: '#1a1a1a', listStyle: 'none',
   },
   faqA: {
-    padding: '0 20px 18px',
-    fontSize: '14px',
-    color: '#555',
-    lineHeight: '1.8',
-    borderTop: '1px solid #f0f0f0',
-    paddingTop: '14px',
+    padding: '0 22px 18px', fontSize: '14px', color: '#555', lineHeight: 1.8,
   },
+
   cta: {
-    backgroundImage: 'url(https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=1600&q=80)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    position: 'relative',
+    backgroundImage: `url(${programmes})`,
+    backgroundSize: 'cover', backgroundPosition: 'center',
+  },
+  ctaOverlay: {
+    position: 'absolute', inset: 0,
+    background: 'linear-gradient(135deg, rgba(14,123,181,0.94) 0%, rgba(0,0,0,0.85) 100%)',
   },
   ctaInner: {
-    background: 'rgba(0,0,0,0.75)',
-    padding: '96px 24px',
-    textAlign: 'center',
+    position: 'relative', zIndex: 1, padding: '96px 24px', textAlign: 'center',
+    maxWidth: '720px', margin: '0 auto',
+  },
+  ctaBadge: {
+    display: 'inline-flex', alignItems: 'center', gap: '8px',
+    background: 'rgba(255,184,0,0.2)', border: '1px solid rgba(255,184,0,0.5)',
+    color: '#FFB800', fontSize: '12px', fontWeight: 600,
+    padding: '6px 14px', borderRadius: '20px', marginBottom: '20px',
   },
   ctaTitle: {
-    fontSize: 'clamp(26px, 3vw, 40px)',
-    fontWeight: '800',
-    color: '#fff',
-    marginBottom: '16px',
-    letterSpacing: '-0.5px',
+    color: '#fff', fontSize: 'clamp(28px, 4vw, 44px)',
+    fontWeight: 800, marginBottom: '16px', letterSpacing: '-0.5px',
   },
   ctaSub: {
-    color: 'rgba(255,255,255,0.8)',
-    fontSize: '16px',
-    marginBottom: '36px',
-    lineHeight: '1.7',
+    color: 'rgba(255,255,255,0.85)', fontSize: '16px', lineHeight: 1.7,
+    marginBottom: '36px', maxWidth: '560px', margin: '0 auto 36px',
   },
-  ctaBtns: {
-    display: 'flex',
-    gap: '16px',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-  },
+  ctaBtns: { display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' },
   btnPrimary: {
-    background: '#FFB800',
-    color: '#000',
-    textDecoration: 'none',
-    padding: '14px 36px',
-    borderRadius: '6px',
-    fontSize: '15px',
-    fontWeight: '700',
-    transition: 'background 0.2s',
+    display: 'inline-flex', alignItems: 'center', gap: '8px',
+    background: '#FFB800', color: '#000', textDecoration: 'none',
+    padding: '14px 30px', borderRadius: '8px', fontSize: '15px', fontWeight: 700,
   },
   btnOutline: {
-    background: 'transparent',
-    color: '#fff',
-    textDecoration: 'none',
-    padding: '14px 36px',
-    borderRadius: '6px',
-    fontSize: '15px',
-    fontWeight: '600',
+    display: 'inline-flex', alignItems: 'center', gap: '8px',
+    background: 'transparent', color: '#fff', textDecoration: 'none',
+    padding: '14px 30px', borderRadius: '8px', fontSize: '15px', fontWeight: 600,
     border: '2px solid rgba(255,255,255,0.5)',
   },
 }

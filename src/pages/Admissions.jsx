@@ -1,507 +1,544 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-
-const steps = [
-  {
-    num: '01',
-    title: 'Career Guidance & Orientation',
-    desc: 'All prospective students must complete a career guidance session before applying. Register as a "First Time Here" applicant on the student portal to access the pre-entry screening and career orientation module. This step is compulsory under DHET policy.',
-    note: 'You cannot skip this step. Applications submitted without completing career guidance will not be processed.',
-    color: '#e8f4fc',
-    textColor: '#0E7BB5',
-  },
-  {
-    num: '02',
-    title: 'Placement Assessment',
-    desc: 'Complete a literacy and numeracy placement test. This assessment determines the most suitable programme and level for your academic profile. Results are used to provide academic counselling - you retain the right to choose your preferred programme, but you must sign a formal acknowledgement if deviating from the recommendation.',
-    note: 'The placement test is strictly compulsory and forms the basis of your academic counselling.',
-    color: '#FFB800',
-    textColor: '#000',
-  },
-  {
-    num: '03',
-    title: 'Formal Application & Document Submission',
-    desc: 'Submit your formal application online at malutitvet.co.za or in person at your nearest campus. Upload certified copies of all required documents in PDF format. Incomplete applications will not be considered.',
-    note: 'Applications outside the designated window will be rejected. 2026 applications opened 1 September 2025.',
-    color: '#0E7BB5',
-    textColor: '#fff',
-  },
-]
-
-const documents = [
-  { doc: 'Certified copy of Identity Document (ID)', required: true, note: 'Must be certified within 3 months of application' },
-  { doc: 'Certified copy of latest academic results', required: true, note: 'Grade 12 certificate, latest school report, or NCV Level 4 certificate' },
-  { doc: 'Proof of residence', required: true, note: 'Not older than 3 months - utility bill, affidavit, or lease agreement' },
-  { doc: 'Certified copy of parent/guardian ID', required: false, note: 'Required for NSFAS applications and students under 18' },
-  { doc: 'Proof of household income', required: false, note: 'Required for NSFAS - payslips, SASSA letter, or sworn affidavit if unemployed' },
-  { doc: 'Previous qualification certificates', required: false, note: 'Required for N4–N6 NATED programmes' },
-]
-
-const requirements = [
-  { prog: 'NC(V) Level 2', req: 'Grade 9 pass or NQF Level 1 or ABET Level 4', note: 'No Matric required' },
-  { prog: 'NATED N1–N3 (Engineering)', req: 'Grade 9 minimum - Grade 12 with Mathematics & Physical Science preferred', note: 'Mathematical Literacy is NOT accepted for engineering pathways' },
-  { prog: 'NATED N4–N6 (Business & Utility)', req: 'Matric (Grade 12) or NC(V) Level 4', note: 'Preference given to applicants scoring 26+ on admission instrument' },
-  { prog: 'NATED N4–N6 (Engineering)', req: 'Matric with Mathematics & Physical Science OR NC(V) L4 in related field', note: 'Mathematical Literacy is NOT accepted' },
-  { prog: 'NC(V) Level 3 & 4 (progression)', req: 'Pass all 7 subjects at current NC(V) level', note: 'All 4 vocational subjects at 50% minimum; all 3 fundamentals must be passed' },
-]
-
-const nsfasAllowances = [
-  { type: 'Urban Accommodation', amount: 'R24,000', period: 'per annum', desc: 'Students residing in urban areas near campus' },
-  { type: 'Peri-Urban Accommodation', amount: 'R18,900', period: 'per annum', desc: 'Students in peri-urban or township areas' },
-  { type: 'Rural Accommodation', amount: 'R15,750', period: 'per annum', desc: 'Students in rural and outlying areas' },
-  { type: 'Transport Allowance', amount: 'Applicable', period: 'where qualifying', desc: 'Where on-campus accommodation is not available' },
-  { type: 'Incidental Allowance', amount: 'Applicable', period: 'personal care', desc: 'Personal care and study-related incidentals' },
-  { type: 'Tuition Fees', amount: 'Covered', period: 'full tuition', desc: 'Direct payment to the college on behalf of qualifying students' },
-]
-
-const campuses = [
-  { name: 'Main Campus', town: 'Phuthaditjhaba', address: 'Mampoi Street, Phuthaditjhaba', specialisation: 'Business, Tourism & Hospitality' },
-  { name: 'Bethlehem Campus', town: 'Bethlehem', address: 'Bethlehem, Free State', specialisation: 'Engineering & Business Studies' },
-  { name: 'Harrismith Campus', town: 'Harrismith', address: 'Harrismith, Free State', specialisation: 'Engineering, Civil & Freight Logistics' },
-  { name: 'Bonamelo Campus', town: 'Phuthaditjhaba', address: 'Phuthaditjhaba, Free State', specialisation: 'Education & Early Childhood Development' },
-  { name: 'Itemoheleng Campus', town: 'Phuthaditjhaba', address: 'Phuthaditjhaba, Free State', specialisation: 'Business Management & IT' },
-  { name: 'Kwetlisong Campus', town: 'Riverside', address: 'Riverside, Free State', specialisation: 'Technical Trades & Skills Academy' },
-  { name: 'Lere la Tshepe Campus', town: 'Tseki Village', address: 'Tseki Village, Free State', specialisation: 'Agriculture & Rural Learning' },
-  { name: 'Sefikeng Campus', town: 'Rosedale', address: 'Rosedale, Free State', specialisation: 'Vocational Skills & Business Support' },
-]
+import { fetchAdmissionsData } from '../services/api'
+import { assets } from '../services/api'
+import nsfasLogo from '../assets/nsfas-logo.png'
+import {
+  CheckCircle2, AlertTriangle, FileText, Clock, Award,
+  ArrowRight, Sparkles, Building2, Users, BookOpen,
+  Briefcase, BadgeCheck, MapPin, ChevronRight, Target,
+  GraduationCap, Calendar, Info, AlertCircle, ClipboardCheck,
+  Phone, Globe, ShieldCheck, Banknote
+} from 'lucide-react'
 
 export default function Admissions() {
-  const [activeTab, setActiveTab] = useState('apply')
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState('process')
+
+  useEffect(() => {
+    fetchAdmissionsData()
+      .then(d => setData(d))
+      .catch(err => console.error(err))
+      .finally(() => setLoading(false))
+  }, [])
+
+  if (loading) {
+    return (
+      <div style={styles.loading}>
+        <div style={styles.loadingSpinner} />
+        <p style={styles.loadingText}>Loading admissions info...</p>
+      </div>
+    )
+  }
+
+  const tabs = [
+    { id: 'process', label: 'Application Process', icon: ClipboardCheck },
+    { id: 'requirements', label: 'Entry Requirements', icon: Award },
+    { id: 'documents', label: 'Required Documents', icon: FileText },
+    { id: 'nsfas', label: 'NSFAS Funding', icon: BadgeCheck },
+    { id: 'wil', label: 'Work-Integrated Learning', icon: Briefcase },
+  ]
 
   return (
     <main>
 
-      {/* Hero */}
+      {/* ═══════════ HERO ═══════════ */}
       <section style={styles.hero}>
         <div style={styles.heroOverlay} />
         <div style={styles.heroContent}>
-          <p style={styles.heroTag}>Admissions 2026</p>
-          <h1 style={styles.heroTitle}>Start Your Application</h1>
+          <div style={styles.heroBadge}>
+            <Sparkles size={13} color="#FFB800" />
+            <span>{data.applicationStatus.year} Applications Open</span>
+          </div>
+          <p style={styles.heroTag}>Admissions & Enrolment</p>
+          <h1 style={styles.heroTitle}>Apply to Maluti TVET College</h1>
           <p style={styles.heroSub}>
-            Applications for the 2026 academic year are open. Follow the three-step
-            admissions process below and take the first step toward your qualification.
+            Your pathway to a nationally recognised qualification. Applications for the
+            2026 academic year opened {data.applicationStatus.openedDate}. Apply online
+            or visit any of our 8 campuses.
           </p>
           <div style={styles.heroBtns}>
-            <a href="https://www.malutitvet.co.za" target="_blank" rel="noreferrer" style={styles.btnPrimary}>
-              Apply Online at malutitvet.co.za
-            </a>
-            <button
-              style={styles.btnSecondary}
-              onClick={() => document.getElementById('steps').scrollIntoView({ behavior: 'smooth' })}
+            <a href="https://www.malutitvet.co.za" target="_blank" rel="noreferrer" style={styles.btnPrimary}
+              onMouseEnter={e => e.currentTarget.style.background = '#e6a600'}
+              onMouseLeave={e => e.currentTarget.style.background = '#FFB800'}
             >
-              How to Apply
-            </button>
-          </div>
-          <div style={styles.heroNotice}>
-            Applications for 2026 opened 1 September 2025. Apply at your nearest campus or online.
+              Apply Online Now <ArrowRight size={16} />
+            </a>
+            <Link to="/contact" style={styles.btnSecondary}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.15)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+            >
+              Visit a Campus
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Tab Navigation */}
-      <section style={styles.tabNav}>
+      {/* ═══════════ APPLICATION STATUS BANNER ═══════════ */}
+      <section style={styles.statusBanner}>
         <div style={styles.container}>
-          <div style={styles.tabs}>
-            {[
-              { id: 'apply', label: 'How to Apply' },
-              { id: 'requirements', label: 'Entry Requirements' },
-              { id: 'documents', label: 'Required Documents' },
-              { id: 'nsfas', label: 'NSFAS Funding' },
-              { id: 'campuses', label: 'Walk-In Campuses' },
-            ].map(tab => (
-              <button
-                key={tab.id}
-                style={{
-                  ...styles.tab,
-                  borderBottom: activeTab === tab.id ? '3px solid #0E7BB5' : '3px solid transparent',
-                  color: activeTab === tab.id ? '#0E7BB5' : '#666',
-                  fontWeight: activeTab === tab.id ? '700' : '400',
-                }}
-                onClick={() => setActiveTab(tab.id)}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tab Content */}
-      <section style={styles.tabContent}>
-        <div style={styles.container}>
-
-          {/* HOW TO APPLY */}
-          {activeTab === 'apply' && (
-            <div id="steps">
-              <h2 style={styles.sectionTitle}>The 3-Step Admissions Process</h2>
-              <p style={styles.sectionSub}>
-                Maluti TVET College follows a structured, DHET-mandated admissions workflow.
-                All three steps are compulsory and must be completed in order.
-              </p>
-              <div style={styles.stepsGrid}>
-                {steps.map((step, i) => (
-                  <div key={i} style={{ ...styles.stepCard, background: step.color }}>
-                    <span style={{ ...styles.stepNum, color: step.textColor }}>{step.num}</span>
-                    <h3 style={{ ...styles.stepTitle, color: step.textColor }}>{step.title}</h3>
-                    <p style={{ ...styles.stepDesc, color: step.color === '#0E7BB5' ? 'rgba(255,255,255,0.88)' : '#444' }}>
-                      {step.desc}
-                    </p>
-                    <div style={{
-                      ...styles.stepNote,
-                      background: step.color === '#0E7BB5' ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.07)',
-                      color: step.color === '#0E7BB5' ? '#fff' : '#333',
-                    }}>
-                      {step.note}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div style={styles.importantBox}>
-                <h3 style={styles.importantTitle}>Important Application Rules</h3>
-                <ul style={styles.importantList}>
-                  <li>Applications submitted outside the designated application window will not be accepted.</li>
-                  <li>Submitting an application does not constitute a guaranteed offer of acceptance.</li>
-                  <li>All documents must be certified copies - originals will not be accepted in place of certified copies.</li>
-                  <li>Maluti TVET College operates a cashless campus. Do not pay cash to any personnel. All payments must be made via electronic funds transfer (EFT) to official college banking details only.</li>
-                  <li>If you deviate from the placement test recommendation, you must sign a formal written acknowledgement.</li>
-                  <li>For fraud, corruption or irregularities: contact the Whistle Blower Fraud Hotline on 0800 333 178 (free call, 24/7).</li>
-                </ul>
-              </div>
-
-              {/* Student Portal Info */}
-              <div style={styles.portalBox}>
-                <div style={styles.portalLeft}>
-                  <h3 style={styles.portalTitle}>Current Student Portal - iEnabler</h3>
-                  <p style={styles.portalDesc}>
-                    Registered students access academic records, financial statements, proof of registration,
-                    class attendance, and NSFAS funding status through the college's iEnabler student portal.
-                    Login credentials are issued upon successful registration.
-                  </p>
-                  <div style={styles.portalFeatures}>
-                    {['Academic results', 'Financial statements', 'Proof of registration', 'NSFAS funding status', 'Class attendance records', 'Examination timetables'].map((f, i) => (
-                      <span key={i} style={styles.portalFeature}>{f}</span>
-                    ))}
-                  </div>
-                  <a href="https://www.malutitvet.co.za" target="_blank" rel="noreferrer" style={styles.portalBtn}>
-                    Access Student Portal
-                  </a>
-                </div>
-                <div style={styles.portalRight}>
-                  <h3 style={styles.portalTitle}>Archie Mobile - Maths Support</h3>
-                  <p style={styles.portalDesc}>
-                    Maluti TVET College provides access to Archie Mobile, a data-efficient
-                    e-learning platform tailored for the TVET Mathematics curriculum. Access
-                    interactive lessons, practice questions, and study guides directly from
-                    your phone. Activation codes are provided upon registration.
-                  </p>
-                  <a href="https://www.malutitvet.co.za" target="_blank" rel="noreferrer" style={styles.portalBtn}>
-                    Learn About Archie
-                  </a>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* ENTRY REQUIREMENTS */}
-          {activeTab === 'requirements' && (
-            <div>
-              <h2 style={styles.sectionTitle}>Entry Requirements by Programme</h2>
-              <p style={styles.sectionSub}>
-                Requirements vary by programme type and level. Read carefully before applying
-                to ensure you qualify for your chosen programme.
-              </p>
-              <div style={styles.requirementsTable}>
-                <div style={styles.tableHeader}>
-                  <span style={styles.thCell}>Programme</span>
-                  <span style={styles.thCell}>Minimum Requirement</span>
-                  <span style={styles.thCell}>Important Note</span>
-                </div>
-                {requirements.map((r, i) => (
-                  <div key={i} style={{ ...styles.tableRow, background: i % 2 === 0 ? '#fff' : '#f8f9fa' }}>
-                    <span style={styles.tdProg}>{r.prog}</span>
-                    <span style={styles.tdReq}>{r.req}</span>
-                    <span style={styles.tdNote}>{r.note}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div style={styles.pathwayInfo}>
-                <h3 style={styles.pathwayTitle}>National Diploma: What You Need to Know</h3>
-                <p style={styles.pathwayText}>
-                  Completing N6 examinations alone does NOT qualify you for a National Diploma.
-                  The diploma requires both the theoretical N6 achievement AND a practical workplace component:
-                </p>
-                <div style={styles.diplomaSteps}>
-                  <div style={styles.diplomaStep}>
-                    <span style={styles.diplomaNum}>Step 1</span>
-                    <h4 style={styles.diplomaTitle}>Complete N6 Examinations</h4>
-                    <p style={styles.diplomaDesc}>Pass all N6 theoretical subjects through DHET examinations in June or November.</p>
-                  </div>
-                  <div style={styles.diplomaArrow}>→</div>
-                  <div style={styles.diplomaStep}>
-                    <span style={styles.diplomaNum}>Step 2</span>
-                    <h4 style={styles.diplomaTitle}>Obtain QCTO Logbook</h4>
-                    <p style={styles.diplomaDesc}>Acquire an approved QCTO logbook from the college to record your practical workplace experience.</p>
-                  </div>
-                  <div style={styles.diplomaArrow}>→</div>
-                  <div style={styles.diplomaStep}>
-                    <span style={styles.diplomaNum}>Step 3</span>
-                    <h4 style={styles.diplomaTitle}>Complete Practical Experience</h4>
-                    <p style={styles.diplomaDesc}>Business Studies: 2,000 hours (18 months). Engineering Studies: 2,670 hours (24 months) of approved workplace experience.</p>
-                  </div>
-                  <div style={styles.diplomaArrow}>→</div>
-                  <div style={styles.diplomaStep}>
-                    <span style={styles.diplomaNum}>Step 4</span>
-                    <h4 style={styles.diplomaTitle}>Submit Portfolio</h4>
-                    <p style={styles.diplomaDesc}>Submit your completed logbook and workplace experience portfolio to the college for National Diploma certification.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div style={styles.ncvPathInfo}>
-                <h3 style={styles.ncvTitle}>NC(V) Level 4 - University Pathways</h3>
-                <p style={styles.ncvText}>
-                  An NC(V) Level 4 certificate is equivalent to Matric on the NQF and can qualify you
-                  for university admission, provided you meet the statutory minimum requirements set by
-                  the Council for General and Further Education and Training:
-                </p>
-                <ul style={styles.ncvList}>
-                  <li>Pass all 7 subjects across Levels 2, 3, and 4 (21 subjects total)</li>
-                  <li>Achieve a minimum of 50% in all 4 vocational subjects - no condonement allowed</li>
-                  <li>One fundamental subject may be condoned by a maximum of 5%</li>
-                  <li>Specific percentage thresholds apply for Higher Certificate, Diploma, or Bachelor's Degree entry</li>
-                </ul>
-              </div>
-            </div>
-          )}
-
-          {/* DOCUMENTS */}
-          {activeTab === 'documents' && (
-            <div>
-              <h2 style={styles.sectionTitle}>Required Documents</h2>
-              <p style={styles.sectionSub}>
-                All documents must be certified copies. Documents must be certified within 3 months
-                of the application date. Do not submit original documents - certified copies only.
-              </p>
-              <div style={styles.docsGrid}>
-                {documents.map((d, i) => (
-                  <div key={i} style={styles.docCard}>
-                    <div style={styles.docTop}>
-                      <span style={{
-                        ...styles.docBadge,
-                        background: d.required ? '#0E7BB5' : '#f0f0f0',
-                        color: d.required ? '#fff' : '#666',
-                      }}>
-                        {d.required ? 'Required' : 'May be required'}
-                      </span>
-                    </div>
-                    <h3 style={styles.docTitle}>{d.doc}</h3>
-                    <p style={styles.docNote}>{d.note}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div style={styles.certBox}>
-                <h3 style={styles.certTitle}>How to Certify Documents</h3>
-                <p style={styles.certText}>
-                  Documents can be certified (stamped and signed as true copies of originals) at:
-                </p>
-                <div style={styles.certOptions}>
-                  {['South African Police Service (SAPS) station', 'Commissioner of Oaths at a bank', 'Nearest Maluti TVET Campus office', 'Registered notary or attorney', 'Post Office with Commissioner of Oaths'].map((o, i) => (
-                    <div key={i} style={styles.certOption}>{o}</div>
-                  ))}
-                </div>
-              </div>
-
-              <div style={styles.warningBox}>
-                <h3 style={styles.warningTitle}>Cashless Campus Policy</h3>
-                <p style={styles.warningText}>
-                  Maluti TVET College operates a strict cashless campus environment.
-                  Under no circumstances should you hand cash to any college staff member.
-                  All payments must be made via Electronic Funds Transfer (EFT) to official
-                  college banking details published on the official website only.
-                  If you are asked for cash by any person claiming to represent the college,
-                  report it immediately to the Fraud Hotline: <strong>0800 333 178</strong> (free call, 24 hours).
+          <div style={styles.statusInner}>
+            <div style={styles.statusLeft}>
+              <div style={styles.statusDot} />
+              <div>
+                <p style={styles.statusLabel}>Application Status</p>
+                <p style={styles.statusText}>
+                  <strong>2026 applications are OPEN</strong> - Opened {data.applicationStatus.openedDate}
                 </p>
               </div>
             </div>
-          )}
-
-          {/* NSFAS */}
-          {activeTab === 'nsfas' && (
-            <div>
-              <h2 style={styles.sectionTitle}>NSFAS Funding at Maluti TVET College</h2>
-              <p style={styles.sectionSub}>
-                The National Student Financial Aid Scheme (NSFAS) provides funding to
-                qualifying South African students enrolled in NC(V) and NATED programmes
-                at public TVET colleges. Do not let financial constraints stop your education.
-              </p>
-
-              <div style={styles.nsfasEligibility}>
-                <h3 style={styles.nsfasSubTitle}>Who Qualifies?</h3>
-                <div style={styles.eligibilityGrid}>
-                  {[
-                    { title: 'South African Citizen', desc: 'You must be a South African citizen with a valid South African ID document.' },
-                    { title: 'Enrolled at Maluti TVET', desc: 'You must be registered for an NC(V) or NATED (Report 191) programme at the college.' },
-                    { title: 'Household Income Threshold', desc: 'Combined household income must not exceed R350,000 per annum. This includes all income from parents and guardians.' },
-                    { title: 'Financial Need', desc: 'NSFAS prioritises students who demonstrate genuine financial need. Unemployed guardian households must submit sworn affidavits.' },
-                  ].map((e, i) => (
-                    <div key={i} style={styles.eligibilityCard}>
-                      <h4 style={styles.eligibilityTitle}>{e.title}</h4>
-                      <p style={styles.eligibilityDesc}>{e.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <h3 style={styles.nsfasSubTitle}>What NSFAS Covers</h3>
-              <div style={styles.allowancesGrid}>
-                {nsfasAllowances.map((a, i) => (
-                  <div key={i} style={styles.allowanceCard}>
-                    <span style={styles.allowanceAmount}>{a.amount}</span>
-                    <span style={styles.allowancePeriod}>{a.period}</span>
-                    <h4 style={styles.allowanceType}>{a.type}</h4>
-                    <p style={styles.allowanceDesc}>{a.desc}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div style={styles.nsfasSteps}>
-                <h3 style={styles.nsfasSubTitle}>How to Apply for NSFAS</h3>
-                <div style={styles.nsfasStepsList}>
-                  {[
-                    { n: '1', t: 'Create a myNSFAS Account', d: 'Go to nsfas.org.za and register with your South African ID number and a valid email address.' },
-                    { n: '2', t: 'Complete the Application', d: 'Fill in the online application form. You will need your household income details and supporting documents ready.' },
-                    { n: '3', t: 'Upload Documents', d: 'Upload certified copies of your ID, parent/guardian IDs, proof of income or sworn affidavits, and proof of registration at Maluti TVET.' },
-                    { n: '4', t: 'Track Your Application', d: 'Log into your myNSFAS portal to track the status of your application. Ensure your contact details are correct as communication is sent digitally.' },
-                    { n: '5', t: 'Funding Disbursement', d: 'Approved funding is paid directly to the college for tuition. Allowances are deposited to your registered bank account. Keep your banking details updated on myNSFAS.' },
-                  ].map((s, i) => (
-                    <div key={i} style={styles.nsfasStepItem}>
-                      <div style={styles.nsfasStepNum}>{s.n}</div>
-                      <div>
-                        <h4 style={styles.nsfasStepTitle}>{s.t}</h4>
-                        <p style={styles.nsfasStepDesc}>{s.d}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div style={styles.nsfasCTA}>
-                  <a href="https://www.nsfas.org.za" target="_blank" rel="noreferrer" style={styles.btnPrimary}>
-                    Apply at nsfas.org.za
-                  </a>
-                </div>
-              </div>
-
-              <div style={styles.dhetBursary}>
-                <h3 style={styles.nsfasSubTitle}>DHET College Bursary Scheme</h3>
-                <p style={styles.pathwayText}>
-                  In addition to NSFAS, the Department of Higher Education and Training (DHET) offers
-                  bursaries for students enrolled in NC(V) and Report 191 (NATED) programmes. Eligibility
-                  criteria mirror NSFAS requirements. Speak to the Financial Aid Office at your nearest
-                  campus for details on the DHET bursary application process.
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* CAMPUSES */}
-          {activeTab === 'campuses' && (
-            <div>
-              <h2 style={styles.sectionTitle}>Walk-In Application at Our 8 Campuses</h2>
-              <p style={styles.sectionSub}>
-                You can apply in person at any of our 8 campuses. Staff are available to assist
-                with the application process, document certification verification, and career guidance.
-              </p>
-              <div style={styles.campusGrid}>
-                {campuses.map((c, i) => (
-                  <div key={i} style={styles.campusCard}>
-                    <div style={styles.campusHeader}>
-                      <h3 style={styles.campusName}>{c.name}</h3>
-                      <span style={styles.campusTownBadge}>{c.town}</span>
-                    </div>
-                    <p style={styles.campusAddress}>{c.address}</p>
-                    <p style={styles.campusSpec}>{c.specialisation}</p>
-                    <div style={styles.campusAction}>
-                      <span style={styles.campusWalkIn}>Walk-in applications accepted</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div style={styles.contactNote}>
-                <p style={styles.contactNoteText}>
-                  For the most current campus contact numbers and office hours, visit
-                  <a href="https://www.malutitvet.co.za" target="_blank" rel="noreferrer" style={styles.contactLink}> malutitvet.co.za</a>
-                  &nbsp;or call your nearest campus directly.
-                  For fraud or corruption concerns, call the 24-hour Whistle Blower Hotline:
-                  <strong> 0800 333 178</strong> (free call).
-                </p>
-              </div>
-            </div>
-          )}
-
-        </div>
-      </section>
-
-      {/* WIL Section */}
-      <section style={styles.wilSection}>
-        <div style={styles.wilOverlay} />
-        <div style={styles.container} style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
-          <div style={styles.wilContent}>
-            <div style={styles.wilText}>
-              <p style={styles.wilTag}>For Employers & Industry</p>
-              <h2 style={styles.wilTitle}>Work-Integrated Learning (WIL)</h2>
-              <p style={styles.wilDesc}>
-                Maluti TVET College actively partners with businesses and organisations
-                to provide students with Workplace Based Experience (WBE). Hosting a
-                TVET student is more than a social contribution - companies can access
-                PIVOTAL grants and SETA funding mechanisms to offset the costs of
-                hosting interns and apprentices while building a pipeline of
-                industry-ready talent tailored to their operational needs.
-              </p>
-              <ul style={styles.wilBenefits}>
-                <li>Access PIVOTAL grants and SETA funding for hosting interns</li>
-                <li>Shape graduate skills to match your operational requirements</li>
-                <li>Fulfil B-BBEE skills development scorecards</li>
-                <li>Build a talent pipeline of job-ready TVET graduates</li>
-                <li>Contribute to national skills development and youth employment</li>
-              </ul>
-              <a href="https://www.malutitvet.co.za" target="_blank" rel="noreferrer" style={styles.wilBtn}>
-                Register as a Host Employer
+            <div style={styles.statusActions}>
+              <a href="https://www.malutitvet.co.za" target="_blank" rel="noreferrer" style={styles.statusLink}>
+                <Globe size={14} /> malutitvet.co.za
+              </a>
+              <a href="tel:0800333178" style={styles.statusLink}>
+                <Phone size={14} /> 0800 333 178
               </a>
             </div>
-            <div style={styles.wilStats}>
-              {[
-                { n: '8', l: 'Campuses with WIL Programmes' },
-                { n: '2,000+', l: 'Hours - Business Practical' },
-                { n: '2,670+', l: 'Hours - Engineering Practical' },
-                { n: 'SETA', l: 'Funding Available for Hosts' },
-              ].map((s, i) => (
-                <div key={i} style={styles.wilStat}>
-                  <span style={styles.wilStatNum}>{s.n}</span>
-                  <span style={styles.wilStatLabel}>{s.l}</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ TAB NAVIGATION ═══════════ */}
+      <section style={styles.tabNav}>
+        <div style={styles.container}>
+          <div style={styles.tabList}>
+            {tabs.map(tab => {
+              const Icon = tab.icon
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  style={{
+                    ...styles.tab,
+                    color: activeTab === tab.id ? '#0E7BB5' : '#666',
+                    borderBottomColor: activeTab === tab.id ? '#0E7BB5' : 'transparent',
+                    fontWeight: activeTab === tab.id ? 700 : 500,
+                  }}
+                >
+                  <Icon size={16} />
+                  {tab.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ TAB CONTENT ═══════════ */}
+
+      {/* 1. APPLICATION PROCESS */}
+      {activeTab === 'process' && (
+        <section style={styles.section}>
+          <div style={styles.container}>
+            <div style={styles.sectionHeadCenter}>
+              <p style={styles.sectionTag}>How to Apply</p>
+              <h2 style={styles.sectionTitle}>The 3-Step Application Process</h2>
+              <p style={styles.sectionSub}>
+                All applicants must complete these steps in order. This is a DHET-mandated
+                process - no step can be skipped.
+              </p>
+            </div>
+            <div style={styles.stepsContainer}>
+              {data.steps.map((step, i) => (
+                <div key={i} style={styles.stepRow}>
+                  <div style={styles.stepNumber}>
+                    <span>{step.num}</span>
+                  </div>
+                  <div style={styles.stepCard}>
+                    <h3 style={styles.stepTitle}>{step.title}</h3>
+                    <p style={styles.stepDesc}>{step.desc}</p>
+                    <div style={styles.stepNote}>
+                      <AlertCircle size={14} color="#e74c3c" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <p style={styles.stepNoteText}>{step.note}</p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
+
+            {/* Apply Methods */}
+            <div style={styles.methodsGrid}>
+              <div style={styles.methodCard}>
+                <div style={styles.methodIconWrap}>
+                  <Globe size={22} color="#0E7BB5" />
+                </div>
+                <h3 style={styles.methodTitle}>Apply Online</h3>
+                <p style={styles.methodDesc}>
+                  Submit your application 24/7 through the official Maluti TVET College
+                  website. Upload certified documents in PDF format.
+                </p>
+                <a href="https://www.malutitvet.co.za" target="_blank" rel="noreferrer" style={styles.methodBtn}>
+                  malutitvet.co.za <ArrowRight size={14} />
+                </a>
+              </div>
+              <div style={styles.methodCard}>
+                <div style={styles.methodIconWrap}>
+                  <Building2 size={22} color="#0E7BB5" />
+                </div>
+                <h3 style={styles.methodTitle}>Apply In-Person</h3>
+                <p style={styles.methodDesc}>
+                  Visit any of our 8 campuses for walk-in assistance. Bring certified
+                  copies of your ID, academic results, and proof of residence.
+                </p>
+                <Link to="/contact" style={styles.methodBtn}>
+                  Find nearest campus <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 2. ENTRY REQUIREMENTS */}
+      {activeTab === 'requirements' && (
+        <section style={styles.section}>
+          <div style={styles.container}>
+            <div style={styles.sectionHeadCenter}>
+              <p style={styles.sectionTag}>Eligibility</p>
+              <h2 style={styles.sectionTitle}>Entry Requirements by Programme</h2>
+              <p style={styles.sectionSub}>
+                Minimum requirements vary by qualification type. Check the specific
+                programme you're interested in before applying.
+              </p>
+            </div>
+            <div style={styles.requirementsList}>
+              {data.requirements.map((req, i) => (
+                <div key={i} style={styles.reqCard}>
+                  <div style={styles.reqIconWrap}>
+                    <Award size={18} color="#0E7BB5" />
+                  </div>
+                  <div style={styles.reqBody}>
+                    <h3 style={styles.reqProg}>{req.prog}</h3>
+                    <p style={styles.reqText}>
+                      <strong>Minimum requirement:</strong> {req.req}
+                    </p>
+                    <p style={styles.reqNote}>{req.note}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Important notice */}
+            <div style={styles.importantBox}>
+              <div style={styles.importantHeader}>
+                <AlertTriangle size={20} color="#e74c3c" />
+                <h3 style={styles.importantTitle}>Important: Mathematics Requirement</h3>
+              </div>
+              <p style={styles.importantText}>
+                For all <strong>Engineering NATED programmes (N1–N6)</strong>, you must have
+                passed <strong>Pure Mathematics</strong> and <strong>Physical Science</strong>.
+                Mathematical Literacy is <strong>NOT accepted</strong> as an alternative.
+              </p>
+              <p style={styles.importantText}>
+                For Business NATED programmes, a minimum admission score of 26+ is preferred
+                for competitive placement.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 3. REQUIRED DOCUMENTS */}
+      {activeTab === 'documents' && (
+        <section style={styles.section}>
+          <div style={styles.container}>
+            <div style={styles.sectionHeadCenter}>
+              <p style={styles.sectionTag}>Checklist</p>
+              <h2 style={styles.sectionTitle}>Required Documents</h2>
+              <p style={styles.sectionSub}>
+                Ensure all documents are certified within 3 months of application.
+                Incomplete applications will not be processed.
+              </p>
+            </div>
+            <div style={styles.docsGrid}>
+              {data.documents.map((d, i) => (
+                <div key={i} style={{
+                  ...styles.docCard,
+                  borderLeft: `4px solid ${d.required ? '#e74c3c' : '#FFB800'}`,
+                }}>
+                  <div style={styles.docHead}>
+                    <div style={styles.docIconWrap}>
+                      {d.required ? (
+                        <CheckCircle2 size={18} color="#e74c3c" />
+                      ) : (
+                        <Info size={18} color="#FFB800" />
+                      )}
+                    </div>
+                    <span style={{
+                      ...styles.docBadge,
+                      background: d.required ? '#ffeaea' : '#fff8e6',
+                      color: d.required ? '#c0392b' : '#b8860b',
+                    }}>
+                      {d.required ? 'Required' : 'Conditional'}
+                    </span>
+                  </div>
+                  <p style={styles.docTitle}>{d.doc}</p>
+                  <p style={styles.docNote}>{d.note}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Certification info */}
+            <div style={styles.certBox}>
+              <div style={styles.certLeft}>
+                <div style={styles.certIconWrap}>
+                  <ShieldCheck size={24} color="#0E7BB5" />
+                </div>
+                <div>
+                  <h3 style={styles.certTitle}>Where to Certify Documents</h3>
+                  <p style={styles.certText}>
+                    Certified copies must be stamped by a Commissioner of Oaths. This can
+                    be done free at any South African Police Service (SAPS) station, Post
+                    Office, or by an admitted attorney. All documents must be certified
+                    within 3 months of your application submission date.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 4. NSFAS FUNDING */}
+      {activeTab === 'nsfas' && (
+        <section style={styles.section}>
+          <div style={styles.container}>
+            <div style={styles.sectionHeadCenter}>
+              <p style={styles.sectionTag}>Financial Support</p>
+              <h2 style={styles.sectionTitle}>NSFAS Bursary Funding</h2>
+              <p style={styles.sectionSub}>
+                The National Student Financial Aid Scheme provides fully-funded bursaries
+                to qualifying students. Funding is NOT a loan and does not need to be repaid.
+              </p>
+            </div>
+
+            {/* Eligibility Card */}
+            <div style={styles.nsfasEligibility}>
+              <div style={styles.nsfasHead}>
+                <img src={nsfasLogo} alt="NSFAS" style={styles.nsfasHeadLogo} />
+                <div>
+                  <h3 style={styles.nsfasHeadTitle}>Do You Qualify for NSFAS?</h3>
+                  <p style={styles.nsfasHeadSub}>
+                    Check if you meet the basic eligibility criteria before applying.
+                  </p>
+                </div>
+              </div>
+              <div style={styles.eligibilityGrid}>
+                {[
+                  { icon: CheckCircle2, text: 'South African citizen with a valid SA ID' },
+                  { icon: CheckCircle2, text: `Household income below ${data.nsfas.householdIncomeThreshold}` },
+                  { icon: CheckCircle2, text: 'Accepted at a public TVET college or university' },
+                  { icon: CheckCircle2, text: 'Enrolled in an approved qualification' },
+                ].map((item, i) => (
+                  <div key={i} style={styles.eligibilityItem}>
+                    <item.icon size={16} color="#2ecc71" />
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* What's Covered */}
+            <h3 style={styles.subSectionTitle}>What Does NSFAS Cover?</h3>
+            <div style={styles.allowanceGrid}>
+              {data.nsfas.allowances.map((a, i) => (
+                <div key={i} style={styles.allowanceCard}>
+                  <div style={styles.allowanceIconWrap}>
+                    <Banknote size={18} color="#FFB800" />
+                  </div>
+                  <h4 style={styles.allowanceType}>{a.type}</h4>
+                  <p style={styles.allowanceAmount}>{a.amount}</p>
+                  <p style={styles.allowancePeriod}>{a.period}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Apply CTA */}
+            <div style={styles.nsfasCtaBox}>
+              <div style={styles.nsfasCtaLeft}>
+                <h3 style={styles.nsfasCtaTitle}>Ready to Apply for NSFAS?</h3>
+                <p style={styles.nsfasCtaDesc}>
+                  Apply online at nsfas.org.za. Create a myNSFAS account, complete the
+                  application, and upload supporting documents. Apply early - funding
+                  is allocated on a first-come basis.
+                </p>
+              </div>
+              <a href="https://www.nsfas.org.za" target="_blank" rel="noreferrer" style={styles.nsfasCtaBtn}>
+                Apply at nsfas.org.za <ArrowRight size={16} />
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 5. WORK-INTEGRATED LEARNING */}
+      {activeTab === 'wil' && (
+        <section style={styles.section}>
+          <div style={styles.container}>
+            <div style={styles.sectionHeadCenter}>
+              <p style={styles.sectionTag}>Practical Experience</p>
+              <h2 style={styles.sectionTitle}>Work-Integrated Learning (WIL)</h2>
+              <p style={styles.sectionSub}>
+                Complete your National Diploma by accumulating supervised workplace hours
+                with accredited employers across the Free State and South Africa.
+              </p>
+            </div>
+
+            <div style={styles.wilGrid}>
+              <div style={styles.wilCard}>
+                <div style={styles.wilIconWrap}>
+                  <Briefcase size={22} color="#0E7BB5" />
+                </div>
+                <h3 style={styles.wilCardTitle}>Business Qualifications</h3>
+                <div style={styles.wilHours}>
+                  <span style={styles.wilHoursNum}>{data.wil.businessHours.toLocaleString()}</span>
+                  <span style={styles.wilHoursLabel}>practical hours</span>
+                </div>
+                <p style={styles.wilCardText}>
+                  Approximately {data.wil.businessMonths} months of workplace experience
+                  with an accredited employer. Required for National Diploma award.
+                </p>
+              </div>
+              <div style={styles.wilCard}>
+                <div style={styles.wilIconWrap}>
+                  <Settings size={22} color="#0E7BB5" />
+                </div>
+                <h3 style={styles.wilCardTitle}>Engineering Qualifications</h3>
+                <div style={styles.wilHours}>
+                  <span style={styles.wilHoursNum}>{data.wil.engineeringHours.toLocaleString()}</span>
+                  <span style={styles.wilHoursLabel}>practical hours</span>
+                </div>
+                <p style={styles.wilCardText}>
+                  Approximately {data.wil.engineeringMonths} months of workplace experience
+                  plus the QCTO trade test for artisan qualification.
+                </p>
+              </div>
+            </div>
+
+            {/* Process */}
+            <h3 style={styles.subSectionTitle}>How Work-Integrated Learning Works</h3>
+            <div style={styles.wilProcess}>
+              {[
+                { num: '01', title: 'Complete N6 / Level 4', desc: 'Pass all theoretical subjects at the highest level of your programme.' },
+                { num: '02', title: 'Secure a Workplace', desc: 'The college assists with employer matching, or you may source your own approved workplace.' },
+                { num: '03', title: 'Maintain Logbook', desc: 'Complete your QCTO logbook under employer supervision. All tasks must be signed off.' },
+                { num: '04', title: 'Submit & Qualify', desc: 'Submit your completed logbook. Engineering students also complete a trade test.' },
+              ].map((p, i) => (
+                <div key={i} style={styles.wilStep}>
+                  <span style={styles.wilStepNum}>{p.num}</span>
+                  <h4 style={styles.wilStepTitle}>{p.title}</h4>
+                  <p style={styles.wilStepDesc}>{p.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Employer Partnership CTA */}
+            <div style={styles.employerBox}>
+              <div style={styles.employerIconWrap}>
+                <Users size={22} color="#FFB800" />
+              </div>
+              <div style={styles.employerContent}>
+                <h3 style={styles.employerTitle}>Are You an Employer?</h3>
+                <p style={styles.employerDesc}>
+                  Partner with Maluti TVET College to host workplace learners. Build your
+                  skills pipeline while supporting the next generation of South African
+                  artisans and professionals.
+                </p>
+                <Link to="/contact" style={styles.employerBtn}>
+                  Partner With Us <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ═══════════ CASHLESS WARNING ═══════════ */}
+      <section style={styles.cashlessSection}>
+        <div style={styles.container}>
+          <div style={styles.cashlessInner}>
+            <AlertTriangle size={28} color="#fff" style={{ flexShrink: 0 }} />
+            <div style={styles.cashlessContent}>
+              <h3 style={styles.cashlessTitle}>Cashless Campus Policy</h3>
+              <p style={styles.cashlessText}>
+                Maluti TVET College operates strictly on a cashless basis. <strong>Do not pay cash
+                to any staff member</strong> - all payments are made via EFT only. Report any fraud
+                or corruption to the Whistle Blower hotline on <strong>0800 333 178</strong> (free, 24 hours).
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* ═══════════ CAMPUS WALK-IN STRIP ═══════════ */}
+      <section style={styles.campusSection}>
+        <div style={styles.container}>
+          <div style={styles.sectionHeadCenter}>
+            <p style={styles.sectionTag}>Walk-In Assistance</p>
+            <h2 style={styles.sectionTitle}>Apply at Any of Our 8 Campuses</h2>
+            <p style={styles.sectionSub}>
+              No appointment needed. Our admissions officers are available during office
+              hours to assist with applications, document submission, and programme advice.
+            </p>
+          </div>
+          <div style={styles.campusStrip}>
+            {[
+              { name: 'Main Campus', town: 'Phuthaditjhaba', image: assets.campuses.phuthaditjhaba },
+              { name: 'Bethlehem Campus', town: 'Bethlehem', image: assets.campuses.bethlehem },
+              { name: 'Harrismith Campus', town: 'Harrismith', image: assets.campuses.harrismith },
+              { name: 'Itemoheleng Campus', town: 'Phuthaditjhaba', image: assets.campuses.itemoheleng },
+            ].map((c, i) => (
+              <div key={i} style={styles.campusCard}>
+                <div style={{ ...styles.campusImg, backgroundImage: `url(${c.image})` }}>
+                  <div style={styles.campusOverlay} />
+                  <div style={styles.campusBadge}>
+                    <MapPin size={11} />
+                    {c.town}
+                  </div>
+                </div>
+                <div style={styles.campusBody}>
+                  <h4 style={styles.campusName}>{c.name}</h4>
+                  <p style={styles.campusWalkin}>Walk-ins welcome during office hours</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={styles.campusFooter}>
+            <Link to="/contact" style={styles.btnBlue}>
+              View All 8 Campus Locations <ArrowRight size={15} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ FINAL CTA ═══════════ */}
       <section style={styles.cta}>
+        <div style={styles.ctaOverlay} />
         <div style={styles.ctaInner}>
+          <div style={styles.ctaBadge}>
+            <Sparkles size={14} color="#FFB800" />
+            <span>Applications Open Now</span>
+          </div>
           <h2 style={styles.ctaTitle}>Ready to Apply?</h2>
           <p style={styles.ctaSub}>
-            Apply online at malutitvet.co.za or walk into any of our 8 campuses across the Free State.
-            2026 applications opened 1 September 2025.
+            Submit your application today. Early applicants have the best chance of
+            securing their preferred programme and NSFAS funding.
           </p>
           <div style={styles.ctaBtns}>
             <a href="https://www.malutitvet.co.za" target="_blank" rel="noreferrer" style={styles.btnPrimary}
               onMouseEnter={e => e.currentTarget.style.background = '#e6a600'}
               onMouseLeave={e => e.currentTarget.style.background = '#FFB800'}
-            >Apply Online Now</a>
-            <Link to="/programmes" style={styles.btnOutline}>Browse Programmes</Link>
+            >
+              Apply Online <ArrowRight size={16} />
+            </a>
+            <Link to="/programmes" style={styles.btnSecondary}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.15)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+            >
+              View Programmes
+            </Link>
           </div>
         </div>
       </section>
@@ -510,784 +547,419 @@ export default function Admissions() {
   )
 }
 
+// Helper - need Settings import for WIL engineering card
+import { Settings } from 'lucide-react'
+
 const styles = {
+  loading: {
+    minHeight: '100vh', display: 'flex', flexDirection: 'column',
+    alignItems: 'center', justifyContent: 'center', gap: '20px', background: '#fff',
+  },
+  loadingSpinner: {
+    width: '48px', height: '48px', borderRadius: '50%',
+    border: '3px solid #e8f4fc', borderTopColor: '#0E7BB5',
+    animation: 'spin 0.8s linear infinite',
+  },
+  loadingText: { color: '#0E7BB5', fontSize: '14px', fontWeight: 500 },
+
+  // Hero
   hero: {
     position: 'relative',
-    backgroundImage: 'url(https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1600&q=80)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    minHeight: '460px',
-    display: 'flex',
-    alignItems: 'center',
+    backgroundImage: `url(${assets.campuses.phuthaditjhaba})`,
+    backgroundSize: 'cover', backgroundPosition: 'center',
+    minHeight: '520px', display: 'flex', alignItems: 'center',
   },
   heroOverlay: {
-    position: 'absolute',
-    inset: 0,
-    background: 'linear-gradient(135deg, rgba(14,123,181,0.93) 0%, rgba(0,0,0,0.72) 100%)',
+    position: 'absolute', inset: 0,
+    background: 'linear-gradient(135deg, rgba(14,123,181,0.94) 0%, rgba(0,0,0,0.72) 100%)',
   },
   heroContent: {
-    position: 'relative',
-    zIndex: 1,
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '80px 24px',
-    width: '100%',
+    position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto',
+    padding: '96px 24px', width: '100%',
+  },
+  heroBadge: {
+    display: 'inline-flex', alignItems: 'center', gap: '8px',
+    background: 'rgba(255,184,0,0.15)', border: '1px solid rgba(255,184,0,0.4)',
+    color: '#FFB800', fontSize: '12px', fontWeight: 600,
+    padding: '6px 14px', borderRadius: '20px', marginBottom: '16px',
   },
   heroTag: {
-    color: '#FFB800',
-    fontSize: '12px',
-    fontWeight: '700',
-    letterSpacing: '3px',
-    textTransform: 'uppercase',
-    marginBottom: '12px',
+    color: '#FFB800', fontSize: '12px', fontWeight: 700,
+    letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px',
   },
   heroTitle: {
-    color: '#fff',
-    fontSize: 'clamp(32px, 5vw, 52px)',
-    fontWeight: '800',
-    marginBottom: '16px',
-    letterSpacing: '-1px',
+    color: '#fff', fontSize: 'clamp(34px, 5vw, 56px)',
+    fontWeight: 800, marginBottom: '16px', letterSpacing: '-1px',
   },
   heroSub: {
-    color: 'rgba(255,255,255,0.88)',
-    fontSize: '17px',
-    lineHeight: '1.8',
-    maxWidth: '580px',
-    marginBottom: '32px',
+    color: 'rgba(255,255,255,0.88)', fontSize: '17px',
+    lineHeight: 1.8, maxWidth: '620px', marginBottom: '32px',
   },
-  heroBtns: {
-    display: 'flex',
-    gap: '16px',
-    flexWrap: 'wrap',
-    marginBottom: '24px',
-  },
+  heroBtns: { display: 'flex', gap: '14px', flexWrap: 'wrap' },
   btnPrimary: {
-    background: '#FFB800',
-    color: '#000',
-    textDecoration: 'none',
-    padding: '14px 32px',
-    borderRadius: '6px',
-    fontSize: '15px',
-    fontWeight: '700',
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'background 0.2s',
+    display: 'inline-flex', alignItems: 'center', gap: '8px',
+    background: '#FFB800', color: '#000', textDecoration: 'none',
+    padding: '14px 30px', borderRadius: '8px', fontSize: '15px',
+    fontWeight: 700, transition: 'background 0.2s',
   },
   btnSecondary: {
-    background: 'transparent',
-    color: '#fff',
-    textDecoration: 'none',
-    padding: '14px 32px',
-    borderRadius: '6px',
-    fontSize: '15px',
-    fontWeight: '600',
-    border: '2px solid rgba(255,255,255,0.5)',
-    cursor: 'pointer',
+    display: 'inline-flex', alignItems: 'center', gap: '8px',
+    background: 'transparent', color: '#fff', textDecoration: 'none',
+    padding: '14px 30px', borderRadius: '8px', fontSize: '15px', fontWeight: 600,
+    border: '2px solid rgba(255,255,255,0.55)', transition: 'background 0.2s',
   },
-  heroNotice: {
-    background: 'rgba(255,184,0,0.2)',
-    border: '1px solid rgba(255,184,0,0.5)',
-    borderRadius: '6px',
-    padding: '12px 16px',
-    color: '#FFB800',
-    fontSize: '14px',
-    fontWeight: '500',
-    maxWidth: '520px',
+
+  // Status Banner
+  statusBanner: {
+    background: '#2ecc71', padding: '16px 24px',
   },
+  container: { maxWidth: '1200px', margin: '0 auto' },
+  statusInner: {
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    flexWrap: 'wrap', gap: '16px',
+  },
+  statusLeft: { display: 'flex', alignItems: 'center', gap: '14px' },
+  statusDot: {
+    width: '10px', height: '10px', borderRadius: '50%', background: '#fff',
+    boxShadow: '0 0 0 4px rgba(255,255,255,0.3)',
+    animation: 'pulse 2s ease-in-out infinite',
+  },
+  statusLabel: {
+    color: 'rgba(255,255,255,0.85)', fontSize: '11px',
+    textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600, margin: 0,
+  },
+  statusText: { color: '#fff', fontSize: '14px', margin: 0 },
+  statusActions: { display: 'flex', gap: '16px', flexWrap: 'wrap' },
+  statusLink: {
+    display: 'inline-flex', alignItems: 'center', gap: '6px',
+    color: '#fff', fontSize: '13px', fontWeight: 600, textDecoration: 'none',
+  },
+
+  // Tab Navigation
   tabNav: {
-    background: '#fff',
-    borderBottom: '1px solid #e8e8e8',
-    position: 'sticky',
-    top: '88px',
-    zIndex: 100,
+    background: '#fff', borderBottom: '1px solid #e8e8e8',
+    position: 'sticky', top: '88px', zIndex: 99,
   },
-  container: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '0 24px',
-  },
-  tabs: {
-    display: 'flex',
-    overflowX: 'auto',
-    gap: '0',
+  tabList: {
+    display: 'flex', gap: '0', overflowX: 'auto', padding: '0 24px',
   },
   tab: {
-    padding: '18px 24px',
-    background: 'none',
-    border: 'none',
-    fontSize: '14px',
-    cursor: 'pointer',
-    whiteSpace: 'nowrap',
-    transition: 'all 0.15s',
+    display: 'inline-flex', alignItems: 'center', gap: '8px',
+    padding: '18px 22px', background: 'transparent', border: 'none',
+    borderBottom: '3px solid transparent', fontSize: '13px', cursor: 'pointer',
+    transition: 'all 0.2s', whiteSpace: 'nowrap',
   },
-  tabContent: {
-    padding: '56px 24px 80px',
-    background: '#f8f9fa',
+
+  // Section base
+  section: { padding: '64px 24px 80px', background: '#fff' },
+  sectionHeadCenter: { textAlign: 'center', marginBottom: '48px' },
+  sectionTag: {
+    color: '#0E7BB5', fontSize: '11px', fontWeight: 700,
+    letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '8px',
   },
   sectionTitle: {
-    fontSize: 'clamp(24px, 3vw, 36px)',
-    fontWeight: '700',
-    color: '#1a1a1a',
-    marginBottom: '12px',
-    letterSpacing: '-0.5px',
+    fontSize: 'clamp(26px, 3vw, 38px)', fontWeight: 700,
+    color: '#1a1a1a', marginBottom: '12px', letterSpacing: '-0.5px',
   },
   sectionSub: {
-    color: '#666',
-    fontSize: '16px',
-    lineHeight: '1.8',
-    maxWidth: '680px',
-    marginBottom: '40px',
+    color: '#666', fontSize: '16px', lineHeight: 1.8,
+    maxWidth: '620px', margin: '0 auto',
   },
-  stepsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '24px',
-    marginBottom: '48px',
+  subSectionTitle: {
+    fontSize: '22px', fontWeight: 700, color: '#1a1a1a',
+    marginBottom: '24px', marginTop: '56px', textAlign: 'center',
+  },
+
+  // Steps
+  stepsContainer: {
+    display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '64px',
+  },
+  stepRow: { display: 'flex', gap: '20px', alignItems: 'flex-start' },
+  stepNumber: {
+    width: '64px', height: '64px', borderRadius: '16px',
+    background: 'linear-gradient(135deg, #0E7BB5 0%, #0a5a8a 100%)',
+    color: '#FFB800', fontSize: '24px', fontWeight: 800,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    flexShrink: 0, boxShadow: '0 4px 12px rgba(14,123,181,0.25)',
   },
   stepCard: {
-    borderRadius: '10px',
-    padding: '32px 28px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
+    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
+    padding: '24px 28px', flex: 1,
+    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
   },
-  stepNum: {
-    fontSize: '48px',
-    fontWeight: '800',
-    lineHeight: '1',
-    opacity: 0.4,
-  },
-  stepTitle: {
-    fontSize: '20px',
-    fontWeight: '700',
-  },
-  stepDesc: {
-    fontSize: '14px',
-    lineHeight: '1.8',
-    flex: 1,
-  },
+  stepTitle: { fontSize: '18px', fontWeight: 700, color: '#1a1a1a', marginBottom: '10px' },
+  stepDesc: { fontSize: '14px', color: '#555', lineHeight: 1.8, marginBottom: '14px' },
   stepNote: {
-    padding: '12px 14px',
-    borderRadius: '6px',
-    fontSize: '13px',
-    fontWeight: '500',
-    lineHeight: '1.5',
+    background: '#fff5f5', borderRadius: '6px', padding: '12px 14px',
+    display: 'flex', alignItems: 'flex-start', gap: '10px',
+    borderLeft: '3px solid #e74c3c',
   },
+  stepNoteText: { fontSize: '13px', color: '#c0392b', lineHeight: 1.6, margin: 0, fontWeight: 500 },
+
+  // Apply Methods
+  methodsGrid: {
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '20px', marginTop: '32px',
+  },
+  methodCard: {
+    background: '#f8f9fa', border: '1px solid #e8e8e8', borderRadius: '12px',
+    padding: '28px', display: 'flex', flexDirection: 'column', gap: '12px',
+  },
+  methodIconWrap: {
+    width: '48px', height: '48px', borderRadius: '10px',
+    background: '#e8f4fc', display: 'flex', alignItems: 'center', justifyContent: 'center',
+  },
+  methodTitle: { fontSize: '17px', fontWeight: 700, color: '#1a1a1a' },
+  methodDesc: { fontSize: '14px', color: '#555', lineHeight: 1.7, flex: 1 },
+  methodBtn: {
+    display: 'inline-flex', alignItems: 'center', gap: '6px',
+    color: '#0E7BB5', fontSize: '14px', fontWeight: 600,
+    textDecoration: 'none', marginTop: '4px',
+  },
+
+  // Requirements
+  requirementsList: { display: 'flex', flexDirection: 'column', gap: '14px' },
+  reqCard: {
+    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '10px',
+    padding: '20px 24px', display: 'flex', gap: '16px', alignItems: 'flex-start',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+  },
+  reqIconWrap: {
+    width: '40px', height: '40px', borderRadius: '10px', background: '#e8f4fc',
+    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+  },
+  reqBody: { flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' },
+  reqProg: { fontSize: '15px', fontWeight: 700, color: '#0E7BB5' },
+  reqText: { fontSize: '14px', color: '#333', lineHeight: 1.6 },
+  reqNote: { fontSize: '12px', color: '#888', fontStyle: 'italic', lineHeight: 1.6 },
+
+  // Important Box
   importantBox: {
-    background: '#fff',
-    border: '1.5px solid #e8e8e8',
-    borderLeft: '4px solid #e74c3c',
-    borderRadius: '8px',
-    padding: '28px',
-    marginBottom: '32px',
+    background: '#fff5f5', border: '1px solid #fcc', borderRadius: '12px',
+    padding: '24px 28px', marginTop: '32px',
   },
-  importantTitle: {
-    fontSize: '17px',
-    fontWeight: '700',
-    color: '#c0392b',
-    marginBottom: '16px',
+  importantHeader: {
+    display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px',
   },
-  importantList: {
-    paddingLeft: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-  },
-  portalBox: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '24px',
-    marginTop: '32px',
-  },
-  portalLeft: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderTop: '4px solid #0E7BB5',
-    borderRadius: '8px',
-    padding: '28px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-  },
-  portalRight: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderTop: '4px solid #FFB800',
-    borderRadius: '8px',
-    padding: '28px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-  },
-  portalTitle: {
-    fontSize: '17px',
-    fontWeight: '700',
-    color: '#1a1a1a',
-  },
-  portalDesc: {
-    fontSize: '14px',
-    color: '#555',
-    lineHeight: '1.7',
-    flex: 1,
-  },
-  portalFeatures: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '6px',
-  },
-  portalFeature: {
-    background: '#e8f4fc',
-    color: '#0E7BB5',
-    fontSize: '12px',
-    padding: '4px 10px',
-    borderRadius: '20px',
-    fontWeight: '500',
-  },
-  portalBtn: {
-    background: '#0E7BB5',
-    color: '#fff',
-    textDecoration: 'none',
-    padding: '10px 20px',
-    borderRadius: '6px',
-    fontSize: '13px',
-    fontWeight: '600',
-    display: 'inline-block',
-    marginTop: '4px',
-  },
-  requirementsTable: {
-    background: '#fff',
-    borderRadius: '10px',
-    overflow: 'hidden',
-    border: '1px solid #e8e8e8',
-    marginBottom: '40px',
-  },
-  tableHeader: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1.5fr 1.5fr',
-    background: '#0E7BB5',
-    padding: '14px 20px',
-    gap: '16px',
-  },
-  thCell: {
-    color: '#fff',
-    fontSize: '12px',
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    letterSpacing: '1px',
-  },
-  tableRow: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1.5fr 1.5fr',
-    padding: '16px 20px',
-    gap: '16px',
-    borderBottom: '1px solid #f0f0f0',
-  },
-  tdProg: {
-    fontSize: '14px',
-    fontWeight: '600',
-    color: '#0E7BB5',
-  },
-  tdReq: {
-    fontSize: '14px',
-    color: '#333',
-    lineHeight: '1.5',
-  },
-  tdNote: {
-    fontSize: '13px',
-    color: '#e74c3c',
-    fontStyle: 'italic',
-    lineHeight: '1.5',
-  },
-  pathwayInfo: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderRadius: '10px',
-    padding: '32px',
-    marginBottom: '32px',
-  },
-  pathwayTitle: {
-    fontSize: '18px',
-    fontWeight: '700',
-    color: '#1a1a1a',
-    marginBottom: '12px',
-  },
-  pathwayText: {
-    fontSize: '14px',
-    color: '#555',
-    lineHeight: '1.8',
-    marginBottom: '24px',
-  },
-  diplomaSteps: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    flexWrap: 'wrap',
-    gap: '8px',
-  },
-  diplomaStep: {
-    background: '#f8f9fa',
-    borderRadius: '8px',
-    padding: '16px',
-    flex: '1',
-    minWidth: '180px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '6px',
-  },
-  diplomaNum: {
-    fontSize: '11px',
-    fontWeight: '700',
-    color: '#0E7BB5',
-    textTransform: 'uppercase',
-    letterSpacing: '1px',
-  },
-  diplomaTitle: {
-    fontSize: '14px',
-    fontWeight: '700',
-    color: '#1a1a1a',
-  },
-  diplomaDesc: {
-    fontSize: '13px',
-    color: '#666',
-    lineHeight: '1.6',
-  },
-  diplomaArrow: {
-    fontSize: '20px',
-    color: '#0E7BB5',
-    display: 'flex',
-    alignItems: 'center',
-    paddingTop: '28px',
-  },
-  ncvPathInfo: {
-    background: '#e8f4fc',
-    border: '1px solid #b3d7ef',
-    borderRadius: '10px',
-    padding: '28px',
-  },
-  ncvTitle: {
-    fontSize: '17px',
-    fontWeight: '700',
-    color: '#0E7BB5',
-    marginBottom: '10px',
-  },
-  ncvText: {
-    fontSize: '14px',
-    color: '#333',
-    lineHeight: '1.8',
-    marginBottom: '16px',
-  },
-  ncvList: {
-    paddingLeft: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-    fontSize: '14px',
-    color: '#444',
-    lineHeight: '1.6',
-  },
+  importantTitle: { fontSize: '17px', fontWeight: 700, color: '#c0392b' },
+  importantText: { fontSize: '14px', color: '#4a0f0f', lineHeight: 1.8, marginBottom: '10px' },
+
+  // Documents
   docsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '16px',
-    marginBottom: '40px',
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px',
   },
   docCard: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderRadius: '8px',
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
+    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '10px',
+    padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
   },
-  docTop: {
-    display: 'flex',
-    justifyContent: 'flex-start',
+  docHead: {
+    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+  },
+  docIconWrap: {
+    width: '32px', height: '32px', borderRadius: '8px', background: '#f8f9fa',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
   },
   docBadge: {
-    fontSize: '11px',
-    fontWeight: '700',
-    padding: '4px 12px',
-    borderRadius: '20px',
+    fontSize: '10px', fontWeight: 700, padding: '3px 10px',
+    borderRadius: '20px', letterSpacing: '0.5px', textTransform: 'uppercase',
   },
-  docTitle: {
-    fontSize: '15px',
-    fontWeight: '600',
-    color: '#1a1a1a',
-  },
-  docNote: {
-    fontSize: '13px',
-    color: '#666',
-    lineHeight: '1.6',
-  },
+  docTitle: { fontSize: '14px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1.4 },
+  docNote: { fontSize: '12px', color: '#666', lineHeight: 1.6 },
+
+  // Certification Box
   certBox: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderRadius: '10px',
-    padding: '28px',
-    marginBottom: '24px',
+    background: '#e8f4fc', border: '1px solid #b8dff0', borderRadius: '12px',
+    padding: '28px', marginTop: '32px',
   },
-  certTitle: {
-    fontSize: '17px',
-    fontWeight: '700',
-    color: '#1a1a1a',
-    marginBottom: '12px',
+  certLeft: { display: 'flex', gap: '16px', alignItems: 'flex-start' },
+  certIconWrap: {
+    width: '48px', height: '48px', borderRadius: '12px', background: '#fff',
+    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
   },
-  certText: {
-    fontSize: '14px',
-    color: '#555',
-    marginBottom: '16px',
-    lineHeight: '1.7',
-  },
-  certOptions: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '8px',
-  },
-  certOption: {
-    background: '#f0f8ff',
-    color: '#0E7BB5',
-    border: '1px solid #cce4f5',
-    borderRadius: '6px',
-    padding: '8px 14px',
-    fontSize: '13px',
-    fontWeight: '500',
-  },
-  warningBox: {
-    background: '#fff8f0',
-    border: '1.5px solid #e67e22',
-    borderRadius: '8px',
-    padding: '24px',
-  },
-  warningTitle: {
-    fontSize: '16px',
-    fontWeight: '700',
-    color: '#e67e22',
-    marginBottom: '10px',
-  },
-  warningText: {
-    fontSize: '14px',
-    color: '#444',
-    lineHeight: '1.8',
-  },
+  certTitle: { fontSize: '16px', fontWeight: 700, color: '#0E7BB5', marginBottom: '8px' },
+  certText: { fontSize: '14px', color: '#333', lineHeight: 1.8 },
+
+  // NSFAS
   nsfasEligibility: {
-    marginBottom: '48px',
+    background: 'linear-gradient(135deg, #e8f4fc 0%, #f0f8fe 100%)',
+    border: '1px solid #b8dff0', borderRadius: '16px',
+    padding: '32px', marginBottom: '48px',
   },
-  nsfasSubTitle: {
-    fontSize: '20px',
-    fontWeight: '700',
-    color: '#1a1a1a',
-    marginBottom: '20px',
+  nsfasHead: {
+    display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px',
+    flexWrap: 'wrap',
   },
+  nsfasHeadLogo: {
+    width: '72px', height: '72px', objectFit: 'contain',
+    background: '#fff', borderRadius: '12px', padding: '10px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+  },
+  nsfasHeadTitle: { fontSize: '20px', fontWeight: 700, color: '#0E7BB5', marginBottom: '4px' },
+  nsfasHeadSub: { fontSize: '14px', color: '#555' },
   eligibilityGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-    gap: '16px',
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '12px',
   },
-  eligibilityCard: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderTop: '3px solid #0E7BB5',
-    borderRadius: '8px',
-    padding: '20px',
+  eligibilityItem: {
+    display: 'flex', alignItems: 'flex-start', gap: '10px',
+    background: '#fff', padding: '12px 16px', borderRadius: '8px',
+    fontSize: '13px', color: '#333', lineHeight: 1.5,
   },
-  eligibilityTitle: {
-    fontSize: '15px',
-    fontWeight: '700',
-    color: '#0E7BB5',
-    marginBottom: '8px',
-  },
-  eligibilityDesc: {
-    fontSize: '14px',
-    color: '#555',
-    lineHeight: '1.7',
-  },
-  allowancesGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-    gap: '16px',
-    marginBottom: '48px',
+  allowanceGrid: {
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px',
   },
   allowanceCard: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderRadius: '8px',
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
+    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
+    padding: '24px 20px', textAlign: 'center',
+    borderTop: '4px solid #FFB800',
+    display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center',
   },
-  allowanceAmount: {
-    fontSize: '28px',
-    fontWeight: '800',
-    color: '#0E7BB5',
+  allowanceIconWrap: {
+    width: '44px', height: '44px', borderRadius: '10px', background: '#fff8e6',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
   },
-  allowancePeriod: {
-    fontSize: '12px',
-    color: '#999',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
+  allowanceType: { fontSize: '13px', fontWeight: 600, color: '#666', marginTop: '4px' },
+  allowanceAmount: { fontSize: '22px', fontWeight: 800, color: '#0E7BB5', letterSpacing: '-0.5px' },
+  allowancePeriod: { fontSize: '11px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px' },
+  nsfasCtaBox: {
+    background: 'linear-gradient(135deg, #0E7BB5 0%, #0a5a8a 100%)',
+    borderRadius: '16px', padding: '32px 36px', marginTop: '48px',
+    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+    flexWrap: 'wrap', gap: '24px',
   },
-  allowanceType: {
-    fontSize: '14px',
-    fontWeight: '700',
-    color: '#1a1a1a',
-    marginTop: '4px',
-  },
-  allowanceDesc: {
-    fontSize: '13px',
-    color: '#666',
-    lineHeight: '1.5',
-  },
-  nsfasSteps: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderRadius: '10px',
-    padding: '32px',
-    marginBottom: '32px',
-  },
-  nsfasStepsList: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-    marginBottom: '24px',
-  },
-  nsfasStepItem: {
-    display: 'flex',
-    gap: '16px',
-    alignItems: 'flex-start',
-  },
-  nsfasStepNum: {
-    width: '32px',
-    height: '32px',
-    borderRadius: '50%',
-    background: '#0E7BB5',
-    color: '#fff',
-    fontSize: '14px',
-    fontWeight: '700',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  nsfasStepTitle: {
-    fontSize: '15px',
-    fontWeight: '700',
-    color: '#1a1a1a',
-    marginBottom: '4px',
-  },
-  nsfasStepDesc: {
-    fontSize: '14px',
-    color: '#555',
-    lineHeight: '1.7',
-  },
-  nsfasCTA: {
-    textAlign: 'center',
-  },
-  dhetBursary: {
-    background: '#e8f4fc',
-    border: '1px solid #b3d7ef',
-    borderRadius: '10px',
-    padding: '28px',
-  },
-  campusGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '16px',
-    marginBottom: '32px',
-  },
-  campusCard: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderRadius: '8px',
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-    transition: 'border-color 0.2s',
-  },
-  campusHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    gap: '8px',
-  },
-  campusName: {
-    fontSize: '16px',
-    fontWeight: '700',
-    color: '#0E7BB5',
-  },
-  campusTownBadge: {
-    background: '#e8f4fc',
-    color: '#0E7BB5',
-    fontSize: '11px',
-    fontWeight: '600',
-    padding: '3px 10px',
-    borderRadius: '20px',
+  nsfasCtaLeft: { flex: 1, minWidth: '260px' },
+  nsfasCtaTitle: { fontSize: '22px', fontWeight: 700, color: '#fff', marginBottom: '8px' },
+  nsfasCtaDesc: { fontSize: '14px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.7 },
+  nsfasCtaBtn: {
+    display: 'inline-flex', alignItems: 'center', gap: '8px',
+    background: '#FFB800', color: '#000', textDecoration: 'none',
+    padding: '14px 28px', borderRadius: '8px', fontSize: '15px', fontWeight: 700,
     whiteSpace: 'nowrap',
   },
-  campusAddress: {
-    fontSize: '13px',
-    color: '#888',
+
+  // WIL
+  wilGrid: {
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px',
   },
-  campusSpec: {
-    fontSize: '13px',
-    color: '#555',
-    fontStyle: 'italic',
-    flex: 1,
+  wilCard: {
+    background: '#fff', border: '1px solid #e8e8e8', borderTop: '4px solid #0E7BB5',
+    borderRadius: '12px', padding: '28px',
+    display: 'flex', flexDirection: 'column', gap: '14px',
   },
-  campusAction: {
-    marginTop: '4px',
+  wilIconWrap: {
+    width: '52px', height: '52px', borderRadius: '12px', background: '#e8f4fc',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
   },
-  campusWalkIn: {
-    fontSize: '12px',
-    color: '#2ecc71',
-    fontWeight: '600',
+  wilCardTitle: { fontSize: '17px', fontWeight: 700, color: '#1a1a1a' },
+  wilHours: {
+    display: 'flex', alignItems: 'baseline', gap: '8px',
+    padding: '10px 0', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0',
   },
-  contactNote: {
-    background: '#fff',
-    border: '1px solid #e8e8e8',
-    borderRadius: '8px',
-    padding: '20px 24px',
+  wilHoursNum: { fontSize: '32px', fontWeight: 800, color: '#0E7BB5', letterSpacing: '-0.5px' },
+  wilHoursLabel: { fontSize: '13px', color: '#666' },
+  wilCardText: { fontSize: '13px', color: '#555', lineHeight: 1.7 },
+  wilProcess: {
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px',
   },
-  contactNoteText: {
-    fontSize: '14px',
-    color: '#555',
-    lineHeight: '1.8',
+  wilStep: {
+    background: '#f8f9fa', borderRadius: '10px', padding: '20px',
+    display: 'flex', flexDirection: 'column', gap: '8px',
   },
-  contactLink: {
-    color: '#0E7BB5',
-    fontWeight: '600',
-    textDecoration: 'none',
+  wilStepNum: {
+    fontSize: '24px', fontWeight: 800, color: '#FFB800',
+    letterSpacing: '-1px', lineHeight: 1,
   },
-  wilSection: {
-    position: 'relative',
-    backgroundImage: 'url(https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600&q=80)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundAttachment: 'fixed',
-    padding: '96px 24px',
-  },
-  wilOverlay: {
-    position: 'absolute',
-    inset: 0,
-    background: 'rgba(14,123,181,0.92)',
-  },
-  wilContent: {
-    display: 'grid',
-    gridTemplateColumns: '1.5fr 1fr',
-    gap: '64px',
-    alignItems: 'center',
-  },
-  wilText: {
-    position: 'relative',
-    zIndex: 1,
-  },
-  wilTag: {
-    color: '#FFB800',
-    fontSize: '11px',
-    fontWeight: '700',
-    letterSpacing: '3px',
-    textTransform: 'uppercase',
-    marginBottom: '12px',
-  },
-  wilTitle: {
-    fontSize: 'clamp(24px, 3vw, 36px)',
-    fontWeight: '800',
-    color: '#fff',
-    marginBottom: '16px',
-    letterSpacing: '-0.5px',
-  },
-  wilDesc: {
-    fontSize: '15px',
-    color: 'rgba(255,255,255,0.88)',
-    lineHeight: '1.8',
-    marginBottom: '20px',
-  },
-  wilBenefits: {
-    paddingLeft: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-    marginBottom: '28px',
-    color: 'rgba(255,255,255,0.85)',
-    fontSize: '14px',
-    lineHeight: '1.6',
-  },
-  wilBtn: {
-    background: '#FFB800',
-    color: '#000',
-    textDecoration: 'none',
-    padding: '13px 28px',
-    borderRadius: '6px',
-    fontSize: '14px',
-    fontWeight: '700',
-    display: 'inline-block',
-  },
-  wilStats: {
-    position: 'relative',
-    zIndex: 1,
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '16px',
-  },
-  wilStat: {
-    background: 'rgba(255,255,255,0.12)',
-    borderRadius: '8px',
-    padding: '20px',
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '6px',
-  },
-  wilStatNum: {
-    fontSize: '28px',
-    fontWeight: '800',
-    color: '#FFB800',
-  },
-  wilStatLabel: {
-    fontSize: '12px',
-    color: 'rgba(255,255,255,0.8)',
-    lineHeight: '1.4',
-  },
-  cta: {
-    backgroundImage: 'url(https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1600&q=80)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-  ctaInner: {
-    background: 'rgba(0,0,0,0.78)',
-    padding: '96px 24px',
-    textAlign: 'center',
-  },
-  ctaTitle: {
-    fontSize: 'clamp(28px, 4vw, 44px)',
-    fontWeight: '800',
-    color: '#fff',
-    marginBottom: '16px',
-    letterSpacing: '-0.5px',
-  },
-  ctaSub: {
-    color: 'rgba(255,255,255,0.8)',
-    fontSize: '16px',
-    marginBottom: '36px',
-    lineHeight: '1.7',
-    maxWidth: '520px',
-    margin: '0 auto 36px',
-  },
-  ctaBtns: {
-    display: 'flex',
-    gap: '16px',
-    justifyContent: 'center',
+  wilStepTitle: { fontSize: '14px', fontWeight: 700, color: '#1a1a1a' },
+  wilStepDesc: { fontSize: '12px', color: '#666', lineHeight: 1.6 },
+  employerBox: {
+    background: '#1a1a1a', borderRadius: '12px', padding: '28px 32px',
+    marginTop: '32px', display: 'flex', gap: '20px', alignItems: 'flex-start',
     flexWrap: 'wrap',
   },
-  btnOutline: {
-    background: 'transparent',
-    color: '#fff',
-    textDecoration: 'none',
-    padding: '14px 32px',
-    borderRadius: '6px',
-    fontSize: '15px',
-    fontWeight: '600',
-    border: '2px solid rgba(255,255,255,0.5)',
+  employerIconWrap: {
+    width: '52px', height: '52px', borderRadius: '12px',
+    background: 'rgba(255,184,0,0.15)', border: '1px solid rgba(255,184,0,0.3)',
+    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
   },
+  employerContent: { flex: 1, minWidth: '260px' },
+  employerTitle: { fontSize: '18px', fontWeight: 700, color: '#fff', marginBottom: '8px' },
+  employerDesc: { fontSize: '14px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '14px' },
+  employerBtn: {
+    display: 'inline-flex', alignItems: 'center', gap: '6px',
+    background: '#FFB800', color: '#000', textDecoration: 'none',
+    padding: '10px 20px', borderRadius: '6px', fontSize: '13px', fontWeight: 700,
+  },
+
+  // Cashless
+  cashlessSection: { background: '#c0392b', padding: '28px 24px' },
+  cashlessInner: {
+    display: 'flex', alignItems: 'flex-start', gap: '16px',
+    maxWidth: '1200px', margin: '0 auto',
+  },
+  cashlessContent: { flex: 1 },
+  cashlessTitle: { fontSize: '16px', fontWeight: 700, color: '#fff', marginBottom: '6px' },
+  cashlessText: { fontSize: '13px', color: 'rgba(255,255,255,0.92)', lineHeight: 1.7 },
+
+  // Campus Strip
+  campusSection: { padding: '80px 24px', background: '#f8f9fa' },
+  campusStrip: {
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px',
+  },
+  campusCard: {
+    background: '#fff', border: '1px solid #e8e8e8', borderRadius: '12px',
+    overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+  },
+  campusImg: {
+    height: '140px', backgroundSize: 'cover', backgroundPosition: 'center',
+    position: 'relative',
+  },
+  campusOverlay: {
+    position: 'absolute', inset: 0,
+    background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 60%)',
+  },
+  campusBadge: {
+    position: 'absolute', bottom: '12px', left: '12px',
+    display: 'inline-flex', alignItems: 'center', gap: '4px',
+    background: '#FFB800', color: '#000', fontSize: '11px', fontWeight: 700,
+    padding: '4px 10px', borderRadius: '4px',
+  },
+  campusBody: { padding: '16px 18px' },
+  campusName: { fontSize: '14px', fontWeight: 700, color: '#0E7BB5', marginBottom: '4px' },
+  campusWalkin: { fontSize: '12px', color: '#666' },
+  campusFooter: { textAlign: 'center', marginTop: '32px' },
+  btnBlue: {
+    display: 'inline-flex', alignItems: 'center', gap: '8px',
+    background: '#0E7BB5', color: '#fff', textDecoration: 'none',
+    padding: '13px 28px', borderRadius: '8px', fontSize: '14px', fontWeight: 600,
+  },
+
+  // CTA
+  cta: {
+    position: 'relative',
+    backgroundImage: `url(${assets.campuses.kwetlisong})`,
+    backgroundSize: 'cover', backgroundPosition: 'center',
+  },
+  ctaOverlay: {
+    position: 'absolute', inset: 0,
+    background: 'linear-gradient(135deg, rgba(14,123,181,0.94) 0%, rgba(0,0,0,0.85) 100%)',
+  },
+  ctaInner: {
+    position: 'relative', zIndex: 1, padding: '96px 24px', textAlign: 'center',
+    maxWidth: '720px', margin: '0 auto',
+  },
+  ctaBadge: {
+    display: 'inline-flex', alignItems: 'center', gap: '8px',
+    background: 'rgba(255,184,0,0.2)', border: '1px solid rgba(255,184,0,0.5)',
+    color: '#FFB800', fontSize: '12px', fontWeight: 600,
+    padding: '6px 14px', borderRadius: '20px', marginBottom: '20px',
+  },
+  ctaTitle: {
+    color: '#fff', fontSize: 'clamp(28px, 4vw, 44px)',
+    fontWeight: 800, marginBottom: '16px', letterSpacing: '-0.5px',
+  },
+  ctaSub: {
+    color: 'rgba(255,255,255,0.85)', fontSize: '16px', lineHeight: 1.7,
+    marginBottom: '36px', maxWidth: '560px', margin: '0 auto 36px',
+  },
+  ctaBtns: { display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' },
 }

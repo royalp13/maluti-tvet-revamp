@@ -6,6 +6,29 @@ import {
   MessageSquare, Building2, Users, Send
 } from 'lucide-react'
 
+// ═══════════════════════════════════════════════════
+// LOCAL ASSET IMPORTS
+// ═══════════════════════════════════════════════════
+import bethlehem from '../assets/campuses/bethlehem.png'
+import bonamelo from '../assets/campuses/bonamelo.png'
+import harrismith from '../assets/campuses/harrismith.png'
+import itemoheleng from '../assets/campuses/itemoheleng.png'
+import kwetlisong from '../assets/campuses/kwetlisong.png'
+import lerelatshepe from '../assets/campuses/lerelatshepe.png'
+import phuthaditjhaba from '../assets/campuses/phuthaditjhaba.png'
+import sefikeng from '../assets/campuses/sefikeng.png'
+
+const campusImages = [
+  bethlehem,
+  bonamelo,
+  harrismith,
+  itemoheleng,
+  kwetlisong,
+  lerelatshepe,
+  phuthaditjhaba,
+  sefikeng
+]
+
 export default function Contact() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -35,8 +58,9 @@ export default function Contact() {
   }
 
   if (loading) return (
-    <div style={{ height: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0E7BB5' }}>
-      <p style={{ fontSize: '16px' }}>Loading...</p>
+    <div style={styles.loadingWrap}>
+      <div style={styles.loadingSpinner} />
+      <p style={styles.loadingText}>Loading...</p>
     </div>
   )
 
@@ -227,29 +251,35 @@ export default function Contact() {
           </p>
           <div style={styles.campusGrid}>
             {data.campuses.map((c, i) => (
-              <div key={i} style={styles.campusCard}>
-                <div style={styles.campusHeader}>
-                  <Building2 size={18} color="#0E7BB5" />
-                  <div>
-                    <h3 style={styles.campusName}>{c.name}</h3>
-                    <span style={{
-                      ...styles.campusTypeBadge,
-                      background: c.type === 'Corporate Office' ? '#FFB800' : c.type === 'Central Office' ? '#0E7BB5' : '#e8f4fc',
-                      color: c.type === 'Corporate Office' ? '#000' : c.type === 'Central Office' ? '#fff' : '#0E7BB5',
-                    }}>{c.type}</span>
-                  </div>
+              <div key={i} style={styles.campusCard}
+                onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+              >
+                <div style={{ ...styles.campusImg, backgroundImage: `url(${campusImages[i % campusImages.length]})` }}>
+                  <div style={styles.campusImgOverlay} />
+                  <span style={{
+                    ...styles.campusTypeBadge,
+                    background: c.type === 'Corporate Office' ? '#FFB800' : c.type === 'Central Office' ? '#0E7BB5' : '#FFB800',
+                    color: c.type === 'Central Office' ? '#fff' : '#000',
+                  }}>
+                    {c.type}
+                  </span>
                 </div>
-                <div style={styles.campusDetails}>
-                  <div style={styles.campusDetailRow}>
-                    <MapPin size={13} color="#999" />
-                    <span style={styles.campusAddress}>{c.address}</span>
+                
+                <div style={styles.campusBody}>
+                  <h3 style={styles.campusName}>{c.name}</h3>
+                  <div style={styles.campusDetails}>
+                    <div style={styles.campusDetailRow}>
+                      <MapPin size={13} color="#999" />
+                      <span style={styles.campusAddress}>{c.address}</span>
+                    </div>
+                    <div style={styles.campusDetailRow}>
+                      <Users size={13} color="#999" />
+                      <span style={styles.campusRole}>{c.role}</span>
+                    </div>
                   </div>
-                  <div style={styles.campusDetailRow}>
-                    <Users size={13} color="#999" />
-                    <span style={styles.campusRole}>{c.role}</span>
-                  </div>
+                  <p style={styles.campusWalkIn}>Walk-in applications and enquiries accepted</p>
                 </div>
-                <p style={styles.campusWalkIn}>Walk-in applications and enquiries accepted</p>
               </div>
             ))}
           </div>
@@ -297,10 +327,24 @@ export default function Contact() {
   )
 }
 
+// ═══════════════════════════════════════════════════
+// STYLES
+// ═══════════════════════════════════════════════════
 const styles = {
+  loadingWrap: {
+    height: '60vh', display: 'flex', flexDirection: 'column',
+    alignItems: 'center', justifyContent: 'center', gap: 16, background: '#fff',
+  },
+  loadingSpinner: {
+    width: 36, height: 36, borderRadius: '50%',
+    border: '3px solid #e8e8e8', borderTopColor: '#0E7BB5',
+    animation: 'spin 0.8s linear infinite',
+  },
+  loadingText: { color: '#0E7BB5', fontSize: 14, fontWeight: 500 },
+
   hero: {
     position: 'relative',
-    backgroundImage: 'url(https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1600&q=80)',
+    backgroundImage: `url(${phuthaditjhaba})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     minHeight: '420px',
@@ -451,6 +495,7 @@ const styles = {
     color: '#1a1a1a',
     width: '100%',
     fontFamily: 'inherit',
+    boxSizing: 'border-box',
   },
   submitBtn: {
     background: '#0E7BB5',
@@ -609,36 +654,54 @@ const styles = {
   campusGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-    gap: '16px',
+    gap: '20px',
   },
   campusCard: {
     background: '#fff',
     border: '1px solid #e8e8e8',
-    borderRadius: '8px',
-    padding: '20px',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+    transition: 'transform 0.2s',
+  },
+  campusImg: {
+    height: '170px',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'flex-end',
+    padding: '12px',
+  },
+  campusImgOverlay: {
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 60%)',
+  },
+  campusTypeBadge: {
+    position: 'relative',
+    zIndex: 1,
+    fontSize: '10px',
+    fontWeight: '700',
+    padding: '4px 10px',
+    borderRadius: '4px',
+    display: 'inline-block',
+    letterSpacing: '0.3px',
+    textTransform: 'uppercase',
+  },
+  campusBody: {
+    padding: '18px 20px',
     display: 'flex',
     flexDirection: 'column',
     gap: '12px',
-    transition: 'box-shadow 0.2s',
-  },
-  campusHeader: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '10px',
   },
   campusName: {
     fontSize: '15px',
     fontWeight: '700',
     color: '#1a1a1a',
-    margin: '0 0 4px',
-  },
-  campusTypeBadge: {
-    fontSize: '10px',
-    fontWeight: '700',
-    padding: '2px 8px',
-    borderRadius: '20px',
-    display: 'inline-block',
-    letterSpacing: '0.3px',
+    margin: '0',
   },
   campusDetails: {
     display: 'flex',
