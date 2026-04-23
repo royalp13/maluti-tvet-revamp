@@ -21,14 +21,14 @@ import ctaImg from '../assets/applications.jpeg'
 import valuesImg from '../assets/slide-1.jpg'
 
 // Campus Imports
-import bethlehem from '../assets/campuses/bethlehem.png'
-import bonamelo from '../assets/campuses/bonamelo.png'
-import harrismith from '../assets/campuses/harrismith.png'
-import itemoheleng from '../assets/campuses/itemoheleng.png'
-import kwetlisong from '../assets/campuses/kwetlisong.png'
-import lerelatshepe from '../assets/campuses/lerelatshepe.png'
-import phuthaditjhaba from '../assets/campuses/phuthaditjhaba.png'
-import sefikeng from '../assets/campuses/sefikeng.png'
+import bethlehem from '../assets/campuses/bethlehem.webp'
+import bonamelo from '../assets/campuses/bonamelo.webp'
+import harrismith from '../assets/campuses/harrismith.webp'
+import itemoheleng from '../assets/campuses/itemoheleng.webp'
+import kwetlisong from '../assets/campuses/kwetlisong.webp'
+import lerelatshepe from '../assets/campuses/lerelatshepe.webp'
+import phuthaditjhaba from '../assets/campuses/phuthaditjhaba.webp'
+import sefikeng from '../assets/campuses/sefikeng.webp'
 
 const valueIcons = {
   'Integrity': Shield,

@@ -227,7 +227,7 @@ export default function Admissions() {
                 <h3 style={styles.importantTitle}>Important: Mathematics Requirement</h3>
               </div>
               <p style={styles.importantText}>
-                For all <strong>Engineering NATED programmes (N1–N6)</strong>, you must have
+                For all <strong>Engineering NATED programmes (N1-N6)</strong>, you must have
                 passed <strong>Pure Mathematics</strong> and <strong>Physical Science</strong>.
                 Mathematical Literacy is <strong>NOT accepted</strong> as an alternative.
               </p>

@@ -4,7 +4,7 @@ import { Eye, EyeOff, User, Lock, AlertTriangle, Shield, LogIn } from 'lucide-re
 import { assets, mockLogin } from '../services/api'
 
 // Import local background image
-import phuthaditjhaba from '../assets/campuses/phuthaditjhaba.png'
+import phuthaditjhaba from '../assets/campuses/phuthaditjhaba.webp'
 
 export default function Portal() {
   const [activeTab, setActiveTab] = useState('student')

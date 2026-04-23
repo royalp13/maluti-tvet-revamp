@@ -137,12 +137,12 @@ export default function Programmes() {
               </div>
               <h3 style={styles.explainerTitle}>NATED (Report 191)</h3>
               <p style={styles.explainerDesc}>
-                N1–N6 trimester-based programmes. Strong theory + practical component.
+                N1-N6 trimester-based programmes. Strong theory + practical component.
                 N6 + practical hours = National Diploma.
               </p>
               <ul style={styles.explainerList}>
-                <li>N1–N3: 18 months total (3 trimesters each)</li>
-                <li>N4–N6: 18 months + 2 years workplace practical</li>
+                <li>N1-N3: 18 months total (3 trimesters each)</li>
+                <li>N4-N6: 18 months + 2 years workplace practical</li>
                 <li>Accredited by QCTO and DHET</li>
                 <li>Leads to artisan trade test or National Diploma</li>
               </ul>
@@ -156,10 +156,10 @@ export default function Programmes() {
                 Your current qualification and career goals determine the best pathway.
               </p>
               <ul style={styles.explainerList}>
-                <li><strong>Grade 9–11:</strong> Start with NC(V) Level 2 or NATED N1</li>
+                <li><strong>Grade 9-11:</strong> Start with NC(V) Level 2 or NATED N1</li>
                 <li><strong>Matric:</strong> Enter NATED N4 or NC(V) for career switch</li>
                 <li><strong>Artisan goal:</strong> NATED engineering + trade test</li>
-                <li><strong>Management goal:</strong> NATED N4–N6 Business</li>
+                <li><strong>Management goal:</strong> NATED N4-N6 Business</li>
               </ul>
             </div>
           </div>
@@ -377,11 +377,11 @@ export default function Programmes() {
           </div>
           <div style={styles.faqList}>
             {[
-              { q: 'Do I need Matric to study at Maluti TVET College?', a: 'Not necessarily. NC(V) Level 2 and NATED N1 only require a Grade 9 pass. However, NATED N4–N6 programmes require Matric or a completed N3 certificate. Engineering NATED programmes specifically require Mathematics and Physical Science - Mathematical Literacy is not accepted.' },
-              { q: 'What is the difference between NC(V) and NATED?', a: 'NC(V) is a 3-year full-time qualification equivalent to Matric, accredited by Umalusi. NATED (Report 191) is trimester-based - N1–N3 for 18 months, then N4–N6 for another 18 months plus 2 years workplace practical. Both are nationally recognised.' },
+              { q: 'Do I need Matric to study at Maluti TVET College?', a: 'Not necessarily. NC(V) Level 2 and NATED N1 only require a Grade 9 pass. However, NATED N4-N6 programmes require Matric or a completed N3 certificate. Engineering NATED programmes specifically require Mathematics and Physical Science - Mathematical Literacy is not accepted.' },
+              { q: 'What is the difference between NC(V) and NATED?', a: 'NC(V) is a 3-year full-time qualification equivalent to Matric, accredited by Umalusi. NATED (Report 191) is trimester-based - N1-N3 for 18 months, then N4-N6 for another 18 months plus 2 years workplace practical. Both are nationally recognised.' },
               { q: 'Can I get NSFAS funding for my programme?', a: 'Yes, qualifying students receive NSFAS funding covering tuition, accommodation, transport, and incidentals. Household income threshold is R350,000 per annum. Apply at nsfas.org.za as early as possible.' },
-              { q: 'How do I become a qualified artisan?', a: 'Complete NATED N1–N3 in your trade (e.g. Electrical, Mechanical), accumulate required workplace hours (logbook), then pass your QCTO trade test. This gives you artisan status recognised nationally.' },
-              { q: 'What is the National Diploma pathway?', a: 'Complete NATED N4–N6 (18 months), then complete 2,000 practical hours for Business qualifications or 2,670 hours for Engineering. Submit your QCTO logbook to receive your National Diploma.' },
+              { q: 'How do I become a qualified artisan?', a: 'Complete NATED N1-N3 in your trade (e.g. Electrical, Mechanical), accumulate required workplace hours (logbook), then pass your QCTO trade test. This gives you artisan status recognised nationally.' },
+              { q: 'What is the National Diploma pathway?', a: 'Complete NATED N4-N6 (18 months), then complete 2,000 practical hours for Business qualifications or 2,670 hours for Engineering. Submit your QCTO logbook to receive your National Diploma.' },
               { q: 'At which campuses can I study my chosen programme?', a: 'Each programme is offered at specific campuses based on infrastructure and specialisation. Click "View full details" on any programme above to see campus availability.' },
             ].map((faq, i) => (
               <details key={i} style={styles.faqItem}>

@@ -9,14 +9,14 @@ import {
 // ═══════════════════════════════════════════════════
 // LOCAL ASSET IMPORTS
 // ═══════════════════════════════════════════════════
-import bethlehem from '../assets/campuses/bethlehem.png'
-import bonamelo from '../assets/campuses/bonamelo.png'
-import harrismith from '../assets/campuses/harrismith.png'
-import itemoheleng from '../assets/campuses/itemoheleng.png'
-import kwetlisong from '../assets/campuses/kwetlisong.png'
-import lerelatshepe from '../assets/campuses/lerelatshepe.png'
-import phuthaditjhaba from '../assets/campuses/phuthaditjhaba.png'
-import sefikeng from '../assets/campuses/sefikeng.png'
+import bethlehem from '../assets/campuses/bethlehem.webp'
+import bonamelo from '../assets/campuses/bonamelo.webp'
+import harrismith from '../assets/campuses/harrismith.webp'
+import itemoheleng from '../assets/campuses/itemoheleng.webp'
+import kwetlisong from '../assets/campuses/kwetlisong.webp'
+import lerelatshepe from '../assets/campuses/lerelatshepe.webp'
+import phuthaditjhaba from '../assets/campuses/phuthaditjhaba.webp'
+import sefikeng from '../assets/campuses/sefikeng.webp'
 
 const campusImages = [
   bethlehem,
@@ -135,7 +135,7 @@ export default function Contact() {
                   <h3 style={styles.successTitle}>Enquiry Submitted</h3>
                   <p style={styles.successDesc}>
                     Thank you for reaching out. Your enquiry has been received and will be
-                    directed to the appropriate department. Please allow 2–3 working days
+                    directed to the appropriate department. Please allow 2-3 working days
                     for a response, or visit your nearest campus for urgent matters.
                   </p>
                   <button style={styles.successBtn} onClick={() => { setSubmitted(false); setForm({ name: '', email: '', phone: '', subject: '', campus: '', message: '' }) }}>
@@ -201,7 +201,7 @@ export default function Contact() {
                     {submitting ? 'Submitting...' : 'Submit Enquiry'}
                   </button>
                   <p style={styles.formNote}>
-                    For urgent matters, visit your nearest campus directly. Response time is 2–3 working days.
+                    For urgent matters, visit your nearest campus directly. Response time is 2-3 working days.
                   </p>
                 </form>
               )}
@@ -317,7 +317,7 @@ export default function Contact() {
               <Mail size={24} color="#FFB800" />
               <h3 style={styles.importantTitle}>General Enquiries</h3>
               <p style={styles.importantLink}>{data.general.email}</p>
-              <p style={styles.importantNote}>For non-urgent enquiries-allow 2–3 working days for response</p>
+              <p style={styles.importantNote}>For non-urgent enquiries-allow 2-3 working days for response</p>
             </div>
           </div>
         </div>
