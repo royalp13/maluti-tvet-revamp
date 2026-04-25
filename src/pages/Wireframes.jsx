@@ -127,7 +127,7 @@ export default function Wireframes() {
           <h2 style={{ ...styles.sectionTitle, color: '#fff' }}>Technology Stack</h2>
           <div style={styles.techGrid}>
             {[
-              { cat: 'Frontend', items: 'React 18, Vite 8, React Router v7' },
+              { cat: 'Frontend', items: 'React 19, Vite 8, React Router v7' },
               { cat: 'UI / Icons', items: 'Lucide React, custom design system' },
               { cat: 'Hosting', items: 'Azure Static Web Apps (Free tier)' },
               { cat: 'CI/CD', items: 'GitHub Actions auto-deploy on push' },
