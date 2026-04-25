@@ -61,26 +61,8 @@ Wireframes were developed using a "content-first" approach, ensuring critical in
 
 ---
 
-## 6. User Testing & Iteration
-To validate the revamp, a "Task-Based" testing approach was used with representative users (students and staff).
 
-### **Testing Objectives**
-* Can a user find course requirements in under 30 seconds?
-* Is the Student Portal easily identifiable on a mobile screen?
-* Does the Chatbot provide a clear path to human contact if automation fails?
-
-### **Key Metrics**
-* **Success Rate:** 90% of testers located the admissions form on the first attempt.
-* **Time on Task:** Average time to find campus contact details dropped from 45 seconds (legacy site) to 12 seconds.
-* **Error Rate:** Significant reduction in "dead-end" clicks where users previously got lost in nested menus.
-
-### **Refinements Based on Feedback**
-* **Navigation:** Implemented a categorized landing page for programmes (NATED vs. NC(V)) with search functionality to reduce mobile scrolling.
-* **Integration:** Moved the NSFAS integration to the primary footer and the Admissions sidebar for constant visibility.
-
----
-
-## 7. Accessibility (A11y) Compliance
+## 6. Accessibility (A11y) Compliance
 * **Color Contrast:** All text-to-background ratios meet **WCAG 2.1 AA** standards to ensure readability for visually impaired users.
 * **Keyboard Navigation:** All interactive elements, including the Chatbot and Portal links, are fully accessible via tab-key navigation.
 * **Screen Readers:** Used semantic HTML5 tags (`<nav>`, `<main>`, `<footer>`) to ensure screen readers can accurately parse the site structure.
