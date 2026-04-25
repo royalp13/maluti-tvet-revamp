@@ -5,13 +5,13 @@
 // In production, replace simulated returns with fetch() calls.
 // ============================================================
 
-import logo from '../assets/logo.png'
-import logoWhiteBg from '../assets/logo-white-bg.png'
-import leadership1 from '../assets/leadership1.jpg'
-import slide1 from '../assets/slide-1.jpg'
-import student1 from '../assets/student1.jpg'
-import student2 from '../assets/student2.jpeg'
-import student3 from '../assets/student3.jpg'
+import logo from '../assets/logo.webp'
+import logoWhiteBg from '../assets/logo-white-bg.webp'
+import leadership1 from '../assets/leadership1.webp'
+import slide1 from '../assets/slide-1.webp'
+import student1 from '../assets/student1.webp'
+import student2 from '../assets/student2.webp'
+import student3 from '../assets/student3.webp'
 
 import phuthaditjhaba from '../assets/campuses/phuthaditjhaba.webp'
 import bethlehem from '../assets/campuses/bethlehem.webp'

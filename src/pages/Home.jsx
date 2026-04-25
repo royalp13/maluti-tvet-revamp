@@ -8,8 +8,8 @@ import {
   Calendar, AlertCircle, CheckCircle2, Sparkles,
   ArrowRight, Briefcase, Target, BadgeCheck
 } from 'lucide-react'
-import leadership1 from '../assets/leadership1.jpg'
-import nsfasLogo from '../assets/nsfas-logo.png'
+import leadership1 from '../assets/leadership1.webp'
+import nsfasLogo from '../assets/nsfas-logo.webp'
 
 const getIcon = (id, size = 22, color = '#0E7BB5') => {
   const icons = {

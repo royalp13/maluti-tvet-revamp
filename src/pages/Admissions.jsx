@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchAdmissionsData } from '../services/api'
 import { assets } from '../services/api'
-import nsfasLogo from '../assets/nsfas-logo.png'
+import nsfasLogo from '../assets/nsfas-logo.webp'
 import {
   CheckCircle2, AlertTriangle, FileText, Clock, Award,
   ArrowRight, Sparkles, Building2, Users, BookOpen,

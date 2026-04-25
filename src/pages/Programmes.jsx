@@ -7,7 +7,7 @@ import {
   CheckCircle2, ArrowRight, ChevronDown, ChevronUp,
   Target, Sparkles, Briefcase, Users, Building2, BadgeCheck
 } from 'lucide-react'
-import programmes from '../assets/programmes.png'
+import programmes from '../assets/programmes.webp'
 
 
 const fieldIcons = {
