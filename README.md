@@ -26,6 +26,13 @@ The legacy Maluti TVET website faced challenges with navigation, load speeds, an
 - `/src/assets`: Campus imagery and branding assets.
 - `/src/services`: Logic for API interactions and future backend connectivity.
 
+## Live Demo
+- **https://gray-pebble-06de67810.7.azurestaticapps.net/**
+
+## Wireframes
+- **https://www.figma.com/make/qj0lJNU4kRFkjtn7rFmEjI/Maluti-Tvet-Revamp-Wireframe-Set?t=zyGHYcdVPWOctbgH-20&fullscreen=1**
+- **https://gray-pebble-06de67810.7.azurestaticapps.net/wireframes**
+
 ## Installation & Setup
 
 1. **Clone the repository:**
